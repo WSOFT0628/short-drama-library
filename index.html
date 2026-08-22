@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>短劇典藏庫 V2.0.0 Prototype 6</title>
+<title>短劇典藏庫 V3.3.0 Beta</title>
 <style>
 :root{
   --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#758097;--line:#e2e7f0;
@@ -957,6 +957,10 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
   #page-player .v300-workspace{grid-template-columns:1fr!important}
 }
 </style>
+<style id="v330-media-library-css">
+.v330-media-grid{display:grid;grid-template-columns:minmax(0,1fr) 170px 110px 120px auto;gap:8px;align-items:end}.v330-media-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}.v330-media-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.v330-media-main{min-width:0}.v330-media-url{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted);font-size:12px;margin-top:4px}.v330-media-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.v330-media-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.v330-play{white-space:nowrap}.v330-player-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.v330-status-off{opacity:.58}.v330-history-media{font-size:11px;white-space:nowrap}.v330-media-empty{padding:18px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center}
+@media(max-width:900px){.v330-media-grid{grid-template-columns:1fr 1fr}.v330-media-grid .v330-url-field{grid-column:1/-1}.v330-media-row{grid-template-columns:1fr}.v330-media-actions{justify-content:flex-start}}
+</style>
 
 <style id="v321-youtube-environment">
 .v321-youtube-fallback{position:absolute;inset:0;z-index:8;display:none;align-items:center;justify-content:center;background:#090b10;color:#fff;padding:24px}
@@ -969,7 +973,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <div class="app">
 <header>
   <div class="brand" id="brandHomeBtn" role="button" tabindex="0" title="返回命名工作台"><div class="logo">🎬</div><div><h1>短劇典藏庫</h1><div class="sub">Willy Soft · Short Drama Library</div></div></div>
-  <div class="badge">V3.2.1 · Beta</div>
+  <div class="badge">V3.3.0 · Beta</div>
 </header>
 
 
@@ -1096,8 +1100,8 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <section id="page-player" class="workspace-page">
 <div class="v300-player-shell">
   <div class="v300-player-hero">
-    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3 Prototype</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
-    <button id="v300ClearQueue" class="ghost" type="button">清空播放清單</button>
+    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.3 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
+    <div class="v330-player-actions"><button id="v330ReturnWork" class="ghost" type="button" style="display:none">← 返回作品</button><button id="v300ClearQueue" class="ghost" type="button">清空播放清單</button></div>
   </div>
   <div class="v300-workspace">
     <aside class="v300-pane"><div class="v300-pane-head"><b>媒體來源</b><span class="v300-badge">MULTI SOURCE</span></div><div class="v300-pane-body">
@@ -1227,6 +1231,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
       <button type="button" class="active" data-work-view-tab="basic">基本資料</button>
       <button type="button" data-work-view-tab="cast">演出／配音</button>
       <button type="button" data-work-view-tab="relations">作品關聯</button>
+      <button type="button" data-work-view-tab="media">影音來源</button>
       <button type="button" data-work-view-tab="source">來源資訊</button>
     </div>
 
@@ -1285,6 +1290,20 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
       </div>
 
       <div id="workViewStoryGroup" class="story-card" style="margin-top:14px"></div>
+    </div>
+
+    <div id="workViewPanel-media" class="work-view-panel">
+      <div class="detail-block">
+        <div class="dialog-head" style="margin-bottom:12px"><div><h3 style="margin:0">▶ 影音來源</h3><div class="meta">只保存 YouTube、HLS 或直接影片網址及季度／集數資料，不保存影片本體。</div></div><button id="v330PlayAll" class="primary" type="button">播放全部</button></div>
+        <div class="v330-media-grid">
+          <label class="v330-url-field">影音網址<input id="v330MediaUrl" class="textbox" placeholder="YouTube、.m3u8、.mp4 / .webm URL…"></label>
+          <label>季度／篇章<input id="v330MediaSeason" class="textbox" placeholder="例如：第1季"></label>
+          <label>集數<input id="v330MediaEpisode" class="textbox" type="number" min="1" value="1"></label>
+          <label>名稱<input id="v330MediaLabel" class="textbox" placeholder="選填"></label>
+          <button id="v330MediaAdd" class="primary" type="button">＋ 新增</button>
+        </div>
+        <div id="v330MediaList" class="v330-media-list"></div>
+      </div>
     </div>
 
     <div id="workViewPanel-source" class="work-view-panel">
@@ -2168,6 +2187,8 @@ function ensureStableIds(){
     if(typeof w.platform!=='string'){w.platform='';changed=true}
     if(typeof w.premiere_date!=='string'){w.premiere_date='';changed=true}
     if(typeof w.episode_duration!=='string'){w.episode_duration='';changed=true}
+    if(!Array.isArray(w.media_sources)){w.media_sources=[];changed=true}
+    w.media_sources=w.media_sources.map((m,i)=>v330NormalizeMedia(m,i)).filter(m=>m.url);
   });
   if(changed)saveData();
 }
@@ -2615,7 +2636,7 @@ function openActors(){
 
 function exportBackup(){
   const auditLog=(typeof v266AuditRead==='function')?v266AuditRead():[];
-  const data={app:'短劇典藏庫',format:6,version:'3.2.1 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
+  const data={app:'短劇典藏庫',format:7,version:'3.3.0 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`短劇典藏庫_備份_${new Date().toISOString().slice(0,10)}.wsbackup`;a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),500);showToast('備份已匯出');
@@ -2956,7 +2977,7 @@ function populateActorSelect(select){
 let viewingWorkId=null;
 
 function switchWorkViewTab(tab){
-  const target=['basic','cast','relations','source'].includes(tab)?tab:'basic';
+  const target=['basic','cast','relations','media','source'].includes(tab)?tab:'basic';
   $$('#workViewTabs [data-work-view-tab]').forEach(btn=>{
     btn.classList.toggle('active',btn.dataset.workViewTab===target);
   });
@@ -3122,6 +3143,7 @@ function openWorkView(workId){
   $$('.view-actor-link').forEach(b=>b.addEventListener('click',()=>openActorDetail(b.dataset.id)));
   renderWorkFormalRelations(w);
   renderWorkStoryGroup(w);
+  v330RenderWorkMedia(w);
   switchPage('work-view');
 }
 
@@ -4578,6 +4600,39 @@ function v280InitWorkTabs(){
 
 let v300Queue=[],v300Index=-1,v300CurrentUrl=null,v300SubtitleUrl=null;
 const V310={workId:'',workTitle:'',season:'',startEpisode:1};
+let v330ReturnWorkId='';
+
+function v330NormalizeMedia(m,i=0){
+  const url=String(m?.url||'').trim(),episode=Math.max(1,Number(m?.episode)||i+1);
+  return {id:String(m?.id||makeId('media')),url,season:String(m?.season||'').trim(),episode,label:String(m?.label||'').trim(),enabled:m?.enabled!==false,created_at:m?.created_at||new Date().toISOString()};
+}
+function v330MediaTypeLabel(url){const t=v320SourceType(url);return t==='youtube'?'YouTube':t==='hls'?'HLS':'影片 URL'}
+function v330WorkMedia(w){if(!w)return[];if(!Array.isArray(w.media_sources))w.media_sources=[];return w.media_sources=w.media_sources.map(v330NormalizeMedia).filter(m=>m.url)}
+function v330RenderWorkMedia(w){
+  const box=$('#v330MediaList');if(!box||!w)return;
+  const rows=v330WorkMedia(w);
+  $('#v330PlayAll').disabled=!rows.some(m=>m.enabled);
+  box.innerHTML=rows.length?rows.map((m,i)=>`<div class="v330-media-row${m.enabled?'':' v330-status-off'}"><div class="v330-media-main"><b>${esc(m.label||`${m.season?m.season+'｜':''}第 ${m.episode} 集`)}</b><div class="v330-media-url">${esc(m.url)}</div><div class="v330-media-tags"><span class="v300-badge">${v330MediaTypeLabel(m.url)}</span>${m.season?`<span class="v300-badge">${esc(m.season)}</span>`:''}<span class="v300-badge">第 ${m.episode} 集</span>${m.enabled?'':'<span class="v300-badge">已停用</span>'}</div></div><div class="v330-media-actions"><button class="primary v330-media-play" data-i="${i}" type="button" ${m.enabled?'':'disabled'}>▶ 播放</button><button class="ghost v330-media-toggle" data-i="${i}" type="button">${m.enabled?'停用':'啟用'}</button><button class="danger v330-media-delete" data-i="${i}" type="button">刪除</button></div></div>`).join(''):'<div class="v330-media-empty">尚未設定影音來源。新增後即可從作品資料庫一鍵播放。</div>';
+  box.querySelectorAll('.v330-media-play').forEach(b=>b.addEventListener('click',()=>v330PlayWork(w.id,+b.dataset.i)));
+  box.querySelectorAll('.v330-media-toggle').forEach(b=>b.addEventListener('click',()=>{const m=rows[+b.dataset.i];m.enabled=!m.enabled;w.updated_at=new Date().toISOString();saveData();v330RenderWorkMedia(w);renderHistoryPage();showToast(m.enabled?'影音來源已啟用':'影音來源已停用')}));
+  box.querySelectorAll('.v330-media-delete').forEach(b=>b.addEventListener('click',()=>{const m=rows[+b.dataset.i];if(!confirm(`刪除「${m.label||`第 ${m.episode} 集`}」的影音來源？`))return;w.media_sources.splice(+b.dataset.i,1);w.updated_at=new Date().toISOString();saveData();v330RenderWorkMedia(w);renderHistoryPage();showToast('影音來源已刪除')}));
+}
+function v330AddMedia(){
+  const w=workById(viewingWorkId);if(!w)return;
+  const url=$('#v330MediaUrl').value.trim();let parsed;try{parsed=new URL(url)}catch(e){return showToast('請輸入正確的影音網址')}
+  if(!/^https?:$/.test(parsed.protocol))return showToast('目前僅支援 http / https 網址');
+  if(v320SourceType(url)==='youtube'&&!v320YouTubeId(url))return showToast('無法辨識 YouTube 影片 ID');
+  const rows=v330WorkMedia(w);if(rows.some(m=>m.url===url))return showToast('這個影音網址已存在');
+  rows.push(v330NormalizeMedia({url,season:$('#v330MediaSeason').value,episode:$('#v330MediaEpisode').value,label:$('#v330MediaLabel').value},rows.length));
+  w.updated_at=new Date().toISOString();saveData();$('#v330MediaUrl').value='';$('#v330MediaLabel').value='';$('#v330MediaEpisode').value=String((Number($('#v330MediaEpisode').value)||1)+1);v330RenderWorkMedia(w);renderHistoryPage();showToast('影音來源已新增');
+}
+function v330PlayWork(workId,startIndex=0){
+  const w=workById(workId);if(!w)return;const rows=v330WorkMedia(w).filter(m=>m.enabled);if(!rows.length)return showToast('這部作品尚未設定可用的影音來源');
+  const chosen=v330WorkMedia(w)[startIndex],preferred=chosen?.enabled?chosen:null;const ordered=preferred?[preferred,...rows.filter(m=>m.id!==preferred.id)]:rows;
+  v300Clear();V310.workId=w.id;V310.workTitle=w.title||'未命名作品';V310.season=preferred?.season||'';V310.startEpisode=preferred?.episode||1;
+  ordered.forEach(m=>{const type=v320SourceType(m.url),name=m.label||v320NameForUrl(m.url,type);v300Queue.push({file:{name,size:0,type:type==='hls'?'application/vnd.apple.mpegurl':type==='youtube'?'video/youtube':'video/url',lastModified:0},url:m.url,sourceType:type,link:{workId:w.id,workTitle:w.title||'未命名作品',season:m.season,episode:m.episode}})});
+  v330ReturnWorkId=w.id;switchPage('player');setTimeout(()=>{v300Bind();v300Load(0,false);const back=$('#v330ReturnWork');if(back){back.style.display='inline-block';back.textContent=`← 返回《${w.title||'作品'}》`}},0);showToast(`已載入《${w.title||'作品'}》影音來源`);
+}
 
 let v320Hls=null;
 function v320SourceType(url){
@@ -4751,7 +4806,7 @@ function v300Load(i,autoplay=false){
   v300RenderQueue();v300SetInfo(item);
 }function v300AddFiles(files){const vids=[...files].filter(f=>f.type.startsWith('video/')||/\.(mp4|m4v|webm|mov|mkv)$/i.test(f.name));if(!vids.length){showToast('沒有可加入的影片檔');return}const keys=new Set(v300Queue.map(q=>`${q.file.name}|${q.file.size}|${q.file.lastModified}`));vids.forEach(f=>{const k=`${f.name}|${f.size}|${f.lastModified}`;if(!keys.has(k)){v300Queue.push({file:f,link:null});keys.add(k)}});v300Queue.sort(v300Natural);if(V310.workTitle)v310Apply(false);if(v300Index<0)v300Load(0);else v300RenderQueue();showToast(`已加入 ${vids.length} 個影片檔`)}
 function v300LoadSubtitle(file){if(!file)return;if(!v300Queue.length){showToast('請先載入影片');return}if((v300Queue[v300Index]?.sourceType||'local')==='youtube'){showToast('YouTube 字幕請使用官方播放器設定');return}const reader=new FileReader();reader.onload=()=>{let text=String(reader.result||'');if(/\.srt$/i.test(file.name))text='WEBVTT\n\n'+text.replace(/\r/g,'').replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g,'$1.$2');if(v300SubtitleUrl)URL.revokeObjectURL(v300SubtitleUrl);v300SubtitleUrl=URL.createObjectURL(new Blob([text],{type:'text/vtt'}));const v=$('#v300Video');v.querySelectorAll('track').forEach(t=>t.remove());const tr=document.createElement('track');tr.kind='subtitles';tr.label=file.name;tr.srclang='zh';tr.default=true;tr.src=v300SubtitleUrl;v.appendChild(tr);tr.addEventListener('load',()=>{try{tr.track.mode='showing'}catch(e){};v300SetInfo(v300Queue[v300Index])});showToast(`已載入字幕：${file.name}`)};reader.readAsText(file)}
-function v300Clear(){v320CleanupSource();const v=$('#v300Video');v.pause();v.removeAttribute('src');v.load();if(v300CurrentUrl)URL.revokeObjectURL(v300CurrentUrl);if(v300SubtitleUrl)URL.revokeObjectURL(v300SubtitleUrl);v300Queue=[];v300Index=-1;v300CurrentUrl=v300SubtitleUrl=null;v.style.display='none';$('#v300Empty').style.display='block';$('#v300NowPlaying').textContent='尚未載入影片';$('#v300CurrentTime').textContent=$('#v300Duration').textContent='00:00';$('#v300Progress').value=0;v300RenderQueue();v300SetInfo(null)}
+function v300Clear(){v320CleanupSource();const v=$('#v300Video');v.pause();v.removeAttribute('src');v.load();if(v300CurrentUrl)URL.revokeObjectURL(v300CurrentUrl);if(v300SubtitleUrl)URL.revokeObjectURL(v300SubtitleUrl);v300Queue=[];v300Index=-1;v300CurrentUrl=v300SubtitleUrl=null;v.style.display='none';$('#v300Empty').style.display='block';$('#v300NowPlaying').textContent='尚未載入影片';$('#v300CurrentTime').textContent=$('#v300Duration').textContent='00:00';$('#v300Progress').value=0;v300RenderQueue();v300SetInfo(null);v330ReturnWorkId='';const back=$('#v330ReturnWork');if(back)back.style.display='none'}
 
 let v303ControlsTimer=null;
 function v303ShowControls(){
@@ -5125,13 +5180,14 @@ function renderHistoryPage(){
   const q=(search?.value||'').trim().toLowerCase();
   const rows=v2634FilteredWorks(historyData).map((h,i)=>({h,i})).filter(x=>JSON.stringify(x.h).toLowerCase().includes(q));
   $('#historyPageCount').textContent=`${rows.length} / ${historyData.length} 筆`;
-  $('#historyPageTable').innerHTML=`${v2634Toolbar()}<table class="table"><thead><tr><th class="v290-work-check-cell">選取</th><th>劇名</th><th>形式</th><th>主演組合</th><th>集數</th><th>版本</th><th>評價</th><th>關聯</th><th>更新時間</th><th>操作</th></tr></thead><tbody>${rows.map(x=>`
+  $('#historyPageTable').innerHTML=`${v2634Toolbar()}<table class="table"><thead><tr><th class="v290-work-check-cell">選取</th><th>劇名</th><th>形式</th><th>主演組合</th><th>集數</th><th>版本</th><th>評價</th><th>影音</th><th>關聯</th><th>更新時間</th><th>操作</th></tr></thead><tbody>${rows.map(x=>`
     <tr><td class="v290-work-check-cell"><input type="checkbox" class="v290-work-check" data-id="${x.h.id}" ${v290SelectedWorks.has(x.h.id)?'checked':''}></td><td><button class="work-title-link hp-view" data-id="${x.h.id}" type="button">${esc(x.h.title||'')}</button></td>
     <td>${x.h.work_format?`<span class="v210-format-badge">${esc(x.h.work_format)}</span>`:'—'}</td>
     <td>${esc(getWorkActors(x.h).map(a=>a.name).join(' × '))}</td>
     <td>${esc(x.h.episode||x.h.episodes||'—')}</td>
     <td>${esc(x.h.version_name||'—')}</td>
     <td>${esc(x.h.rating||'')}</td>
+    <td>${v330WorkMedia(x.h).some(m=>m.enabled)?`<button class="primary v330-play hp-play" data-id="${x.h.id}" type="button">▶ ${v330WorkMedia(x.h).filter(m=>m.enabled).length}</button>`:'<button class="ghost hp-media" data-id="'+x.h.id+'" type="button">＋ 設定</button>'}</td>
     <td>${(()=>{
       const c=workRelationCounts(x.h);
       if(!c.total)return '<span class="history-relation-empty">—</span>';
@@ -5146,6 +5202,8 @@ function renderHistoryPage(){
   $$('.v290-work-check').forEach(c=>c.addEventListener('change',()=>{c.checked?v290SelectedWorks.add(c.dataset.id):v290SelectedWorks.delete(c.dataset.id);v290UpdateBatchBar()}));
   v290UpdateBatchBar();
   $$('.hp-view').forEach(b=>b.addEventListener('click',()=>openWorkView(b.dataset.id)));
+  $$('.hp-play').forEach(b=>b.addEventListener('click',()=>v330PlayWork(b.dataset.id,0)));
+  $$('.hp-media').forEach(b=>b.addEventListener('click',()=>{openWorkView(b.dataset.id);setTimeout(()=>switchWorkViewTab('media'),0)}));
   $$('.hp-rel').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();v273ShowRelationPreview(b.dataset.id,b)}));
   $$('.hp-edit').forEach(b=>b.addEventListener('click',()=>openWorkDetail(b.dataset.id)));
   $$('.hp-more-edit').forEach(b=>b.addEventListener('click',()=>openWorkDetail(b.dataset.id)));
@@ -5670,6 +5728,9 @@ function boot(){
   $('#workViewBackBtn').addEventListener('click',()=>switchPage('history'));
   $('#workViewEditBtn').addEventListener('click',()=>{if(viewingWorkId)openWorkDetail(viewingWorkId)});
   $('#workViewOpenRelationBrowser')?.addEventListener('click',()=>switchPage('relation-browser'));
+  $('#v330MediaAdd')?.addEventListener('click',v330AddMedia);
+  $('#v330PlayAll')?.addEventListener('click',()=>{if(viewingWorkId)v330PlayWork(viewingWorkId,0)});
+  $('#v330ReturnWork')?.addEventListener('click',()=>{if(v330ReturnWorkId)openWorkView(v330ReturnWorkId)});
 
 
   bindActorCombo('#workAddActorCombo','#workAddActorSearch','#workAddActorMenu','#workAddActorSelect');
