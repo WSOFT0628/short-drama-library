@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>短劇典藏庫 V3.3.0 Beta</title>
+<title>短劇典藏庫 V3.3.1 Beta</title>
 <style>
 :root{
   --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#758097;--line:#e2e7f0;
@@ -961,6 +961,10 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 .v330-media-grid{display:grid;grid-template-columns:minmax(0,1fr) 170px 110px 120px auto;gap:8px;align-items:end}.v330-media-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}.v330-media-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.v330-media-main{min-width:0}.v330-media-url{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted);font-size:12px;margin-top:4px}.v330-media-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.v330-media-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.v330-play{white-space:nowrap}.v330-player-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.v330-status-off{opacity:.58}.v330-history-media{font-size:11px;white-space:nowrap}.v330-media-empty{padding:18px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center}
 @media(max-width:900px){.v330-media-grid{grid-template-columns:1fr 1fr}.v330-media-grid .v330-url-field{grid-column:1/-1}.v330-media-row{grid-template-columns:1fr}.v330-media-actions{justify-content:flex-start}}
 </style>
+<style id="v331-image-library-css">
+.v331-image-toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:12px 0}.v331-image-drop{padding:18px;border:2px dashed var(--line);border-radius:14px;text-align:center;background:var(--soft);color:var(--muted);cursor:pointer}.v331-image-drop.drag{border-color:var(--accent);background:#eaf2ff}.v331-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:13px;margin-top:14px}.v331-image-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--soft)}.v331-image-card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:#111;cursor:zoom-in}.v331-image-body{padding:10px}.v331-image-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.v331-image-actions button{padding:7px 9px}.v331-poster-mark{display:inline-flex;padding:3px 7px;border-radius:999px;background:#dbeafe;color:#1d4ed8;font-size:11px}.v331-empty{padding:24px;border:1px dashed var(--line);border-radius:14px;text-align:center;color:var(--muted)}.v331-lightbox{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.88)}.v331-lightbox.show{display:flex}.v331-lightbox img{max-width:min(1100px,94vw);max-height:88vh;object-fit:contain}.v331-lightbox button{position:absolute;right:22px;top:18px;color:#fff;border-color:#64748b;background:#111827}.v331-storage-note{font-size:12px;color:var(--muted);line-height:1.6}
+@media(max-width:620px){.v331-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.v331-image-toolbar>*{width:100%}}
+</style>
 
 <style id="v321-youtube-environment">
 .v321-youtube-fallback{position:absolute;inset:0;z-index:8;display:none;align-items:center;justify-content:center;background:#090b10;color:#fff;padding:24px}
@@ -973,7 +977,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <div class="app">
 <header>
   <div class="brand" id="brandHomeBtn" role="button" tabindex="0" title="返回命名工作台"><div class="logo">🎬</div><div><h1>短劇典藏庫</h1><div class="sub">Willy Soft · Short Drama Library</div></div></div>
-  <div class="badge">V3.3.0 · Beta</div>
+  <div class="badge">V3.3.1 · Beta</div>
 </header>
 
 
@@ -1100,13 +1104,13 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <section id="page-player" class="workspace-page">
 <div class="v300-player-shell">
   <div class="v300-player-hero">
-    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.3 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
+    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.3.1 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
     <div class="v330-player-actions"><button id="v330ReturnWork" class="ghost" type="button" style="display:none">← 返回作品</button><button id="v300ClearQueue" class="ghost" type="button">清空播放清單</button></div>
   </div>
   <div class="v300-workspace">
     <aside class="v300-pane"><div class="v300-pane-head"><b>媒體來源</b><span class="v300-badge">MULTI SOURCE</span></div><div class="v300-pane-body">
       <div class="v310-link-card">
-  <div class="v310-link-title"><b>🔗 典藏庫關聯</b><span id="v310LinkState" class="v300-badge">未關聯</span></div>
+  <div class="v310-link-title"><b>🔗 影片對應作品</b><span id="v310LinkState" class="v300-badge">未對應</span></div>
 
   <label>搜尋作品</label>
   <input id="v311WorkSearch" class="textbox" placeholder="輸入劇名快速篩選…">
@@ -1121,7 +1125,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
   <input id="v310StartEpisode" class="textbox" type="number" min="1" value="1">
 
   <button id="v310AutoMatch" class="ghost v300-file-btn" type="button">✨ 重新依檔名配對集數</button>
-  <div id="v310LinkSummary" class="meta" style="margin-top:7px">選擇作品後，已載入與之後加入的影片都會立即套用關聯。</div>
+  <div id="v310LinkSummary" class="meta" style="margin-top:7px">指定這批影片屬於哪部作品、哪一季，並從第幾集開始；這不是同原作或翻拍的作品關聯。</div>
 </div><div class="v300-library-card"><b>快速播放</b><div class="meta" style="margin-top:5px">不用先建作品，直接加入影片即可觀看。</div></div>
       <button id="v300PickVideos" class="primary v300-file-btn" type="button">＋ 加入影片</button>
       <button id="v300PickSubtitle" class="ghost v300-file-btn" type="button">＋ 載入字幕</button>
@@ -1232,6 +1236,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
       <button type="button" data-work-view-tab="cast">演出／配音</button>
       <button type="button" data-work-view-tab="relations">作品關聯</button>
       <button type="button" data-work-view-tab="media">影音來源</button>
+      <button type="button" data-work-view-tab="images">封面／劇照</button>
       <button type="button" data-work-view-tab="source">來源資訊</button>
     </div>
 
@@ -1306,6 +1311,21 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
       </div>
     </div>
 
+    <div id="workViewPanel-images" class="work-view-panel">
+      <div class="detail-block">
+        <div class="dialog-head" style="margin-bottom:12px"><div><h3 style="margin:0">🖼️ 作品封面與劇照</h3><div class="meta">主海報用於作品識別；劇照可保存多張。圖片保存在目前瀏覽器，不會上傳到 GitHub。</div></div></div>
+        <div id="v331ImageDrop" class="v331-image-drop" tabindex="0">拖曳圖片到這裡，或點擊選擇 JPG、PNG、WebP</div>
+        <input id="v331ImageInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+        <div class="v331-image-toolbar">
+          <select id="v331ImageRole" class="textbox" style="width:170px"><option value="poster">主海報／封面</option><option value="still">劇照</option></select>
+          <input id="v331ImageNote" class="textbox" style="flex:1;min-width:210px" placeholder="圖片備註，例如：第 1 集、角色合照（選填）">
+          <button id="v331PickImages" class="primary" type="button">＋ 加入圖片</button>
+        </div>
+        <div class="v331-storage-note">加入時會自動縮小過大的圖片並製作縮圖。若選擇多張「主海報」，第一張設為主海報，其餘保留在圖片庫。</div>
+        <div id="v331ImageGallery" class="v331-gallery"></div>
+      </div>
+    </div>
+
     <div id="workViewPanel-source" class="work-view-panel">
       <div class="detail-block">
         <h3>來源資訊</h3>
@@ -1320,6 +1340,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
     </div>
   </section>
 </section>
+<div id="v331Lightbox" class="v331-lightbox" role="dialog" aria-modal="true"><button id="v331LightboxClose" class="ghost" type="button">✕ 關閉</button><img id="v331LightboxImage" alt="劇照預覽"></div>
 
 <section id="page-work-detail" class="workspace-page v271-work-detail">
   <section class="card">
@@ -2189,6 +2210,8 @@ function ensureStableIds(){
     if(typeof w.episode_duration!=='string'){w.episode_duration='';changed=true}
     if(!Array.isArray(w.media_sources)){w.media_sources=[];changed=true}
     w.media_sources=w.media_sources.map((m,i)=>v330NormalizeMedia(m,i)).filter(m=>m.url);
+    if(!Array.isArray(w.images)){w.images=[];changed=true}
+    if(typeof w.poster_image_id!=='string'){w.poster_image_id='';changed=true}
   });
   if(changed)saveData();
 }
@@ -3144,6 +3167,7 @@ function openWorkView(workId){
   renderWorkFormalRelations(w);
   renderWorkStoryGroup(w);
   v330RenderWorkMedia(w);
+  v331RenderImages(w);
   switchPage('work-view');
 }
 
@@ -4602,6 +4626,22 @@ let v300Queue=[],v300Index=-1,v300CurrentUrl=null,v300SubtitleUrl=null;
 const V310={workId:'',workTitle:'',season:'',startEpisode:1};
 let v330ReturnWorkId='';
 
+const V331_DB='short_drama_library_images',V331_STORE='images';
+let v331ObjectUrls=[];
+function v331Db(){return new Promise((resolve,reject)=>{const req=indexedDB.open(V331_DB,1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(V331_STORE))db.createObjectStore(V331_STORE,{keyPath:'id'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function v331Put(record){const db=await v331Db();return new Promise((resolve,reject)=>{const tx=db.transaction(V331_STORE,'readwrite');tx.objectStore(V331_STORE).put(record);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>reject(tx.error)})}
+async function v331Get(id){const db=await v331Db();return new Promise((resolve,reject)=>{const req=db.transaction(V331_STORE).objectStore(V331_STORE).get(id);req.onsuccess=()=>{db.close();resolve(req.result||null)};req.onerror=()=>reject(req.error)})}
+async function v331DeleteBlob(id){const db=await v331Db();return new Promise((resolve,reject)=>{const tx=db.transaction(V331_STORE,'readwrite');tx.objectStore(V331_STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>reject(tx.error)})}
+async function v331CanvasBlob(source,maxSide,quality=.88){const bitmap=await createImageBitmap(source),scale=Math.min(1,maxSide/Math.max(bitmap.width,bitmap.height)),w=Math.max(1,Math.round(bitmap.width*scale)),h=Math.max(1,Math.round(bitmap.height*scale)),canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(bitmap,0,0,w,h);bitmap.close();const type=source.type==='image/png'?'image/png':'image/jpeg';return new Promise(resolve=>canvas.toBlob(resolve,type,type==='image/jpeg'?quality:undefined))}
+async function v331PrepareImage(file){if(!/^image\/(jpeg|png|webp)$/.test(file.type))throw new Error('僅支援 JPG、PNG、WebP');const [blob,thumb]=await Promise.all([v331CanvasBlob(file,2000,.88),v331CanvasBlob(file,480,.82)]);return{blob,thumb}}
+function v331ClearUrls(){v331ObjectUrls.forEach(URL.revokeObjectURL);v331ObjectUrls=[]}
+async function v331RenderImages(w){const host=$('#v331ImageGallery');if(!host||!w)return;v331ClearUrls();const refs=Array.isArray(w.images)?w.images:[];if(!refs.length){host.innerHTML='<div class="v331-empty">尚未加入主海報或劇照。</div>';return}host.innerHTML='<div class="v331-empty">正在載入圖片…</div>';const cards=[];for(const ref of refs){const rec=await v331Get(ref.id).catch(()=>null);if(!rec){cards.push(`<div class="v331-image-card"><div class="v331-image-body"><b>${esc(ref.name||'圖片')}</b><div class="meta">圖片檔已不在此瀏覽器</div><div class="v331-image-actions"><button class="danger v331-remove" data-id="${esc(ref.id)}">移除紀錄</button></div></div></div>`);continue}const url=URL.createObjectURL(rec.thumb||rec.blob);v331ObjectUrls.push(url);const main=w.poster_image_id===ref.id;cards.push(`<div class="v331-image-card"><img src="${url}" data-full-id="${esc(ref.id)}" alt="${esc(ref.note||ref.name||'作品圖片')}"><div class="v331-image-body">${main?'<span class="v331-poster-mark">主海報</span>':`<span class="v300-badge">${ref.role==='poster'?'海報':'劇照'}</span>`}<div style="margin-top:7px"><b>${esc(ref.note||ref.name||'未命名圖片')}</b></div><div class="meta">${new Date(ref.created_at).toLocaleString()}</div><div class="v331-image-actions">${main?'':`<button class="ghost v331-set-poster" data-id="${esc(ref.id)}">設為主海報</button>`}<button class="danger v331-remove" data-id="${esc(ref.id)}">刪除</button></div></div></div>`)}host.innerHTML=cards.join('');host.querySelectorAll('[data-full-id]').forEach(img=>img.addEventListener('click',()=>v331OpenLightbox(img.dataset.fullId)));host.querySelectorAll('.v331-set-poster').forEach(b=>b.addEventListener('click',()=>v331SetPoster(w,b.dataset.id)));host.querySelectorAll('.v331-remove').forEach(b=>b.addEventListener('click',()=>v331RemoveImage(w,b.dataset.id)))}
+async function v331AddImages(files){const w=workById(viewingWorkId);if(!w)return;const list=[...files];if(!list.length)return;if(!Array.isArray(w.images))w.images=[];if(typeof w.poster_image_id!=='string')w.poster_image_id='';const role=$('#v331ImageRole').value,note=$('#v331ImageNote').value.trim();showToast(`正在處理 ${list.length} 張圖片…`);let added=0;for(const file of list){try{const id=makeId('image'),made=await v331PrepareImage(file);await v331Put({id,workId:w.id,name:file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});w.images.push({id,role,name:file.name,note,created_at:new Date().toISOString()});if(role==='poster'&&!w.poster_image_id)w.poster_image_id=id;added++}catch(err){console.warn(err);showToast(`${file.name}：${err.message}`)}}w.updated_at=new Date().toISOString();saveData();$('#v331ImageNote').value='';await v331RenderImages(w);renderHistoryPage();showToast(`已加入 ${added} 張圖片`)}
+async function v331SetPoster(w,id){w.poster_image_id=id;const ref=w.images.find(x=>x.id===id);if(ref)ref.role='poster';w.updated_at=new Date().toISOString();saveData();await v331RenderImages(w);showToast('主海報已更新')}
+async function v331RemoveImage(w,id){const ref=w.images.find(x=>x.id===id);if(!confirm(`確定刪除「${ref?.note||ref?.name||'這張圖片'}」？`))return;await v331DeleteBlob(id).catch(console.warn);w.images=w.images.filter(x=>x.id!==id);if(w.poster_image_id===id)w.poster_image_id=w.images.find(x=>x.role==='poster')?.id||'';w.updated_at=new Date().toISOString();saveData();await v331RenderImages(w);renderHistoryPage();showToast('圖片已刪除')}
+async function v331OpenLightbox(id){const rec=await v331Get(id);if(!rec)return showToast('找不到圖片檔');const url=URL.createObjectURL(rec.blob);v331ObjectUrls.push(url);$('#v331LightboxImage').src=url;$('#v331Lightbox').classList.add('show')}
+function v331CloseLightbox(){$('#v331Lightbox').classList.remove('show');$('#v331LightboxImage').removeAttribute('src')}
+
 function v330NormalizeMedia(m,i=0){
   const url=String(m?.url||'').trim(),episode=Math.max(1,Number(m?.episode)||i+1);
   return {id:String(m?.id||makeId('media')),url,season:String(m?.season||'').trim(),episode,label:String(m?.label||'').trim(),enabled:m?.enabled!==false,created_at:m?.created_at||new Date().toISOString()};
@@ -4721,7 +4761,7 @@ function v310WorkChanged(){
 function v310Refresh(){
   V310.season=$('#v310Season')?.value||'';
   V310.startEpisode=Math.max(1,+($('#v310StartEpisode')?.value||1));
-  $('#v310LinkState').textContent=V310.workTitle?'已關聯':'未關聯';
+  $('#v310LinkState').textContent=V310.workTitle?'已對應':'未對應';
   $('#v310LinkSummary').textContent=V310.workTitle
     ?`${V310.workTitle}${V310.season?'｜'+V310.season:''}｜由第 ${V310.startEpisode} 集起配對${v300Queue.length?`｜目前 ${v300Queue.length} 部影片`:''}`
     :'選擇作品後，已載入與之後加入的影片都會立即套用關聯。';
@@ -4734,7 +4774,7 @@ function v300RenderQueue(){
   box.innerHTML=v300Queue.length?v300Queue.map((x,i)=>{
     const type=x.sourceType||'local';
     const icon=type==='youtube'?'▶':type==='hls'?'📡':type==='direct'?'🌐':'•';
-    return `<div class="v300-item${i===v300Index?' active':''}" data-i="${i}"><span>${i===v300Index?'▶':icon}</span><span class="name">${esc(x.file.name)}<span class="v310-qmeta">${x.link?esc(`${x.link.workTitle}${x.link.season?'｜'+x.link.season:''}｜第 ${x.link.episode} 集`):'未關聯典藏'}</span></span></div>`;
+    return `<div class="v300-item${i===v300Index?' active':''}" data-i="${i}"><span>${i===v300Index?'▶':icon}</span><span class="name">${esc(x.file.name)}<span class="v310-qmeta">${x.link?esc(`${x.link.workTitle}${x.link.season?'｜'+x.link.season:''}｜第 ${x.link.episode} 集`):'未對應作品'}</span></span></div>`;
   }).join(''):'<div class="meta">尚無影片</div>';
   $$('.v300-item').forEach(el=>el.addEventListener('click',()=>v300Load(+el.dataset.i,true)));
 }function v300SetInfo(item){
@@ -5731,6 +5771,16 @@ function boot(){
   $('#v330MediaAdd')?.addEventListener('click',v330AddMedia);
   $('#v330PlayAll')?.addEventListener('click',()=>{if(viewingWorkId)v330PlayWork(viewingWorkId,0)});
   $('#v330ReturnWork')?.addEventListener('click',()=>{if(v330ReturnWorkId)openWorkView(v330ReturnWorkId)});
+  $('#v331PickImages')?.addEventListener('click',()=>$('#v331ImageInput').click());
+  $('#v331ImageDrop')?.addEventListener('click',()=>$('#v331ImageInput').click());
+  $('#v331ImageDrop')?.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('#v331ImageInput').click()}});
+  $('#v331ImageInput')?.addEventListener('change',e=>{v331AddImages(e.target.files);e.target.value=''});
+  const imageDrop=$('#v331ImageDrop');
+  imageDrop?.addEventListener('dragover',e=>{e.preventDefault();imageDrop.classList.add('drag')});
+  imageDrop?.addEventListener('dragleave',()=>imageDrop.classList.remove('drag'));
+  imageDrop?.addEventListener('drop',e=>{e.preventDefault();imageDrop.classList.remove('drag');v331AddImages([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')))});
+  $('#v331LightboxClose')?.addEventListener('click',v331CloseLightbox);
+  $('#v331Lightbox')?.addEventListener('click',e=>{if(e.target===$('#v331Lightbox'))v331CloseLightbox()});
 
 
   bindActorCombo('#workAddActorCombo','#workAddActorSearch','#workAddActorMenu','#workAddActorSelect');
