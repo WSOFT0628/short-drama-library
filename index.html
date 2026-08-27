@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>短劇典藏庫 V3.3.1 Beta</title>
+<title>短劇典藏庫 V3.3.2 Beta</title>
 <style>
 :root{
   --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#758097;--line:#e2e7f0;
@@ -977,7 +977,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <div class="app">
 <header>
   <div class="brand" id="brandHomeBtn" role="button" tabindex="0" title="返回命名工作台"><div class="logo">🎬</div><div><h1>短劇典藏庫</h1><div class="sub">Willy Soft · Short Drama Library</div></div></div>
-  <div class="badge">V3.3.1 · Beta</div>
+  <div class="badge">V3.3.2 · Beta</div>
 </header>
 
 
@@ -1104,7 +1104,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <section id="page-player" class="workspace-page">
 <div class="v300-player-shell">
   <div class="v300-player-hero">
-    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.3.1 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
+    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.3.2 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
     <div class="v330-player-actions"><button id="v330ReturnWork" class="ghost" type="button" style="display:none">← 返回作品</button><button id="v300ClearQueue" class="ghost" type="button">清空播放清單</button></div>
   </div>
   <div class="v300-workspace">
@@ -1364,6 +1364,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
       <button class="v280-tab" data-tab="source" type="button">📁 來源</button>
       <button class="v280-tab" data-tab="story" type="button">📝 劇情</button>
       <button class="v280-tab" data-tab="notes" type="button">🏷️ 備註／標籤</button>
+      <button class="v280-tab" data-tab="images" type="button">🖼️ 封面／劇照</button>
       <button class="v280-tab v280-tab-all" data-tab="all" type="button">▦ 全部</button>
     </div>
     <div class="v272-work-columns v280-tabbed-work">
@@ -1479,6 +1480,19 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
         <label class="label">標籤（以逗號分隔）</label>
         <input id="workEditTags" class="textbox" placeholder="甜寵, 重生, 虐戀">
       </div>
+        <div class="detail-block v280-panel" data-panel="images">
+          <h3>🖼️ 封面與劇照管理</h3>
+          <div class="meta" style="margin-bottom:12px">主海報用於作品識別；劇照可保存多張。圖片保存在目前瀏覽器。</div>
+          <div id="v331EditImageDrop" class="v331-image-drop" tabindex="0">拖曳圖片到這裡，或點擊選擇 JPG、PNG、WebP</div>
+          <input id="v331EditImageInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+          <div class="v331-image-toolbar">
+            <select id="v331EditImageRole" class="textbox" style="width:170px"><option value="poster">主海報／封面</option><option value="still">劇照</option></select>
+            <input id="v331EditImageNote" class="textbox" style="flex:1;min-width:210px" placeholder="圖片備註，例如：第 1 集、角色合照（選填）">
+            <button id="v331EditPickImages" class="primary" type="button">＋ 加入圖片</button>
+          </div>
+          <div class="v331-storage-note">加入時會自動縮小過大的圖片並製作縮圖。</div>
+          <div id="v331EditImageGallery" class="v331-gallery"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -3000,7 +3014,7 @@ function populateActorSelect(select){
 let viewingWorkId=null;
 
 function switchWorkViewTab(tab){
-  const target=['basic','cast','relations','media','source'].includes(tab)?tab:'basic';
+  const target=['basic','cast','relations','media','images','source'].includes(tab)?tab:'basic';
   $$('#workViewTabs [data-work-view-tab]').forEach(btn=>{
     btn.classList.toggle('active',btn.dataset.workViewTab===target);
   });
@@ -3212,6 +3226,7 @@ function openWorkDetail(workId=null){
   syncCreationSourceUI();
   v210RenderSameTitleNotice();
   switchPage('work-detail');
+  if(w)v331RenderImages(w);
   setTimeout(v264RenderRelations,0);
 }
 function renderWorkActorsEditor(work){
@@ -4635,8 +4650,8 @@ async function v331DeleteBlob(id){const db=await v331Db();return new Promise((re
 async function v331CanvasBlob(source,maxSide,quality=.88){const bitmap=await createImageBitmap(source),scale=Math.min(1,maxSide/Math.max(bitmap.width,bitmap.height)),w=Math.max(1,Math.round(bitmap.width*scale)),h=Math.max(1,Math.round(bitmap.height*scale)),canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(bitmap,0,0,w,h);bitmap.close();const type=source.type==='image/png'?'image/png':'image/jpeg';return new Promise(resolve=>canvas.toBlob(resolve,type,type==='image/jpeg'?quality:undefined))}
 async function v331PrepareImage(file){if(!/^image\/(jpeg|png|webp)$/.test(file.type))throw new Error('僅支援 JPG、PNG、WebP');const [blob,thumb]=await Promise.all([v331CanvasBlob(file,2000,.88),v331CanvasBlob(file,480,.82)]);return{blob,thumb}}
 function v331ClearUrls(){v331ObjectUrls.forEach(URL.revokeObjectURL);v331ObjectUrls=[]}
-async function v331RenderImages(w){const host=$('#v331ImageGallery');if(!host||!w)return;v331ClearUrls();const refs=Array.isArray(w.images)?w.images:[];if(!refs.length){host.innerHTML='<div class="v331-empty">尚未加入主海報或劇照。</div>';return}host.innerHTML='<div class="v331-empty">正在載入圖片…</div>';const cards=[];for(const ref of refs){const rec=await v331Get(ref.id).catch(()=>null);if(!rec){cards.push(`<div class="v331-image-card"><div class="v331-image-body"><b>${esc(ref.name||'圖片')}</b><div class="meta">圖片檔已不在此瀏覽器</div><div class="v331-image-actions"><button class="danger v331-remove" data-id="${esc(ref.id)}">移除紀錄</button></div></div></div>`);continue}const url=URL.createObjectURL(rec.thumb||rec.blob);v331ObjectUrls.push(url);const main=w.poster_image_id===ref.id;cards.push(`<div class="v331-image-card"><img src="${url}" data-full-id="${esc(ref.id)}" alt="${esc(ref.note||ref.name||'作品圖片')}"><div class="v331-image-body">${main?'<span class="v331-poster-mark">主海報</span>':`<span class="v300-badge">${ref.role==='poster'?'海報':'劇照'}</span>`}<div style="margin-top:7px"><b>${esc(ref.note||ref.name||'未命名圖片')}</b></div><div class="meta">${new Date(ref.created_at).toLocaleString()}</div><div class="v331-image-actions">${main?'':`<button class="ghost v331-set-poster" data-id="${esc(ref.id)}">設為主海報</button>`}<button class="danger v331-remove" data-id="${esc(ref.id)}">刪除</button></div></div></div>`)}host.innerHTML=cards.join('');host.querySelectorAll('[data-full-id]').forEach(img=>img.addEventListener('click',()=>v331OpenLightbox(img.dataset.fullId)));host.querySelectorAll('.v331-set-poster').forEach(b=>b.addEventListener('click',()=>v331SetPoster(w,b.dataset.id)));host.querySelectorAll('.v331-remove').forEach(b=>b.addEventListener('click',()=>v331RemoveImage(w,b.dataset.id)))}
-async function v331AddImages(files){const w=workById(viewingWorkId);if(!w)return;const list=[...files];if(!list.length)return;if(!Array.isArray(w.images))w.images=[];if(typeof w.poster_image_id!=='string')w.poster_image_id='';const role=$('#v331ImageRole').value,note=$('#v331ImageNote').value.trim();showToast(`正在處理 ${list.length} 張圖片…`);let added=0;for(const file of list){try{const id=makeId('image'),made=await v331PrepareImage(file);await v331Put({id,workId:w.id,name:file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});w.images.push({id,role,name:file.name,note,created_at:new Date().toISOString()});if(role==='poster'&&!w.poster_image_id)w.poster_image_id=id;added++}catch(err){console.warn(err);showToast(`${file.name}：${err.message}`)}}w.updated_at=new Date().toISOString();saveData();$('#v331ImageNote').value='';await v331RenderImages(w);renderHistoryPage();showToast(`已加入 ${added} 張圖片`)}
+async function v331RenderImages(w){const hosts=[$('#v331ImageGallery'),$('#v331EditImageGallery')].filter(Boolean);if(!hosts.length||!w)return;v331ClearUrls();const refs=Array.isArray(w.images)?w.images:[];if(!refs.length){hosts.forEach(host=>host.innerHTML='<div class="v331-empty">尚未加入主海報或劇照。</div>');return}hosts.forEach(host=>host.innerHTML='<div class="v331-empty">正在載入圖片…</div>');const cards=[];for(const ref of refs){const rec=await v331Get(ref.id).catch(()=>null);if(!rec){cards.push(`<div class="v331-image-card"><div class="v331-image-body"><b>${esc(ref.name||'圖片')}</b><div class="meta">圖片檔已不在此瀏覽器</div><div class="v331-image-actions"><button class="danger v331-remove" data-id="${esc(ref.id)}">移除紀錄</button></div></div></div>`);continue}const url=URL.createObjectURL(rec.thumb||rec.blob);v331ObjectUrls.push(url);const main=w.poster_image_id===ref.id;cards.push(`<div class="v331-image-card"><img src="${url}" data-full-id="${esc(ref.id)}" alt="${esc(ref.note||ref.name||'作品圖片')}"><div class="v331-image-body">${main?'<span class="v331-poster-mark">主海報</span>':`<span class="v300-badge">${ref.role==='poster'?'海報':'劇照'}</span>`}<div style="margin-top:7px"><b>${esc(ref.note||ref.name||'未命名圖片')}</b></div><div class="meta">${new Date(ref.created_at).toLocaleString()}</div><div class="v331-image-actions">${main?'':`<button class="ghost v331-set-poster" data-id="${esc(ref.id)}">設為主海報</button>`}<button class="danger v331-remove" data-id="${esc(ref.id)}">刪除</button></div></div></div>`)}hosts.forEach(host=>{host.innerHTML=cards.join('');host.querySelectorAll('[data-full-id]').forEach(img=>img.addEventListener('click',()=>v331OpenLightbox(img.dataset.fullId)));host.querySelectorAll('.v331-set-poster').forEach(b=>b.addEventListener('click',()=>v331SetPoster(w,b.dataset.id)));host.querySelectorAll('.v331-remove').forEach(b=>b.addEventListener('click',()=>v331RemoveImage(w,b.dataset.id)))})}
+async function v331AddImages(files,scope='view'){const w=workById(scope==='edit'?editingWorkId:viewingWorkId)||workById(editingWorkId)||workById(viewingWorkId);if(!w)return showToast('請先儲存作品，再加入圖片');const list=[...files];if(!list.length)return;if(!Array.isArray(w.images))w.images=[];if(typeof w.poster_image_id!=='string')w.poster_image_id='';const prefix=scope==='edit'?'#v331Edit':'#v331',role=$(`${prefix}ImageRole`).value,note=$(`${prefix}ImageNote`).value.trim();showToast(`正在處理 ${list.length} 張圖片…`);let added=0;for(const file of list){try{const id=makeId('image'),made=await v331PrepareImage(file);await v331Put({id,workId:w.id,name:file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});w.images.push({id,role,name:file.name,note,created_at:new Date().toISOString()});if(role==='poster'&&!w.poster_image_id)w.poster_image_id=id;added++}catch(err){console.warn(err);showToast(`${file.name}：${err.message}`)}}w.updated_at=new Date().toISOString();saveData();$(`${prefix}ImageNote`).value='';await v331RenderImages(w);renderHistoryPage();showToast(`已加入 ${added} 張圖片`)}
 async function v331SetPoster(w,id){w.poster_image_id=id;const ref=w.images.find(x=>x.id===id);if(ref)ref.role='poster';w.updated_at=new Date().toISOString();saveData();await v331RenderImages(w);showToast('主海報已更新')}
 async function v331RemoveImage(w,id){const ref=w.images.find(x=>x.id===id);if(!confirm(`確定刪除「${ref?.note||ref?.name||'這張圖片'}」？`))return;await v331DeleteBlob(id).catch(console.warn);w.images=w.images.filter(x=>x.id!==id);if(w.poster_image_id===id)w.poster_image_id=w.images.find(x=>x.role==='poster')?.id||'';w.updated_at=new Date().toISOString();saveData();await v331RenderImages(w);renderHistoryPage();showToast('圖片已刪除')}
 async function v331OpenLightbox(id){const rec=await v331Get(id);if(!rec)return showToast('找不到圖片檔');const url=URL.createObjectURL(rec.blob);v331ObjectUrls.push(url);$('#v331LightboxImage').src=url;$('#v331Lightbox').classList.add('show')}
@@ -5779,6 +5794,14 @@ function boot(){
   imageDrop?.addEventListener('dragover',e=>{e.preventDefault();imageDrop.classList.add('drag')});
   imageDrop?.addEventListener('dragleave',()=>imageDrop.classList.remove('drag'));
   imageDrop?.addEventListener('drop',e=>{e.preventDefault();imageDrop.classList.remove('drag');v331AddImages([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')))});
+  $('#v331EditPickImages')?.addEventListener('click',()=>$('#v331EditImageInput').click());
+  $('#v331EditImageDrop')?.addEventListener('click',()=>$('#v331EditImageInput').click());
+  $('#v331EditImageDrop')?.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('#v331EditImageInput').click()}});
+  $('#v331EditImageInput')?.addEventListener('change',e=>{v331AddImages(e.target.files,'edit');e.target.value=''});
+  const editImageDrop=$('#v331EditImageDrop');
+  editImageDrop?.addEventListener('dragover',e=>{e.preventDefault();editImageDrop.classList.add('drag')});
+  editImageDrop?.addEventListener('dragleave',()=>editImageDrop.classList.remove('drag'));
+  editImageDrop?.addEventListener('drop',e=>{e.preventDefault();editImageDrop.classList.remove('drag');v331AddImages([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')),'edit')});
   $('#v331LightboxClose')?.addEventListener('click',v331CloseLightbox);
   $('#v331Lightbox')?.addEventListener('click',e=>{if(e.target===$('#v331Lightbox'))v331CloseLightbox()});
 
