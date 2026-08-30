@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>短劇典藏庫 V3.4.1 Beta</title>
+<title>短劇典藏庫 V3.4.2 Beta</title>
 <style>
 :root{
   --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#758097;--line:#e2e7f0;
@@ -969,6 +969,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 .v340-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.v340-stat{border:1px solid var(--line);border-radius:16px;padding:16px;background:linear-gradient(145deg,var(--card),var(--soft));cursor:pointer}.v340-stat b{display:block;font-size:25px;margin-top:8px}.v340-stat span{font-size:12px;color:var(--muted)}
 .v340-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.v340-view-toggle{display:flex;gap:4px;padding:4px;border-radius:11px;background:var(--soft)}.v340-view-toggle button{border:0;background:transparent;color:var(--muted);border-radius:8px;padding:8px 11px;cursor:pointer;font-weight:700}.v340-view-toggle button.active{background:var(--card);color:var(--accent);box-shadow:0 2px 8px rgba(20,40,80,.08)}
 .v340-work-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}.v340-work-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);box-shadow:0 7px 20px rgba(34,43,72,.06);transition:.18s}.v340-work-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(34,43,72,.11)}.v340-poster{width:100%;aspect-ratio:3/4;display:grid;place-items:center;background:linear-gradient(145deg,#292447,#6b59f2);color:#fff;font-size:42px;overflow:hidden;cursor:pointer}.v340-poster img{width:100%;height:100%;object-fit:cover}.v340-card-body{padding:13px}.v340-card-title{font-size:15px;font-weight:800;line-height:1.45;min-height:43px}.v340-card-meta{font-size:12px;color:var(--muted);margin-top:7px;line-height:1.55}.v340-card-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.v340-card-actions{display:flex;gap:7px;margin-top:12px}.v340-card-actions button{flex:1;padding:8px 9px}.v340-card-select{position:absolute;margin:10px;z-index:2;width:20px;height:20px}.v340-card-wrap{position:relative}
+.v340-card-wrap:has(.more-wrap.open){z-index:60}.v340-work-card{overflow:visible}.v340-poster{border-radius:16px 16px 0 0}.v340-card-actions .more-wrap{flex:0 0 auto}.v340-card-actions .more-wrap>.hp-more{width:38px;min-width:38px}.v340-card-actions .more-menu button{width:100%;text-align:left}.v340-card-relations{display:flex;gap:5px;flex-wrap:wrap}.v340-card-relations .history-relation-badge{cursor:pointer}
 #workViewTabs,.v280-work-tabs{position:sticky;top:8px;z-index:20;background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(10px);padding:7px;border:1px solid var(--line);border-radius:13px;box-shadow:0 5px 16px rgba(30,40,70,.07)}
 @media(max-width:900px){.v340-overview{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.v340-work-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.v340-card-body{padding:10px}.v340-card-title{font-size:13px}.v340-card-actions{flex-direction:column}.v340-overview{gap:8px}.v340-stat{padding:12px}.v340-stat b{font-size:20px}}
 </style>
@@ -987,7 +988,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <div class="app">
 <header>
   <div class="brand" id="brandHomeBtn" role="button" tabindex="0" title="返回命名工作台"><div class="logo">🎬</div><div><h1>短劇典藏庫</h1><div class="sub">Willy Soft · Short Drama Library</div></div></div>
-  <div class="badge">V3.4.1 · Beta</div>
+  <div class="badge">V3.4.2 · Beta</div>
 </header>
 
 
@@ -1121,7 +1122,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <section id="page-player" class="workspace-page">
 <div class="v300-player-shell">
   <div class="v300-player-hero">
-    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.4.1 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
+    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.4.2 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
     <div class="v330-player-actions"><button id="v330ReturnWork" class="ghost" type="button" style="display:none">← 返回作品</button><button id="v300ClearQueue" class="ghost" type="button">清空播放清單</button></div>
   </div>
   <div class="v300-workspace">
@@ -2705,7 +2706,7 @@ async function exportBackup(){
   const auditLog=(typeof v266AuditRead==='function')?v266AuditRead():[];
   showToast(settings.backup_images===false?'正在整理文字備份…':'正在整理作品與圖片備份…');
   const images=settings.backup_images===false?[]:await v340BackupImages().catch(err=>{console.warn(err);showToast('部分圖片無法讀取，將繼續匯出');return[]});
-  const data={app:'短劇典藏庫',format:8,version:'3.4.1 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,images,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
+  const data={app:'短劇典藏庫',format:8,version:'3.4.2 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,images,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`短劇典藏庫_備份_${new Date().toISOString().slice(0,10)}.wsbackup`;a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),500);showToast(images.length?`完整備份已匯出，包含 ${images.length} 張圖片`:'備份已匯出');
@@ -5267,7 +5268,7 @@ function v290DeleteSelected(){
 function renderHistoryPage(){
   const search=$('#historyPageSearch');
   const q=(search?.value||'').trim().toLowerCase();
-  const rows=v2634FilteredWorks(historyData).map((h,i)=>({h,i})).filter(x=>JSON.stringify(x.h).toLowerCase().includes(q));
+  const rows=v2634FilteredWorks(historyData).map(h=>({h,i:historyData.indexOf(h)})).filter(x=>JSON.stringify(x.h).toLowerCase().includes(q));
   $('#historyPageCount').textContent=`${rows.length} / ${historyData.length} 筆`;
   $('#historyPageTable').innerHTML=`${v2634Toolbar()}<table class="table"><thead><tr><th class="v290-work-check-cell">選取</th><th>劇名</th><th>形式</th><th>主演組合</th><th>集數</th><th>版本</th><th>評價</th><th>影音</th><th>關聯</th><th>更新時間</th><th>操作</th></tr></thead><tbody>${rows.map(x=>`
     <tr><td class="v290-work-check-cell"><input type="checkbox" class="v290-work-check" data-id="${x.h.id}" ${v290SelectedWorks.has(x.h.id)?'checked':''}></td><td><button class="work-title-link hp-view" data-id="${x.h.id}" type="button">${esc(x.h.title||'')}</button></td>
@@ -5966,18 +5967,31 @@ async function v340HydratePosters(){
 }
 function v340RenderCards(rows){
   const host=$('#v340WorkCards');if(!host)return;
-  host.innerHTML=rows.length?rows.map(x=>{const w=x.h,cast=getWorkActors(w).map(a=>a.name).join(' × '),media=v330WorkMedia(w).filter(m=>m.enabled).length;return `<article class="v340-card-wrap"><input class="v340-card-select" type="checkbox" data-id="${esc(w.id)}" ${v290SelectedWorks.has(w.id)?'checked':''}><div class="v340-work-card"><div class="v340-poster v340-card-open" data-id="${esc(w.id)}"><span>🎬</span>${w.poster_image_id?`<img data-image-id="${esc(w.poster_image_id)}" alt="${esc(w.title||'作品封面')}" hidden>`:''}</div><div class="v340-card-body"><div class="v340-card-title v340-card-open" data-id="${esc(w.id)}">${esc(w.title||'未命名作品')}</div><div class="v340-card-meta">${esc(cast||'尚未設定主演')}<br>${esc(w.episode||w.episodes||'—')} 集 · ${w.updated_at?new Date(w.updated_at).toLocaleDateString():'—'}</div><div class="v340-card-badges">${w.work_format?`<span class="v210-format-badge">${esc(w.work_format)}</span>`:''}${w.rating?`<span class="v300-badge">${esc(w.rating)}</span>`:''}${media?`<span class="v300-badge">▶ ${media}</span>`:''}</div><div class="v340-card-actions">${media?`<button class="primary v340-card-play" data-id="${esc(w.id)}">▶ 播放</button>`:`<button class="ghost v340-card-media" data-id="${esc(w.id)}">＋ 影音</button>`}<button class="ghost v340-card-edit" data-id="${esc(w.id)}">編輯</button></div></div></div></article>`}).join(''):'<div class="v331-empty" style="grid-column:1/-1">沒有符合條件的作品。</div>';
+  host.innerHTML=rows.length?rows.map(x=>{
+    const w=x.h,cast=getWorkActors(w).map(a=>a.name).join(' × '),media=v330WorkMedia(w).filter(m=>m.enabled).length,rel=workRelationCounts(w);
+    const relBadges=rel.total?`<div class="v340-card-relations">
+      ${rel.source?`<button type="button" class="history-relation-badge v340-card-rel" data-id="${esc(w.id)}" title="同原作族群共 ${rel.source} 部（含本作）">📚${rel.source}</button>`:''}
+      ${rel.script?`<button type="button" class="history-relation-badge v340-card-rel" data-id="${esc(w.id)}" title="同劇本／翻拍族群共 ${rel.script} 部（含本作）">🎬${rel.script}</button>`:''}
+      ${rel.similar?`<button type="button" class="history-relation-badge v340-card-rel" data-id="${esc(w.id)}" title="劇情相似族群共 ${rel.similar} 部（含本作）">🧬${rel.similar}</button>`:''}
+    </div>`:'';
+    return `<article class="v340-card-wrap"><input class="v340-card-select" type="checkbox" data-id="${esc(w.id)}" ${v290SelectedWorks.has(w.id)?'checked':''}><div class="v340-work-card"><div class="v340-poster v340-card-open" data-id="${esc(w.id)}"><span>🎬</span>${w.poster_image_id?`<img data-image-id="${esc(w.poster_image_id)}" alt="${esc(w.title||'作品封面')}" hidden>`:''}</div><div class="v340-card-body"><div class="v340-card-title v340-card-open" data-id="${esc(w.id)}">${esc(w.title||'未命名作品')}</div><div class="v340-card-meta">${esc(cast||'尚未設定主演')}<br>${esc(w.episode||w.episodes||'—')} 集 · ${w.updated_at?new Date(w.updated_at).toLocaleDateString():'—'}</div><div class="v340-card-badges">${w.work_format?`<span class="v210-format-badge">${esc(w.work_format)}</span>`:''}${w.rating?`<span class="v300-badge">${esc(w.rating)}</span>`:''}${media?`<span class="v300-badge">▶ ${media}</span>`:''}${relBadges}</div><div class="v340-card-actions">${media?`<button class="primary v340-card-play" data-id="${esc(w.id)}">▶ 播放</button>`:`<button class="ghost v340-card-media" data-id="${esc(w.id)}">＋ 影音</button>`}<button class="ghost v340-card-load" data-i="${x.i}">載入工作台</button><span class="more-wrap"><button class="ghost hp-more" type="button" aria-label="更多作品操作">⋯</button><span class="more-menu"><button class="v340-card-edit" data-id="${esc(w.id)}" type="button">編輯作品</button><button class="v340-card-copy" data-i="${x.i}" type="button">複製命名</button><button class="v340-card-del danger-text" data-i="${x.i}" type="button">刪除作品</button></span></span></div></div></div></article>`;
+  }).join(''):'<div class="v331-empty" style="grid-column:1/-1">沒有符合條件的作品。</div>';
   $$('.v340-card-open').forEach(b=>b.addEventListener('click',()=>openWorkView(b.dataset.id)));
   $$('.v340-card-play').forEach(b=>b.addEventListener('click',()=>v330PlayWork(b.dataset.id,0)));
   $$('.v340-card-media').forEach(b=>b.addEventListener('click',()=>{openWorkView(b.dataset.id);setTimeout(()=>switchWorkViewTab('media'),0)}));
   $$('.v340-card-edit').forEach(b=>b.addEventListener('click',()=>openWorkDetail(b.dataset.id)));
+  $$('.v340-card-rel').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();v273ShowRelationPreview(b.dataset.id,b)}));
+  $$('.v340-card-load').forEach(b=>b.addEventListener('click',()=>{loadHistory(Number(b.dataset.i));switchPage('home')}));
+  $$('.v340-card-copy').forEach(b=>b.addEventListener('click',async()=>{const h=historyData[Number(b.dataset.i)];if(h){await copyText(h.output||'');showToast('歷史結果已複製')}}));
+  $$('.v340-card-del').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.i);if(confirm('確定刪除這筆異動紀錄？')){historyData.splice(i,1);saveData();renderRecent();renderHistoryPage();renderSystemPage()}}));
+  $$('#v340WorkCards .hp-more').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const wrap=b.closest('.more-wrap');$$('.more-wrap.open').forEach(x=>{if(x!==wrap)x.classList.remove('open')});wrap.classList.toggle('open')}));
   $$('.v340-card-select').forEach(c=>c.addEventListener('change',()=>{c.checked?v290SelectedWorks.add(c.dataset.id):v290SelectedWorks.delete(c.dataset.id);v290UpdateBatchBar()}));
   v340HydratePosters();
 }
 renderHistoryPage=function(){
   v340RenderHistoryTable();
   const q=($('#historyPageSearch')?.value||'').trim().toLowerCase();
-  const rows=v2634FilteredWorks(historyData).map((h,i)=>({h,i})).filter(x=>JSON.stringify(x.h).toLowerCase().includes(q));
+  const rows=v2634FilteredWorks(historyData).map(h=>({h,i:historyData.indexOf(h)})).filter(x=>JSON.stringify(x.h).toLowerCase().includes(q));
   const cards=settings.work_view!=='table',table=$('#historyPageTable'),grid=$('#v340WorkCards');
   if(table)table.hidden=cards;if(grid)grid.hidden=!cards;
   $('#v340CardsView')?.classList.toggle('active',cards);$('#v340TableView')?.classList.toggle('active',!cards);
