@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>短劇典藏庫 V3.4.0 Beta</title>
+<title>短劇典藏庫 V3.4.1 Beta</title>
 <style>
 :root{
   --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#758097;--line:#e2e7f0;
@@ -974,6 +974,9 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 </style>
 
 <style id="v321-youtube-environment">
+.v341-actor-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 16px}.v341-actor-stat{padding:13px 15px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,var(--card),var(--soft))}.v341-actor-stat strong{display:block;font-size:22px}.v341-actor-stat span{font-size:11px;color:var(--muted)}
+.v341-actor-table{overflow-x:auto;border:1px solid var(--line);border-radius:14px}.v341-actor-table .table{margin:0}.v341-actor-row{cursor:pointer;transition:background .15s}.v341-actor-row:hover{background:var(--soft)}.v341-actor-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}.v341-person{display:flex;align-items:center;gap:11px;min-width:180px}.v341-avatar{width:38px;height:38px;flex:0 0 38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;background:linear-gradient(145deg,#5b7cfa,#7357dc);box-shadow:0 5px 12px rgba(74,91,196,.18)}.v341-name{border:0;background:none;padding:0;color:var(--text);font:inherit;font-weight:800;cursor:pointer;text-align:left}.v341-name:hover{color:var(--accent);text-decoration:underline}.v341-sub{font-size:11px;color:var(--muted);margin-top:3px}.v341-pill{display:inline-flex;padding:4px 8px;border-radius:999px;background:var(--soft);border:1px solid var(--line);font-size:11px;white-space:nowrap}.v341-actions{display:flex;gap:6px;justify-content:flex-end;white-space:nowrap}.v341-actions button{padding:7px 9px}.v341-edit-row{background:color-mix(in srgb,var(--accent) 5%,var(--card))}.v341-edit-row input,.v341-edit-row select{min-width:105px}.v341-empty{padding:34px 18px;text-align:center;color:var(--muted)}
+@media(max-width:760px){.v341-actor-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.v341-hide-mobile{display:none}.v341-actions{flex-direction:column}.v341-actor-stat strong{font-size:19px}}
 .v321-youtube-fallback{position:absolute;inset:0;z-index:8;display:none;align-items:center;justify-content:center;background:#090b10;color:#fff;padding:24px}
 .v321-youtube-card{max-width:520px;text-align:center}
 .v321-youtube-card .meta{color:#cbd5e1;margin-top:8px;line-height:1.65}
@@ -984,7 +987,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <div class="app">
 <header>
   <div class="brand" id="brandHomeBtn" role="button" tabindex="0" title="返回命名工作台"><div class="logo">🎬</div><div><h1>短劇典藏庫</h1><div class="sub">Willy Soft · Short Drama Library</div></div></div>
-  <div class="badge">V3.4.0 · Beta</div>
+  <div class="badge">V3.4.1 · Beta</div>
 </header>
 
 
@@ -1118,7 +1121,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <section id="page-player" class="workspace-page">
 <div class="v300-player-shell">
   <div class="v300-player-hero">
-    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.4.0 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
+    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.4.1 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
     <div class="v330-player-actions"><button id="v330ReturnWork" class="ghost" type="button" style="display:none">← 返回作品</button><button id="v300ClearQueue" class="ghost" type="button">清空播放清單</button></div>
   </div>
   <div class="v300-workspace">
@@ -1188,7 +1191,13 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <section id="page-actors" class="workspace-page">
   <section class="card">
     <div class="dialog-head"><h2>演員資料庫</h2><span id="actorPageCount" class="meta"></span></div>
-<div class="meta" style="margin-bottom:12px">點「作品／搭檔」可查看這位演員演過哪些作品，以及和誰合作過。</div>
+    <div class="meta">點演員姓名或整列，即可直接查看人物資料、參演作品與合作演員。</div>
+    <div class="v341-actor-stats">
+      <div class="v341-actor-stat"><strong id="actorStatTotal">0</strong><span>演員總數</span></div>
+      <div class="v341-actor-stat"><strong id="actorStatFav">0</strong><span>最愛演員</span></div>
+      <div class="v341-actor-stat"><strong id="actorStatActive">0</strong><span>已有作品</span></div>
+      <div class="v341-actor-stat"><strong id="actorStatUnused">0</strong><span>尚未使用</span></div>
+    </div>
     <div class="toolbar" style="margin-bottom:10px">
       <input id="actorPageSearch" class="textbox" placeholder="搜尋演員姓名…" style="flex:1;min-width:180px">
       <select id="actorPageGender" class="textbox" style="width:130px">
@@ -1222,7 +1231,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
       </select>
       <button id="actorPageAdd" type="button" class="primary">新增</button>
     </div>
-    <div class="meta" style="margin-bottom:10px">提示：直接修改演員姓名後按 Enter 或點到其他地方即可儲存；Esc 可取消。改名會同步套用到工作台與作品資料庫。</div>
+    <div class="meta" style="margin-bottom:10px">瀏覽與編輯已分開：按「編輯」才會修改資料；改名仍會同步套用到工作台與作品資料庫。</div>
     <div id="actorPageTable"></div>
   </section>
 </section>
@@ -2696,7 +2705,7 @@ async function exportBackup(){
   const auditLog=(typeof v266AuditRead==='function')?v266AuditRead():[];
   showToast(settings.backup_images===false?'正在整理文字備份…':'正在整理作品與圖片備份…');
   const images=settings.backup_images===false?[]:await v340BackupImages().catch(err=>{console.warn(err);showToast('部分圖片無法讀取，將繼續匯出');return[]});
-  const data={app:'短劇典藏庫',format:8,version:'3.4.0 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,images,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
+  const data={app:'短劇典藏庫',format:8,version:'3.4.1 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,images,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`短劇典藏庫_備份_${new Date().toISOString().slice(0,10)}.wsbackup`;a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),500);showToast(images.length?`完整備份已匯出，包含 ${images.length} 張圖片`:'備份已匯出');
@@ -5299,6 +5308,7 @@ function renderHistoryPage(){
 }
 
 let actorPageState={q:'',gender:'all',identity:'all',sort:'last_used',direction:-1,favTop:true};
+let editingActorRowId=null;
 
 function renameActor(oldName,newName){
   oldName=String(oldName||'').trim();
@@ -5457,56 +5467,48 @@ function renderActorPage(){
 
   $('#actorPageDirection').textContent=actorPageState.direction===1?'升冪 ↑':'降冪 ↓';
   $('#actorPageCount').textContent=`顯示 ${rows.length} / ${actors.length} 位演員`;
-  $('#actorPageTable').innerHTML=`<table class="table"><thead><tr><th>最愛</th><th>演員姓名（可編輯）</th><th>性別</th><th>身分</th><th>作品數</th><th>使用次數</th><th>最近使用</th><th>關聯</th><th>操作</th></tr></thead><tbody>${rows.map(a=>`
-    <tr><td><button class="ghost ap-fav" data-name="${encodeURIComponent(a.name)}">${a.favorite?'★':'☆'}</button></td>
-    <td><input class="ap-name" data-old-name="${encodeURIComponent(a.name)}" value="${esc(a.name)}" style="width:150px"></td><td><select class="ap-gender" data-name="${encodeURIComponent(a.name)}">
-    <option value="male"${a.gender==='male'?' selected':''}>男</option><option value="female"${a.gender==='female'?' selected':''}>女</option><option value="unknown"${a.gender==='unknown'?' selected':''}>未分類</option></select></td>
-    <td><select class="ap-identity" data-name="${encodeURIComponent(a.name)}">
-      <option value="actor"${normalizeActorIdentity(a)==='actor'?' selected':''}>演員</option>
-      <option value="voice_actor"${normalizeActorIdentity(a)==='voice_actor'?' selected':''}>配音員</option>
-      <option value="actor_voice"${normalizeActorIdentity(a)==='actor_voice'?' selected':''}>演員兼配音員</option>
-      <option value="other"${normalizeActorIdentity(a)==='other'?' selected':''}>其他</option>
-    </select></td>
-    <td>${getActorWorks(a.name).length}</td>
-    <td>${a.use_count||0}</td><td>${a.last_used?new Date(a.last_used).toLocaleDateString():'—'}</td>
-    <td><button class="ghost ap-rel" data-name="${encodeURIComponent(a.name)}">作品／搭檔</button></td>
-    <td><button class="danger ap-del" data-name="${encodeURIComponent(a.name)}">刪除</button></td></tr>`).join('')}</tbody></table>`;
-
-
-  $$('.ap-name').forEach(inp=>{
-    let committed=false;
-    const commit=()=>{
-      if(committed)return;
-      committed=true;
-      const oldName=decodeURIComponent(inp.dataset.oldName);
-      const newName=inp.value.trim();
-      if(!renameActor(oldName,newName)){
-        inp.value=oldName;
-        committed=false;
-      }
-    };
-    inp.addEventListener('change',commit);
-    inp.addEventListener('keydown',e=>{
-      if(e.key==='Enter'){
-        e.preventDefault();
-        inp.blur();
-      }else if(e.key==='Escape'){
-        e.preventDefault();
-        inp.value=decodeURIComponent(inp.dataset.oldName);
-        committed=true;
-        inp.blur();
-      }
-    });
-  });
+  const workCounts=new Map(actors.map(a=>[a.id,getActorWorks(a.name).length]));
+  $('#actorStatTotal').textContent=actors.length;
+  $('#actorStatFav').textContent=actors.filter(a=>a.favorite).length;
+  $('#actorStatActive').textContent=actors.filter(a=>(workCounts.get(a.id)||0)>0).length;
+  $('#actorStatUnused').textContent=actors.filter(a=>(workCounts.get(a.id)||0)===0).length;
+  const genderLabel=v=>v==='male'?'男':v==='female'?'女':'未分類';
+  const initials=name=>[...String(name||'演')].slice(0,2).join('');
+  const rowHtml=a=>{
+    const encoded=encodeURIComponent(a.name),works=workCounts.get(a.id)||0,isEdit=editingActorRowId===a.id;
+    if(isEdit)return `<tr class="v341-edit-row" data-actor-id="${a.id}">
+      <td><button class="ghost ap-fav" data-name="${encoded}" title="切換最愛">${a.favorite?'★':'☆'}</button></td>
+      <td><input class="textbox ap-edit-name" value="${esc(a.name)}" aria-label="演員姓名"></td>
+      <td><select class="textbox ap-edit-gender"><option value="male"${a.gender==='male'?' selected':''}>男</option><option value="female"${a.gender==='female'?' selected':''}>女</option><option value="unknown"${a.gender==='unknown'?' selected':''}>未分類</option></select></td>
+      <td><select class="textbox ap-edit-identity"><option value="actor"${normalizeActorIdentity(a)==='actor'?' selected':''}>演員</option><option value="voice_actor"${normalizeActorIdentity(a)==='voice_actor'?' selected':''}>配音員</option><option value="actor_voice"${normalizeActorIdentity(a)==='actor_voice'?' selected':''}>演員兼配音員</option><option value="other"${normalizeActorIdentity(a)==='other'?' selected':''}>其他</option></select></td>
+      <td>${works}</td><td class="v341-hide-mobile">${a.use_count||0}</td><td class="v341-hide-mobile">${a.last_used?new Date(a.last_used).toLocaleDateString():'—'}</td>
+      <td><div class="v341-actions"><button class="primary ap-save" data-id="${a.id}">儲存</button><button class="ghost ap-cancel">取消</button></div></td></tr>`;
+    return `<tr class="v341-actor-row" data-id="${a.id}" tabindex="0" aria-label="查看 ${esc(a.name)} 的詳細資料">
+      <td><button class="ghost ap-fav" data-name="${encoded}" title="切換最愛">${a.favorite?'★':'☆'}</button></td>
+      <td><div class="v341-person"><div class="v341-avatar">${esc(initials(a.name))}</div><div><button class="v341-name ap-open" data-id="${a.id}">${esc(a.name)}</button><div class="v341-sub">${works?`${works} 部參演作品`:'尚未加入作品'}</div></div></div></td>
+      <td><span class="v341-pill">${genderLabel(a.gender)}</span></td><td><span class="v341-pill">${actorIdentityLabel(normalizeActorIdentity(a))}</span></td>
+      <td>${works}</td><td class="v341-hide-mobile">${a.use_count||0}</td><td class="v341-hide-mobile">${a.last_used?new Date(a.last_used).toLocaleDateString():'—'}</td>
+      <td><div class="v341-actions"><button class="ghost ap-open" data-id="${a.id}">查看詳情</button><button class="ghost ap-edit" data-id="${a.id}">編輯</button><button class="danger ap-del" data-name="${encoded}">刪除</button></div></td></tr>`;
+  };
+  $('#actorPageTable').innerHTML=rows.length?`<div class="v341-actor-table"><table class="table"><thead><tr><th>最愛</th><th>演員</th><th>性別</th><th>身分</th><th>作品</th><th class="v341-hide-mobile">使用</th><th class="v341-hide-mobile">最近使用</th><th style="text-align:right">操作</th></tr></thead><tbody>${rows.map(rowHtml).join('')}</tbody></table></div>`:'<div class="v341-empty">找不到符合條件的演員</div>';
 
   $$('.ap-fav').forEach(b=>b.addEventListener('click',()=>{const n=decodeURIComponent(b.dataset.name);const a=actors.find(x=>x.name===n);if(a)a.favorite=!a.favorite;saveData();renderActorPage();renderQuickActors();renderSystemPage()}));
-  $$('.ap-gender').forEach(s=>s.addEventListener('change',()=>{const n=decodeURIComponent(s.dataset.name);const a=actors.find(x=>x.name===n);if(a)a.gender=s.value;saveData();renderActorPage();renderQuickActors()}));
-  $$('.ap-identity').forEach(s=>s.addEventListener('change',()=>{
-    const n=decodeURIComponent(s.dataset.name),a=actors.find(x=>x.name===n);
-    if(a)a.identity=s.value;
-    saveData();renderActorPage();
+  $$('.ap-open').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openActorDetail(b.dataset.id)}));
+  $$('.v341-actor-row').forEach(row=>{
+    const open=()=>openActorDetail(row.dataset.id);
+    row.addEventListener('click',e=>{if(!e.target.closest('button,input,select'))open()});
+    row.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('button,input,select')){e.preventDefault();open()}});
+  });
+  $$('.ap-edit').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();editingActorRowId=b.dataset.id;renderActorPage();setTimeout(()=>$('.ap-edit-name')?.focus(),0)}));
+  $$('.ap-cancel').forEach(b=>b.addEventListener('click',()=>{editingActorRowId=null;renderActorPage()}));
+  $$('.ap-save').forEach(b=>b.addEventListener('click',()=>{
+    const a=actorById(b.dataset.id);if(!a)return;
+    const row=b.closest('tr'),oldName=a.name,newName=row.querySelector('.ap-edit-name').value.trim();
+    if(oldName!==newName&&!renameActor(oldName,newName))return;
+    const fresh=actorById(b.dataset.id)||findActorByEquivalentName(newName);if(!fresh)return;
+    fresh.gender=row.querySelector('.ap-edit-gender').value;fresh.identity=row.querySelector('.ap-edit-identity').value;
+    editingActorRowId=null;saveData();renderActorPage();renderQuickActors();renderSystemPage();showToast('演員資料已儲存');
   }));
-  $$('.ap-rel').forEach(b=>b.addEventListener('click',()=>{const a=findActorByEquivalentName(decodeURIComponent(b.dataset.name));if(a)openActorDetail(a.id)}));
   $$('.ap-del').forEach(b=>b.addEventListener('click',()=>{const n=decodeURIComponent(b.dataset.name);if(confirm(`確定刪除「${n}」？`)){actors=actors.filter(a=>a.name!==n);selectedMale=selectedMale.filter(x=>x!==n);selectedFemale=selectedFemale.filter(x=>x!==n);saveData();update();renderActorPage();renderSystemPage()}}));
 }
 
