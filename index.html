@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>短劇典藏庫 V3.4.2 Beta</title>
+<title>短劇典藏庫 V3.4.3 Beta</title>
 <style>
 :root{
   --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#758097;--line:#e2e7f0;
@@ -67,14 +67,15 @@ body.dark .rating button.active{background:#2e2754;color:#d8d2ff}
 
 .import-drop{border:2px dashed var(--line);border-radius:16px;padding:24px;text-align:center;background:var(--card)}
 .import-drop h3{margin:0 0 7px}.import-drop p{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.6}
-.import-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.import-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:10px;margin:14px 0}
 .import-summary div{background:var(--soft);border-radius:12px;padding:12px;text-align:center}
 .import-summary strong{display:block;font-size:20px}.import-summary span{font-size:11px;color:var(--muted)}
-.status-ok{color:#17855b;font-weight:700}.status-warn{color:#b57a00;font-weight:700}.status-dup{color:#9a5a00;font-weight:700}
+.status-ok{color:#17855b;font-weight:700}.status-warn{color:#b57a00;font-weight:700}.status-dup{color:#9a5a00;font-weight:700}.status-imported{color:#64748b;font-weight:700}.status-changed{color:#7c3aed;font-weight:700}
 .import-table-wrap{overflow:auto;max-height:58vh;border:1px solid var(--line);border-radius:14px}
 .import-table{min-width:1050px}
 .import-table input,.import-table select{padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text)}
 .import-table input{width:100%}
+.import-actor-classifier{margin:12px 0;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}.import-actor-classifier summary{cursor:pointer;font-weight:800}.import-actor-classifier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:12px;max-height:300px;overflow:auto}.import-actor-classifier-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}.import-actor-classifier-row span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.import-actor-classifier-row select{width:92px;padding:7px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text)}
 .import-actor{display:flex;gap:5px;align-items:center;margin:3px 0}
 .import-actor input{width:115px}
 .import-actor select{width:82px}
@@ -988,7 +989,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <div class="app">
 <header>
   <div class="brand" id="brandHomeBtn" role="button" tabindex="0" title="返回命名工作台"><div class="logo">🎬</div><div><h1>短劇典藏庫</h1><div class="sub">Willy Soft · Short Drama Library</div></div></div>
-  <div class="badge">V3.4.2 · Beta</div>
+  <div class="badge">V3.4.3 · Beta</div>
 </header>
 
 
@@ -1122,7 +1123,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 <section id="page-player" class="workspace-page">
 <div class="v300-player-shell">
   <div class="v300-player-hero">
-    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.4.2 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
+    <div><h2 style="margin:0 0 6px">▶ 播放工作區 <span class="badge">V3.4.3 Beta</span></h2><div class="meta">多來源影音工作區：本機檔案、直接影片網址、HLS .m3u8 與 YouTube。媒體本體不寫入典藏庫。</div></div>
     <div class="v330-player-actions"><button id="v330ReturnWork" class="ghost" type="button" style="display:none">← 返回作品</button><button id="v300ClearQueue" class="ghost" type="button">清空播放清單</button></div>
   </div>
   <div class="v300-workspace">
@@ -1724,7 +1725,7 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
     <div class="import-drop">
       <h3>📂 選擇短劇資料夾</h3>
       <p>只讀取檔名與資料夾名稱，不會上傳影片內容。支援資料夾名稱、MKV、MP4 等既有命名資料。<br>
-      系統會先解析並預覽，不會直接寫入資料庫。</p>
+      系統會先解析並預覽，不會直接建立新作品；已匯入項目只會補上掃描識別資料，供下次增量比較。</p>
       <div class="toolbar" style="justify-content:center;margin-bottom:12px">
         <label class="label" style="margin:0">掃描模式</label>
         <select id="scanMode" class="textbox" style="width:210px">
@@ -1742,17 +1743,22 @@ body.dark .v300-top-player.active{background:#172b4d!important;border-color:#4f8
 
     <div id="importSummary" class="import-summary" style="display:none">
       <div><strong id="sumTotal">0</strong><span>辨識項目</span></div>
+      <div><strong id="sumNew">0</strong><span>新發現</span></div>
+      <div><strong id="sumImported">0</strong><span>已匯入</span></div>
       <div><strong id="sumReady">0</strong><span>可直接匯入</span></div>
       <div><strong id="sumReview">0</strong><span>待確認</span></div>
+      <div><strong id="sumChanged">0</strong><span>內容變更</span></div>
       <div><strong id="sumDuplicate">0</strong><span>可能重複</span></div>
     </div>
 
     <div id="importActions" class="toolbar" style="display:none;margin-bottom:12px">
       <button id="selectReadyBtn" type="button" class="ghost">勾選可匯入項目</button>
-      <button id="selectAllImportBtn" type="button" class="ghost">全選</button>
+      <button id="selectAllImportBtn" type="button" class="ghost">全選未匯入</button>
       <button id="selectNoneImportBtn" type="button" class="ghost">取消全選</button>
+      <label style="margin-left:auto"><input id="showImportedRows" type="checkbox"> 顯示已匯入項目</label>
       <button id="commitImportBtn" type="button" class="primary">✓ 將勾選項目建立至資料庫</button>
     </div>
+    <div id="importActorClassifier"></div>
     <div id="importPreview"></div>
   </section>
 </section>
@@ -2211,6 +2217,7 @@ let conv='none';
 let settings={theme:'light',favorite_first:true,default_mode:'full',default_conv:'none',auto_history:true,quick_actors:true,restore_draft:true,reset_after_copy:false,active_template:'default',work_view:'cards',backup_images:true};
 let templates=[];
 let importRows=[];
+let showImportedRows=false;
 let storyGroups=[];
 let editingStoryGroupId=null;
 let ccS2T=null, ccT2S=null;
@@ -2706,7 +2713,7 @@ async function exportBackup(){
   const auditLog=(typeof v266AuditRead==='function')?v266AuditRead():[];
   showToast(settings.backup_images===false?'正在整理文字備份…':'正在整理作品與圖片備份…');
   const images=settings.backup_images===false?[]:await v340BackupImages().catch(err=>{console.warn(err);showToast('部分圖片無法讀取，將繼續匯出');return[]});
-  const data={app:'短劇典藏庫',format:8,version:'3.4.2 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,images,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
+  const data={app:'短劇典藏庫',format:8,version:'3.4.3 Beta',created_at:new Date().toISOString(),actors,history:historyData,story_groups:storyGroups,templates,audit_log:auditLog,images,settings:{...settings,rating_mode:'multi',actor_gender_split:true}};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`短劇典藏庫_備份_${new Date().toISOString().slice(0,10)}.wsbackup`;a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),500);showToast(images.length?`完整備份已匯出，包含 ${images.length} 張圖片`:'備份已匯出');
@@ -2771,7 +2778,21 @@ function splitActorNames(text){
   if(!s)return [];
   return s.split(/\s*(?:&|＆|×|x|X|✕|\+|、|，|,)\s*/).map(x=>x.trim()).filter(Boolean);
 }
-function parseExistingName(raw,path,type){
+function normalizeScanPath(path){return String(path||'').replace(/\\/g,'/').replace(/\/+$/,'').trim().toLowerCase()}
+function scanFingerprint(items){
+  let h=2166136261;
+  String(items||'').split('').forEach(ch=>{h^=ch.charCodeAt(0);h=Math.imul(h,16777619)});
+  return (h>>>0).toString(16).padStart(8,'0');
+}
+function scanMetaForFiles(files){
+  const list=[...files].map(f=>`${normalizeScanPath(f.webkitRelativePath||f.name)}|${f.size||0}|${f.lastModified||0}`).sort();
+  return {file_count:list.length,fingerprint:scanFingerprint(list.join('\n'))};
+}
+function findImportedSource(path){
+  const key=normalizeScanPath(path);if(!key)return null;
+  return historyData.find(h=>h.imported&&normalizeScanPath(h.source_path)===key)||null;
+}
+function parseExistingName(raw,path,type,scanMeta={}){
   const original=stripExtension(raw);
   let work=original;
   let title='', actorPart='', prefix='', episode='';
@@ -2819,13 +2840,17 @@ function parseExistingName(raw,path,type){
     const oldActors=(Array.isArray(h.actors)?h.actors:[]).map(actorKey).filter(Boolean).sort().join('|');
     return sameTitle && normalizedActors && oldActors===normalizedActors;
   });
+  const previous=findImportedSource(path);
+  const changed=!!(previous&&previous.source_fingerprint&&scanMeta.fingerprint&&previous.source_fingerprint!==scanMeta.fingerprint);
+  const imported=!!previous&&!changed;
   const needsReview=!title || parsedActors.some(a=>a.gender==='unknown');
   return {
     id:'imp_'+Math.random().toString(36).slice(2),
-    selected:!duplicate,
+    selected:!duplicate&&!imported&&!changed,
     source:original,path,type,prefix,episode,title,
     actors:parsedActors,ratings:rating.length?rating:['@'],
-    duplicate,needsReview
+    duplicate,needsReview,imported,changed,
+    source_fingerprint:scanMeta.fingerprint||'',source_file_count:scanMeta.file_count||0
   };
 }
 function looksLikeEpisodeFile(name){
@@ -2860,12 +2885,12 @@ function scanFolderFiles(files){
   });
 
   const rows=[];
-  rootVideos.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本')));
+  rootVideos.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本',scanMetaForFiles([f]))));
 
   folders.forEach(info=>{
     const vids=info.videos;
-    if(mode==='folder'){rows.push(parseExistingName(info.name,info.path,'資料夾'));return}
-    if(mode==='video'){vids.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本')));return}
+    if(mode==='folder'){rows.push(parseExistingName(info.name,info.path,'資料夾',scanMetaForFiles(vids)));return}
+    if(mode==='video'){vids.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本',scanMetaForFiles([f]))));return}
 
     const episodeCount=vids.filter(f=>looksLikeEpisodeFile(f.name)).length;
     const named=vids.filter(f=>looksLikeNamedDramaFile(f.name));
@@ -2873,13 +2898,13 @@ function scanFolderFiles(files){
     const namedRatio=vids.length?named.length/vids.length:0;
 
     if(vids.length>1&&episodeRatio>=0.5){
-      rows.push(parseExistingName(info.name,info.path,'資料夾'));
+      rows.push(parseExistingName(info.name,info.path,'資料夾',scanMetaForFiles(vids)));
     }else if(named.length>=2&&namedRatio>=0.5){
-      named.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本')));
+      named.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本',scanMetaForFiles([f]))));
     }else if(named.length>=2){
-      named.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本')));
+      named.forEach(f=>rows.push(parseExistingName(f.name,f.webkitRelativePath,'影片版本',scanMetaForFiles([f]))));
     }else{
-      rows.push(parseExistingName(info.name,info.path,'資料夾'));
+      rows.push(parseExistingName(info.name,info.path,'資料夾',scanMetaForFiles(vids)));
     }
   });
 
@@ -2890,6 +2915,18 @@ function scanFolderFiles(files){
     seen.add(key);return true;
   }).map(normalizeImportRowTraditional);
 
+  let registryUpdated=false;
+  importRows.filter(r=>r.imported&&r.source_fingerprint).forEach(r=>{
+    const previous=findImportedSource(r.path);
+    if(previous&&!previous.source_fingerprint){
+      previous.source_fingerprint=r.source_fingerprint;
+      previous.source_file_count=r.source_file_count||0;
+      previous.source_scan_type=r.type;
+      registryUpdated=true;
+    }
+  });
+  if(registryUpdated)saveData();
+
   renderImportPreview();
   renderStoriesPage();
   renderRelationDashboard();
@@ -2897,41 +2934,73 @@ function scanFolderFiles(files){
 
 function refreshImportSummary(){
   if(!importRows.length)return;
-  refreshImportSummary();
+  $('#sumTotal').textContent=importRows.length;
+  $('#sumNew').textContent=importRows.filter(r=>!r.imported&&!r.changed&&!r.duplicate).length;
+  $('#sumImported').textContent=importRows.filter(r=>r.imported).length;
+  $('#sumReady').textContent=importRows.filter(r=>!r.needsReview&&!r.duplicate&&!r.imported&&!r.changed).length;
+  $('#sumReview').textContent=importRows.filter(r=>r.needsReview&&!r.imported).length;
+  $('#sumChanged').textContent=importRows.filter(r=>r.changed).length;
+  $('#sumDuplicate').textContent=importRows.filter(r=>r.duplicate&&!r.imported).length;
+  renderImportActorClassifier();
 }
 function updateImportRowStatus(index){
   const r=importRows[index];
   if(!r)return;
   r.needsReview=!r.title || r.actors.some(a=>a.gender==='unknown');
   const cell=document.querySelector(`.imp-status[data-i="${index}"]`);
-  if(cell){
-    cell.innerHTML=r.duplicate
-      ? '<span class="status-dup">可能重複</span>'
-      : r.needsReview
-        ? '<span class="status-warn">待確認</span>'
-        : '<span class="status-ok">可匯入</span>';
-  }
+  if(cell)cell.innerHTML=importRowStatus(r);
   refreshImportSummary();
+}
+function importRowStatus(r){
+  if(r.changed)return '<span class="status-changed">內容有變更</span>';
+  if(r.imported)return '<span class="status-imported">已匯入・自動略過</span>';
+  if(r.duplicate)return '<span class="status-dup">可能重複</span>';
+  if(r.needsReview)return '<span class="status-warn">待確認</span>';
+  return '<span class="status-ok">可匯入</span>';
+}
+function renderImportActorClassifier(){
+  const host=$('#importActorClassifier');if(!host)return;
+  const map=new Map();
+  importRows.filter(r=>!r.imported).forEach(r=>r.actors.forEach(a=>{
+    if(a.gender!=='unknown'||!a.name.trim())return;
+    const key=actorKey(a.name),found=map.get(key);
+    if(found)found.count++;else map.set(key,{key,name:a.name,count:1});
+  }));
+  const unknown=[...map.values()].sort((a,b)=>a.name.localeCompare(b.name,'zh-Hant'));
+  if(!unknown.length){host.innerHTML='';return}
+  host.innerHTML=`<details class="import-actor-classifier" open><summary>👥 待分類演員 ${unknown.length} 位｜每人只需設定一次</summary><div class="meta" style="margin-top:7px">設定後會同步套用到這次掃描中所有同名演員，不必逐筆作品選擇。</div><div class="import-actor-classifier-grid">${unknown.map(a=>`<label class="import-actor-classifier-row"><span title="${esc(a.name)}">${esc(a.name)}${a.count>1?` <small>× ${a.count}</small>`:''}</span><select class="import-actor-gender" data-key="${encodeURIComponent(a.key)}"><option value="unknown">待確認</option><option value="male">男</option><option value="female">女</option></select></label>`).join('')}</div></details>`;
+  $$('.import-actor-gender').forEach(sel=>sel.addEventListener('change',()=>{
+    const key=decodeURIComponent(sel.dataset.key),value=sel.value;
+    importRows.forEach(r=>r.actors.forEach(a=>{if(actorKey(a.name)===key)a.gender=value}));
+    renderImportPreview();
+  }));
 }
 function renderImportPreview(){
   const box=$('#importPreview');
   const summary=$('#importSummary'),actions=$('#importActions');
   if(!importRows.length){
     summary.style.display='none';actions.style.display='none';
+    $('#importActorClassifier').innerHTML='';
     box.innerHTML='<div class="meta" style="text-align:center;padding:24px">尚未掃描資料夾</div>';
     return;
   }
   summary.style.display='grid';actions.style.display='flex';
   $('#sumTotal').textContent=importRows.length;
-  $('#sumReady').textContent=importRows.filter(r=>!r.needsReview&&!r.duplicate).length;
-  $('#sumReview').textContent=importRows.filter(r=>r.needsReview).length;
-  $('#sumDuplicate').textContent=importRows.filter(r=>r.duplicate).length;
+  $('#sumNew').textContent=importRows.filter(r=>!r.imported&&!r.changed&&!r.duplicate).length;
+  $('#sumImported').textContent=importRows.filter(r=>r.imported).length;
+  $('#sumReady').textContent=importRows.filter(r=>!r.needsReview&&!r.duplicate&&!r.imported&&!r.changed).length;
+  $('#sumReview').textContent=importRows.filter(r=>r.needsReview&&!r.imported).length;
+  $('#sumChanged').textContent=importRows.filter(r=>r.changed).length;
+  $('#sumDuplicate').textContent=importRows.filter(r=>r.duplicate&&!r.imported).length;
+  $('#showImportedRows').checked=showImportedRows;
+  renderImportActorClassifier();
 
-  box.innerHTML=`<div class="import-table-wrap"><table class="table import-table">
+  const visible=importRows.map((r,i)=>({r,i})).filter(x=>showImportedRows||!x.r.imported);
+  box.innerHTML=visible.length?`<div class="import-table-wrap"><table class="table import-table">
   <thead><tr><th>匯入</th><th>來源</th><th>劇名</th><th>演員／性別</th><th>評價</th><th>集數</th><th>狀態</th></tr></thead>
-  <tbody>${importRows.map((r,i)=>`
+  <tbody>${visible.map(({r,i})=>`
     <tr>
-      <td><input type="checkbox" class="imp-check" data-i="${i}" ${r.selected?'checked':''}></td>
+      <td><input type="checkbox" class="imp-check" data-i="${i}" ${r.selected?'checked':''} ${r.imported?'disabled title="已匯入項目自動略過"':''}></td>
       <td><strong>${r.type}</strong><div class="import-path">${esc(r.path)}</div></td>
       <td><input class="imp-title" data-i="${i}" value="${esc(r.title)}"></td>
       <td>${r.actors.length?r.actors.map((a,j)=>`<div class="import-actor">
@@ -2943,8 +3012,8 @@ function renderImportPreview(){
         </select></div>`).join(''):'<span class="meta">未辨識演員</span>'}</td>
       <td><input class="imp-rating" data-i="${i}" value="${esc(r.ratings.join(''))}" style="width:75px"></td>
       <td>${esc(r.episode||'—')}</td>
-      <td class="imp-status" data-i="${i}">${r.duplicate?'<span class="status-dup">可能重複</span>':r.needsReview?'<span class="status-warn">待確認</span>':'<span class="status-ok">可匯入</span>'}</td>
-    </tr>`).join('')}</tbody></table></div>`;
+      <td class="imp-status" data-i="${i}">${importRowStatus(r)}</td>
+    </tr>`).join('')}</tbody></table></div>`:'<div class="meta" style="text-align:center;padding:28px">本次掃描項目都已匯入。勾選「顯示已匯入項目」可查看。</div>';
 
   $$('.imp-check').forEach(e=>e.addEventListener('change',()=>{importRows[+e.dataset.i].selected=e.checked}));
   $$('.imp-title').forEach(e=>e.addEventListener('input',()=>{
@@ -3004,6 +3073,7 @@ function commitBatchImport(){
       actors:actorNames,male_actors:male,female_actors:female,
       ratings:[...r.ratings],rating,output,
       imported:true,source_type:'批次掃描',source_name:r.source,source_path:r.path,episode:r.episode||'',
+      source_scan_type:r.type,source_fingerprint:r.source_fingerprint||'',source_file_count:r.source_file_count||0,
       version_name:'',aliases:'',work_type:'',original_work:'',platform:'',premiere_date:'',episode_duration:'',notes:'',tags:[]
     });
   });
@@ -5920,9 +5990,10 @@ function boot(){
   $('#scanFolderBtn').addEventListener('click',()=>$('#folderPicker').click());
   $('#folderPicker').addEventListener('change',e=>{scanFolderFiles(e.target.files);e.target.value=''});
   $('#clearScanBtn').addEventListener('click',()=>{importRows=[];renderImportPreview()});
-  $('#selectReadyBtn').addEventListener('click',()=>{importRows.forEach(r=>r.selected=!r.needsReview&&!r.duplicate);renderImportPreview()});
-  $('#selectAllImportBtn').addEventListener('click',()=>{importRows.forEach(r=>r.selected=true);renderImportPreview()});
+  $('#selectReadyBtn').addEventListener('click',()=>{importRows.forEach(r=>r.selected=!r.needsReview&&!r.duplicate&&!r.imported&&!r.changed);renderImportPreview()});
+  $('#selectAllImportBtn').addEventListener('click',()=>{importRows.forEach(r=>r.selected=!r.imported);renderImportPreview()});
   $('#selectNoneImportBtn').addEventListener('click',()=>{importRows.forEach(r=>r.selected=false);renderImportPreview()});
+  $('#showImportedRows').addEventListener('change',e=>{showImportedRows=e.target.checked;renderImportPreview()});
   $('#commitImportBtn').addEventListener('click',commitBatchImport);
 
   renderImportPreview();
