@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>短劇典藏庫 V3.6.0</title>
+<title>短劇典藏庫 V3.6.0 Beta RC44</title>
 <style>
 :root{
   --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#758097;--line:#e2e7f0;
@@ -1196,6 +1196,12 @@ body:not(.actor-detail-active) #actorPartnersTable{
 .actor-smart-guide{margin-top:12px;border:1px solid var(--line);border-radius:13px;background:var(--soft);overflow:hidden}
 .actor-smart-guide-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 11px;border-bottom:1px solid var(--line)}
 .actor-smart-guide pre{margin:0;padding:12px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:280px;overflow:auto;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--card)}
+.rc39-smart-images{margin:12px 0;padding:12px;border:1px dashed var(--line);border-radius:14px;background:var(--soft)}
+.rc39-smart-image-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.rc39-smart-image-head .meta{line-height:1.55}
+.rc39-smart-image-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;margin-top:10px}.rc39-smart-image-card{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.rc39-smart-image-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.rc39-smart-image-card.actor img{aspect-ratio:3/4}.rc39-smart-image-info{padding:8px;font-size:11px}.rc39-smart-image-card .rc39-remove{position:absolute;right:6px;top:6px;width:30px;height:30px;padding:0;border-radius:50%;background:rgba(255,255,255,.94)}
+.rc39-smart-image-card label{display:flex;align-items:center;gap:5px;margin-top:5px;cursor:pointer}.rc39-smart-image-empty{color:var(--muted);font-size:12px;margin-top:8px}
+.rc40-gallery{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--card)}.rc40-gallery-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.rc40-gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:11px;margin-top:12px}.rc40-photo{position:relative;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--soft)}.rc40-photo img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;cursor:zoom-in}.rc40-photo-body{padding:8px}.rc40-photo-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.rc40-photo-actions button{padding:6px 8px;font-size:11px}.rc40-main-mark{display:inline-flex;padding:3px 7px;border-radius:999px;background:#dbeafe;color:#1d4ed8;font-size:11px}.rc40-lightbox{position:fixed;inset:0;z-index:12000;display:none;align-items:center;justify-content:center;background:rgba(8,12,24,.92);padding:60px}.rc40-lightbox.show{display:flex}.rc40-lightbox img{max-width:90vw;max-height:86vh;object-fit:contain}.rc40-lightbox button{position:absolute;background:rgba(255,255,255,.94)}.rc40-lightbox-close{right:22px;top:18px}.rc40-lightbox-prev{left:22px;top:50%}.rc40-lightbox-next{right:22px;top:50%}@media(max-width:620px){.rc40-lightbox{padding:50px 15px}.rc40-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* =========================================================
    V3.6.0 Beta RC28 — Actor Detail unified layout
@@ -1702,12 +1708,24 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
   .rc36-photo-preview{width:86px}
 }
 </style>
+<style id="rc42-tv-details-unified-viewer">
+/* RC42：作品與演員共用同一燈箱規格；詳細影視資料採分頁承載 */
+#v331Lightbox.rc40-lightbox{display:none;position:fixed;inset:0;width:auto;height:auto;margin:0;border:0;border-radius:0;overflow:hidden;background:rgba(8,12,24,.92);padding:60px;z-index:12000;align-items:center;justify-content:center}
+#v331Lightbox.rc40-lightbox.show{display:flex}
+#v331Lightbox.rc40-lightbox>img{display:block;width:auto;height:auto;max-width:90vw;max-height:86vh;object-fit:contain;border:0;border-radius:0;background:transparent}
+#v331Lightbox.rc40-lightbox>button{width:auto;height:auto;min-width:48px;position:absolute;background:rgba(255,255,255,.94);color:var(--ink);border:1px solid var(--line)}
+#v331Lightbox .rc40-lightbox-close{right:22px;top:18px;left:auto}
+#v331Lightbox .rc40-lightbox-prev{left:22px;right:auto;top:50%;transform:translateY(-50%)}
+#v331Lightbox .rc40-lightbox-next{right:22px;left:auto;top:50%;transform:translateY(-50%)}
+.rc42-table-wrap{overflow:auto;margin-top:14px;border:1px solid var(--line);border-radius:14px}.rc42-table{width:100%;border-collapse:collapse;min-width:720px}.rc42-table th,.rc42-table td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.rc42-table th{background:var(--soft);font-size:12px}.rc42-table tr:last-child td{border-bottom:0}.rc42-cast-group+.rc42-cast-group{margin-top:20px}.rc42-cast-group h4{margin:16px 0 10px}
+@media(max-width:620px){#v331Lightbox.rc40-lightbox{padding:52px 14px}#v331Lightbox .rc40-lightbox-prev{left:10px}#v331Lightbox .rc40-lightbox-next{right:10px}}
+</style>
 </head>
 <body>
 <div class="app">
 <header>
   <div class="brand" id="brandHomeBtn" role="button" tabindex="0" title="返回命名工作台"><div class="logo">🎬</div><div><h1>短劇典藏庫</h1><div class="sub">Willy Soft · Short Drama Library</div></div></div>
-  <div class="badge">V3.6.0 · Beta RC38</div>
+  <div class="badge">V3.6.0 · Beta RC44</div>
 </header>
 
 
@@ -1981,6 +1999,9 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
 
     <div class="detail-tabs" id="workViewTabs">
       <button type="button" class="active" data-work-view-tab="basic">📋 作品總覽</button>
+      <button type="button" data-work-view-tab="cast">👥 演員角色</button>
+      <button type="button" data-work-view-tab="production">🎬 製作資料</button>
+      <button type="button" data-work-view-tab="broadcast">📡 播映資訊</button>
       <button type="button" data-work-view-tab="relations">🔗 作品關聯</button>
       <button type="button" data-work-view-tab="media">▶️ 影音播放</button>
       <button type="button" data-work-view-tab="images">🖼️ 封面／劇照</button>
@@ -2047,6 +2068,10 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
       </div>
     </div>
 
+    <div id="workViewPanel-cast" class="work-view-panel"><div class="detail-block"><div class="dialog-head"><div><h3 style="margin:0">👥 演員與角色</h3><div class="meta">依演出定位分組；點擊演員可前往人物檔案，點擊角色可查看完整介紹。</div></div></div><div id="rc42CastGroups"></div></div></div>
+    <div id="workViewPanel-production" class="work-view-panel"><div class="detail-block"><h3>🎬 製作資料</h3><div id="rc42ProductionView" class="detail-view-list"></div></div></div>
+    <div id="workViewPanel-broadcast" class="work-view-panel"><div class="detail-block"><div class="dialog-head"><div><h3 style="margin:0">📡 播映資訊</h3><div class="meta">同一作品可保存不同地區、平台、頻道及播出批次。</div></div></div><div id="rc42BroadcastView"></div></div></div>
+
     <div id="workViewPanel-relations" class="work-view-panel">
       <div class="detail-block">
         <div class="dialog-head" style="margin-bottom:10px">
@@ -2105,7 +2130,7 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
     </div>
   </section>
 </section>
-<div id="v331Lightbox" class="v331-lightbox" role="dialog" aria-modal="true"><button id="v331LightboxClose" class="ghost" type="button">✕ 關閉</button><img id="v331LightboxImage" alt="劇照預覽"></div>
+<div id="v331Lightbox" class="rc40-lightbox" role="dialog" aria-modal="true" aria-hidden="true"><button id="v331LightboxClose" class="ghost rc40-lightbox-close" type="button">✕ 關閉</button><button id="v331LightboxPrev" class="ghost rc40-lightbox-prev" type="button" aria-label="上一張">←</button><img id="v331LightboxImage" alt="封面／劇照預覽"><button id="v331LightboxNext" class="ghost rc40-lightbox-next" type="button" aria-label="下一張">→</button></div>
 
 <section id="page-work-detail" class="workspace-page v271-work-detail" hidden>
   <section class="card">
@@ -2126,6 +2151,7 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
 
     <div class="v280-work-tabs" role="tablist" aria-label="作品資料分類">
       <button class="v280-tab active" data-tab="data" type="button">📝 作品資料</button>
+      <button class="v280-tab" data-tab="tv" type="button">🎬 影視詳情</button>
       <button class="v280-tab" data-tab="images" type="button">🖼️ 封面／劇照</button>
     </div>
     <div class="v272-work-columns v280-tabbed-work">
@@ -2246,6 +2272,26 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
         <label class="label">劇情大綱</label>
         <textarea id="workEditSynopsis" class="textbox note-area" style="min-height:150px" placeholder="輸入作品劇情大綱…"></textarea>
       </div>
+        <div class="detail-block v280-panel" data-panel="tv">
+          <h3>🎬 影視製作與播映資料</h3>
+          <div class="meta" style="margin-bottom:12px">電視劇、網路劇與電影可填寫完整資料；短劇沒有的欄位留白即可，檢視頁不會顯示空項。</div>
+          <div class="rc30-production-grid">
+            <label>製作國家／地區<input id="workEditCountry" class="textbox" placeholder="例如：中國大陸"></label>
+            <label>語言<input id="workEditLanguage" class="textbox" placeholder="例如：漢語普通話"></label>
+            <label>字幕<input id="workEditSubtitles" class="textbox" placeholder="例如：中文"></label>
+            <label>導演<input id="workEditDirectors" class="textbox" placeholder="多人以頓號或逗號分隔"></label>
+            <label>監製<input id="workEditProducers" class="textbox" placeholder="多人以頓號或逗號分隔"></label>
+            <label>拍攝地點<input id="workEditFilmingLocation" class="textbox" placeholder="例如：深圳"></label>
+            <label>開機日期<input id="workEditProductionStart" class="textbox" placeholder="YYYY-MM-DD"></label>
+            <label>殺青日期<input id="workEditProductionEnd" class="textbox" placeholder="YYYY-MM-DD"></label>
+            <label>完結日期<input id="workEditFinaleDate" class="textbox" placeholder="YYYY-MM-DD"></label>
+            <label>首播國家／地區<input id="workEditBroadcastCountry" class="textbox" placeholder="例如：中國大陸"></label>
+          </div>
+          <div style="height:14px"></div>
+          <label class="label">播映紀錄</label>
+          <textarea id="workEditBroadcastRecords" class="textbox note-area" style="min-height:150px" placeholder="每行一筆：地區｜平台／頻道｜開始日期｜結束日期｜播出方式&#10;中國大陸｜騰訊視頻｜2023-06-02｜2023-06-20｜網路首播"></textarea>
+          <div class="meta" style="margin-top:7px">使用全形或半形直線分隔；儲存後會轉為結構化播映紀錄。</div>
+        </div>
         <div class="detail-block v280-panel" data-panel="notes">
         <h3>備註</h3>
         <textarea id="workEditNotes" class="textbox note-area" placeholder="作品備註、版本差異、其他資訊…"></textarea>
@@ -2326,7 +2372,7 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
     <div id="actorEditPanel" class="detail-block v360-edit-panel"><h3>編輯演員資料</h3>
       <div class="rc36-photo-editor">
         <div id="actorEditPortraitPreview" class="rc36-photo-preview">演</div>
-        <div class="rc36-photo-copy"><h4>演員肖像</h4><div class="meta">更換後會同步更新演員資料庫、作品演員陣容與合作共演中的人物照片。</div><div class="v360-photo-tools"><button id="actorPortraitPick" class="ghost" type="button">更換肖像</button><button id="actorPortraitRemove" class="danger" type="button">移除肖像</button><input id="actorPortraitInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div></div>
+        <div class="rc36-photo-copy"><h4>主要肖像</h4><div class="meta">新照片會加入人物影像並設為主要肖像，原照片仍會保留；主要肖像會同步顯示於演員資料庫、作品陣容與合作共演。</div><div class="v360-photo-tools"><button id="actorPortraitPick" class="ghost" type="button">加入並設為主要肖像</button><button id="actorPortraitRemove" class="danger" type="button">取消主要肖像</button><input id="actorPortraitInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></div></div>
       </div>
       <div class="v360-edit-grid">
 <div><label class="label">藝名／顯示名稱</label><input id="actorDetailName" class="textbox"></div><div><label class="label">本名</label><input id="actorDetailRealName" class="textbox"></div>
@@ -2338,7 +2384,7 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
 <div class="wide"><label class="label">代表作品（以、分隔）</label><input id="actorDetailRepresentativeWorks" class="textbox"></div>
 <div class="wide"><label class="label">演員介紹</label><textarea id="actorDetailBio" class="textbox" rows="4" placeholder="簡介、特色、常見戲路或其他備註"></textarea></div></div></div><label style="display:none"><input id="actorDetailFavorite" type="checkbox">最愛</label>
 <div id="actorEditActions" class="v360-edit-actions"><span class="meta">頁首與此處皆可儲存修改</span><div><button id="actorEditCancel" class="ghost" type="button">取消</button><button id="actorDetailSaveBtn" class="primary" type="button">儲存修改</button></div></div>
-    <div class="v360-tabs"><button class="active" data-actor-tab="overview" type="button">👤 演員總覽</button><button data-actor-tab="works" type="button">🎞️ 參演作品</button><button data-actor-tab="partners" type="button">🤝 合作共演</button></div>
+    <div class="v360-tabs"><button class="active" data-actor-tab="overview" type="button">👤 演員總覽</button><button data-actor-tab="works" type="button">🎞️ 參演作品</button><button data-actor-tab="images" type="button">🖼️ 人物影像</button><button data-actor-tab="partners" type="button">🤝 合作共演</button></div>
     <div id="actorPanelOverview" class="v360-panel active">
       <section class="v361-overview-works">
         <div class="v361-overview-works-head">
@@ -2353,9 +2399,12 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
       </div>
     </div>
     <div id="actorPanelWorks" class="v360-panel"><div id="actorWorksTable"></div></div>
+    <div id="actorPanelImages" class="v360-panel"><div id="actorGallery" class="rc40-gallery"><div class="rc40-gallery-head"><div><h3 style="margin:0">🖼️ 人物影像</h3><div class="meta">主要肖像用於資料庫與演員陣容；其他人物寫真可點擊放大瀏覽。</div></div><div><button id="actorGalleryAdd" class="ghost" type="button">＋ 加入照片</button><input id="actorGalleryInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden></div></div><div id="actorGalleryGrid" class="rc40-gallery-grid"></div></div></div>
     <div id="actorPanelPartners" class="v360-panel"><div id="actorPartnersTable"></div></div>
   </section>
 </section>
+
+<div id="actorGalleryLightbox" class="rc40-lightbox" aria-hidden="true"><button id="actorGalleryLightboxClose" class="ghost rc40-lightbox-close" type="button">✕ 關閉</button><button id="actorGalleryPrev" class="ghost rc40-lightbox-prev" type="button">←</button><img id="actorGalleryLightboxImage" alt="人物影像預覽"><button id="actorGalleryNext" class="ghost rc40-lightbox-next" type="button">→</button></div>
 
 <div id="rc31RoleModal" class="rc31-role-modal" role="dialog" aria-modal="true" aria-labelledby="rc31RoleModalTitle" hidden>
   <div class="rc31-role-dialog"><div class="rc31-role-modal-head"><div><div class="meta">角色介紹</div><h2 id="rc31RoleModalTitle">角色</h2><div id="rc31RoleModalActor" class="meta"></div></div><button id="rc31RoleModalClose" class="ghost" type="button">✕ 關閉</button></div><div id="rc31RoleModalBody"></div></div>
@@ -2893,10 +2942,12 @@ body.actor-detail-active #page-actor-detail.rc31-editing .v360-panel{
 <div id="actorSmartPasteModal" class="modal" aria-hidden="true"><div class="dialog actor-smart-dialog"><div class="dialog-head"><div><h2>✨ 演員智慧貼上</h2><div class="meta">支援百科、演員介紹與欄位式資料；解析時自動轉為繁體並比對欄位。</div></div><button id="actorSmartPasteClose" class="ghost" type="button">✕</button></div><div class="actor-smart-current"><span>目前演員</span><b id="actorSmartCurrentName">—</b><span id="actorSmartIdentityHint" class="meta"></span></div><textarea id="actorSmartPasteInput" class="textbox actor-smart-input" placeholder="例如：&#10;藝名：權書嫻&#10;本名：權睿&#10;性別：女&#10;國籍：中國&#10;出生地：山東&#10;出生日期：1996年11月21日&#10;畢業院校：山東藝術學院&#10;代表作品：玲瓏掌櫃俏廚王、熾熱、權寵醫妃、狂暴少帥、危牆之下&#10;職業：演員"></textarea><div class="toolbar actor-smart-toolbar">
       <button id="actorSmartParseBtn" class="primary" type="button">解析內容</button>
       <button id="actorSmartClearBtn" class="ghost" type="button">清空</button>
+      <button id="actorSmartImagePick" class="ghost" type="button">🖼️ 加入圖片</button><input id="actorSmartImageInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
       <button id="actorSmartFormatBtn" class="ghost" type="button">📋 標準辨識格式</button>
       <button id="actorSmartPromptBtn" class="ghost" type="button">🤖 AI 整理提示詞</button>
       <span class="meta">解析結果會先預覽，不會直接修改演員資料。</span>
     </div>
+    <div id="actorSmartImages" class="rc39-smart-images" hidden><div class="rc39-smart-image-head"><b>人物影像</b><span class="meta">可一次加入多張；指定一張為主要肖像，其餘保存為人物寫真。</span></div><div id="actorSmartImageList" class="rc39-smart-image-list"></div></div>
     <div id="actorSmartGuide" class="actor-smart-guide" hidden>
       <div class="actor-smart-guide-head">
         <b id="actorSmartGuideTitle">標準辨識格式</b>
@@ -3119,19 +3170,23 @@ function normalizeActor(a){
   };
 }
 const _normalizeActorRC4=normalizeActor;
-normalizeActor=function(a){
- a=_normalizeActorRC4(a);
+normalizeActor=function(input){
+ const raw=(input&&typeof input==='object')?input:{};
+ let a=_normalizeActorRC4(input);
  Object.assign(a,{
-  stage_name:String(a.stage_name||a.name||'').trim(),real_name:String(a.real_name||'').trim(),
-  nationality:String(a.nationality||'').trim(),birthplace:String(a.birthplace||'').trim(),
-  birth_date:String(a.birth_date||'').trim(),education:String(a.education||'').trim(),
-  occupation:String(a.occupation||'演員').trim(),agency:String(a.agency||'').trim(),
-  representative_works:Array.isArray(a.representative_works)?a.representative_works:[],
-  former_names:Array.isArray(a.former_names)?a.former_names:[],
-  nicknames:Array.isArray(a.nicknames)?a.nicknames:[],
-  name_variants:Array.isArray(a.name_variants)?a.name_variants:[],
-  recognition_meta:(a.recognition_meta&&typeof a.recognition_meta==='object')?a.recognition_meta:{}
- }); return a;
+  stage_name:String(raw.stage_name||a.name||'').trim(),real_name:String(raw.real_name||'').trim(),
+  nationality:String(raw.nationality||'').trim(),birthplace:String(raw.birthplace||'').trim(),
+  birth_date:String(raw.birth_date||'').trim(),education:String(raw.education||'').trim(),
+  occupation:String(raw.occupation||'演員').trim(),agency:String(raw.agency||'').trim(),
+  representative_works:Array.isArray(raw.representative_works)?raw.representative_works:[],
+  former_names:Array.isArray(raw.former_names)?raw.former_names:[],
+  nicknames:Array.isArray(raw.nicknames)?raw.nicknames:[],
+  name_variants:Array.isArray(raw.name_variants)?raw.name_variants:[],
+  recognition_meta:(raw.recognition_meta&&typeof raw.recognition_meta==='object')?raw.recognition_meta:{},
+  images:Array.isArray(raw.images)?raw.images.filter(x=>x&&String(x.id||'').trim()).map(x=>({id:String(x.id),name:String(x.name||'人物影像'),created_at:x.created_at||new Date().toISOString()})):[]
+ });
+ if(a.portrait_image_id&&!a.images.some(x=>x.id===a.portrait_image_id))a.images.unshift({id:a.portrait_image_id,name:'主要肖像',created_at:new Date().toISOString()});
+ return a;
 };
 function loadData(){
   actors=safeParse(localStorage.getItem(KEY_ACTORS)||'[]',[]).map(normalizeActor).filter(a=>a.name);
@@ -3566,9 +3621,9 @@ function openActors(){
 
 function v340BlobToDataUrl(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(blob)})}
 async function v340ReadAllImages(){const db=await v331Db();return new Promise((resolve,reject)=>{const req=db.transaction(V331_STORE).objectStore(V331_STORE).getAll();req.onsuccess=()=>{db.close();resolve(req.result||[])};req.onerror=()=>{db.close();reject(req.error)}})}
-async function v340BackupImages(){const rows=await v340ReadAllImages();const out=[];for(const row of rows){out.push({id:row.id,workId:row.workId,name:row.name,type:row.type,created_at:row.created_at,blob_data:row.blob?await v340BlobToDataUrl(row.blob):'',thumb_data:row.thumb?await v340BlobToDataUrl(row.thumb):''})}return out}
+async function v340BackupImages(){const rows=await v340ReadAllImages();const out=[];for(const row of rows){out.push({id:row.id,workId:row.workId,actorId:row.actorId,role:row.role,name:row.name,type:row.type,created_at:row.created_at,blob_data:row.blob?await v340BlobToDataUrl(row.blob):'',thumb_data:row.thumb?await v340BlobToDataUrl(row.thumb):''})}return out}
 async function v340DataUrlBlob(value){if(!value)return null;return fetch(value).then(r=>r.blob())}
-async function v340RestoreImages(rows){if(!Array.isArray(rows))return 0;let restored=0;for(const row of rows){try{const blob=await v340DataUrlBlob(row.blob_data),thumb=await v340DataUrlBlob(row.thumb_data);if(!blob)continue;await v331Put({id:row.id,workId:row.workId,name:row.name,type:row.type||blob.type,created_at:row.created_at,blob,thumb:thumb||blob});restored++}catch(err){console.warn('圖片還原失敗',row?.id,err)}}return restored}
+async function v340RestoreImages(rows){if(!Array.isArray(rows))return 0;let restored=0;for(const row of rows){try{const blob=await v340DataUrlBlob(row.blob_data),thumb=await v340DataUrlBlob(row.thumb_data);if(!blob)continue;await v331Put({id:row.id,workId:row.workId,actorId:row.actorId,role:row.role,name:row.name,type:row.type||blob.type,created_at:row.created_at,blob,thumb:thumb||blob});restored++}catch(err){console.warn('圖片還原失敗',row?.id,err)}}return restored}
 async function exportBackup(){
   const auditLog=(typeof v266AuditRead==='function')?v266AuditRead():[];
   showToast(settings.backup_images===false?'正在整理文字備份…':'正在整理作品與圖片備份…');
@@ -3979,7 +4034,7 @@ function populateActorSelect(select){
 let viewingWorkId=null;
 
 function switchWorkViewTab(tab){
-  const target=['basic','relations','media','images','source'].includes(tab)?tab:'basic';
+  const target=['basic','cast','production','broadcast','relations','media','images','source'].includes(tab)?tab:'basic';
   $$('#workViewTabs [data-work-view-tab]').forEach(btn=>{
     btn.classList.toggle('active',btn.dataset.workViewTab===target);
   });
@@ -3987,6 +4042,25 @@ function switchWorkViewTab(tab){
     panel.classList.toggle('active',panel.id===`workViewPanel-${target}`);
     panel.classList.remove('v350-overview-companion');
   });
+}
+
+function rc42BroadcastLines(records){
+  return (Array.isArray(records)?records:[]).map(r=>[r.region,r.channel,r.start_date,r.end_date,r.mode].map(x=>String(x||'').trim()).join('｜')).join('\n');
+}
+function rc42ParseBroadcastLines(text){
+  return String(text||'').split(/\n+/).map(line=>line.trim()).filter(Boolean).map(line=>{
+    const p=line.split(/[｜|]/).map(x=>x.trim());
+    return {region:p[0]||'',channel:p[1]||'',start_date:p[2]||'',end_date:p[3]||'',mode:p.slice(4).join('｜')||''};
+  }).filter(r=>r.region||r.channel||r.start_date||r.mode);
+}
+function rc42RenderWorkDetails(w){
+  const production=[['製作國家／地區',w.country],['語言',w.language],['字幕',w.subtitles],['原著',w.originalTitle||w.original_work],['原作者',w.originalAuthor||w.original_author],['編劇',w.screenwriter],['導演',w.directors],['監製',w.producers],['製作公司',w.production_company],['出品公司',w.producing_company],['拍攝地點',w.filming_location],['開機日期',w.production_start],['殺青日期',w.production_end]].filter(x=>String(x[1]||'').trim());
+  const ph=$('#rc42ProductionView');if(ph)ph.innerHTML=production.length?production.map(x=>`<div class="k">${esc(x[0])}</div><div class="v">${esc(x[1])}</div>`).join(''):'<div class="meta">尚無製作資料</div>';
+  const records=Array.isArray(w.broadcast_records)?w.broadcast_records:[];const bh=$('#rc42BroadcastView');
+  if(bh)bh.innerHTML=records.length?`<div class="rc42-table-wrap"><table class="rc42-table"><thead><tr><th>地區</th><th>平台／頻道</th><th>開始日期</th><th>結束日期</th><th>播出方式</th></tr></thead><tbody>${records.map(r=>`<tr><td>${esc(r.region||'—')}</td><td>${esc(r.channel||'—')}</td><td>${esc(r.start_date||'—')}</td><td>${esc(r.end_date||'—')}</td><td>${esc(r.mode||'—')}</td></tr>`).join('')}</tbody></table></div>`:'<div class="meta">尚無播映紀錄</div>';
+  const actors=getWorkActors(w),groups=[['領銜／主要演員',actors.filter(a=>/主角|領銜|主演/.test((rc19CastMetaFor(w,a)||{}).cast_type||''))],['其他／客串演員',actors.filter(a=>!/主角|領銜|主演/.test((rc19CastMetaFor(w,a)||{}).cast_type||''))]];const ch=$('#rc42CastGroups');
+  if(ch)ch.innerHTML=actors.length?groups.filter(g=>g[1].length).map(g=>`<section class="rc42-cast-group"><h4>${g[0]} <span class="meta">${g[1].length} 位</span></h4><div class="rc29-cast-grid">${g[1].map(a=>rc29OverviewCastCard(w,a)).join('')}</div></section>`).join(''):'<div class="meta">尚未建立演員與角色資料</div>';
+  if(ch){v360HydrateActorImages(ch);$$('.view-actor-link',ch).forEach(b=>b.addEventListener('click',()=>openActorDetail(b.dataset.id)));$$('.rc30-role-open',ch).forEach(b=>b.addEventListener('click',()=>{const a=actorById(b.dataset.id);if(a)rc30ShowRoleDetail(w,a)}));}
 }
 
 
@@ -4169,7 +4243,7 @@ function openWorkView(workId){
   $('#viewCreationSource').textContent=resolveSingleAttributeDisplay('creation_source',w.creationSourceCode,w.creationSource)||'—';
   normalizeExistingOriginalAuthor(w);
   $('#viewOriginalWork').textContent=w.originalTitle||w.original_work||'—';
-  $('#viewOriginalAuthor').textContent=w.originalAuthor||'—';
+  $('#viewOriginalAuthor').textContent=w.originalAuthor||w.original_author||'—';
   $('#viewScreenwriter').textContent=w.screenwriter||'—';
   $('#viewProductionCompany').textContent=w.production_company||'—';
   $('#viewFilingDate').textContent=w.filing_date||'—';
@@ -4202,6 +4276,7 @@ function openWorkView(workId){
   $$('.view-actor-link',castHost).forEach(b=>b.addEventListener('click',()=>openActorDetail(b.dataset.id)));
   $$('.rc30-role-open',castHost).forEach(b=>b.addEventListener('click',()=>{const a=actorById(b.dataset.id);if(a)rc30ShowRoleDetail(w,a)}));
   v351RenderWorkExperience(w);
+  rc42RenderWorkDetails(w);
   renderWorkFormalRelations(w);
   renderWorkStoryGroup(w);
   v330RenderWorkMedia(w);
@@ -4251,9 +4326,20 @@ function openWorkDetail(workId=null){
   normalizeExistingOriginalAuthor(w);
   $('#workEditCreationSource').value=resolveSingleAttributeDisplay('creation_source',w?.creationSourceCode,w?.creationSource)||'';
   $('#workEditOriginalWork').value=w?.originalTitle||w?.original_work||'';
-  $('#workEditOriginalAuthor').value=w?.originalAuthor||'';
+  $('#workEditOriginalAuthor').value=w?.originalAuthor||w?.original_author||'';
   $('#workEditScreenwriter').value=w?.screenwriter||'';
   $('#workEditProductionCompany').value=w?.production_company||'';
+  $('#workEditCountry').value=w?.country||'';
+  $('#workEditLanguage').value=w?.language||'';
+  $('#workEditSubtitles').value=w?.subtitles||'';
+  $('#workEditDirectors').value=w?.directors||'';
+  $('#workEditProducers').value=w?.producers||'';
+  $('#workEditFilmingLocation').value=w?.filming_location||'';
+  $('#workEditProductionStart').value=w?.production_start||'';
+  $('#workEditProductionEnd').value=w?.production_end||'';
+  $('#workEditFinaleDate').value=w?.finale_date||'';
+  $('#workEditBroadcastCountry').value=w?.broadcast_country||'';
+  $('#workEditBroadcastRecords').value=rc42BroadcastLines(w?.broadcast_records);
   $('#workEditFilingDate').value=w?.filing_date||'';
   $('#workEditProducingCompany').value=w?.producing_company||'';
   $('#workEditContractorCompany').value=w?.contractor_company||'';
@@ -4393,12 +4479,13 @@ function splitOriginalAuthorText(value){
 }
 function normalizeExistingOriginalAuthor(w){
   if(!w)return;
-  const existing=String(w.originalAuthor||'').trim();
-  if(existing)return;
+  const existing=String(w.originalAuthor||w.original_author||'').trim();
+  if(existing){w.originalAuthor=canonicalDbText(existing);w.original_author=w.originalAuthor;return;}
   const raw=String(w.originalTitle||w.original_work||'').trim();
   const parsed=splitOriginalAuthorText(raw);
   if(parsed.author){
     w.originalAuthor=canonicalDbText(parsed.author);
+    w.original_author=w.originalAuthor;
     w.originalTitle=parsed.title;
     w.original_work=parsed.title;
   }
@@ -4459,6 +4546,17 @@ function saveWorkDetail(){
   w.original_work=$('#workEditOriginalWork').value.trim();
   w.screenwriter=$('#workEditScreenwriter').value.trim();
   w.production_company=$('#workEditProductionCompany').value.trim();
+  w.country=$('#workEditCountry').value.trim();
+  w.language=$('#workEditLanguage').value.trim();
+  w.subtitles=$('#workEditSubtitles').value.trim();
+  w.directors=$('#workEditDirectors').value.trim();
+  w.producers=$('#workEditProducers').value.trim();
+  w.filming_location=$('#workEditFilmingLocation').value.trim();
+  w.production_start=$('#workEditProductionStart').value.trim();
+  w.production_end=$('#workEditProductionEnd').value.trim();
+  w.finale_date=$('#workEditFinaleDate').value.trim();
+  w.broadcast_country=$('#workEditBroadcastCountry').value.trim();
+  w.broadcast_records=rc42ParseBroadcastLines($('#workEditBroadcastRecords').value);
   w.filing_date=$('#workEditFilingDate').value.trim();
   w.producing_company=$('#workEditProducingCompany').value.trim();
   w.contractor_company=$('#workEditContractorCompany').value.trim();
@@ -4493,6 +4591,7 @@ function saveWorkDetail(){
   }
   w.originalTitle=originalMode==='none'?'':$('#workEditOriginalWork').value.trim();
   w.originalAuthor=authorMode==='none'?'':canonicalDbText($('#workEditOriginalAuthor').value);
+  w.original_author=w.originalAuthor;
   w.original_work=w.originalTitle;
   w.original=originalMode==='none'?(w.creationSource||'原創劇本'):w.originalTitle;
 
@@ -4529,6 +4628,7 @@ function v360RenderActorPortraits(a){
   $('#actorPortraitRemove').style.display=imageId?'inline-block':'none';
   v360HydrateActorImages($('#actorPortrait'));
   v360HydrateActorImages($('#actorEditPortraitPreview'));
+  $('#actorPortrait').style.cursor=imageId?'zoom-in':'';$('#actorPortrait').onclick=imageId?()=>rc40OpenActorLightbox(a,a.portrait_image_id):null;
 }
 function v360ToggleActorEdit(show){
   $('#actorEditPanel')?.classList.toggle('show',!!show);
@@ -4537,9 +4637,18 @@ function v360ToggleActorEdit(show){
   $('.rc31-actor-manage')?.removeAttribute('open');
   if(show){window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>$('#actorDetailName')?.focus(),0)}
 }
-function v360SwitchActorTab(tab){$$('[data-actor-tab]').forEach(b=>b.classList.toggle('active',b.dataset.actorTab===tab));['works','partners','overview'].forEach(x=>$(`#actorPanel${x[0].toUpperCase()+x.slice(1)}`)?.classList.toggle('active',x===tab))}
-async function v360SetPortrait(file){const a=actorById(editingActorId);if(!a||!file)return;try{const made=await v331PrepareImage(file),id=makeId('actor_image');if(a.portrait_image_id)await v331DeleteBlob(a.portrait_image_id).catch(()=>{});await v331Put({id,actorId:a.id,name:file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});a.portrait_image_id=id;saveData();v360RenderActorPortraits(a);renderActorPage();showToast('演員肖像已更新，可繼續編輯其他資料')}catch(err){showToast(err.message||'肖像處理失敗')}}
-async function v360RemovePortrait(){const a=actorById(editingActorId);if(!a?.portrait_image_id)return;if(!confirm('確定移除這張演員肖像？'))return;await v331DeleteBlob(a.portrait_image_id).catch(()=>{});a.portrait_image_id='';saveData();v360RenderActorPortraits(a);renderActorPage();showToast('演員肖像已移除，可繼續編輯其他資料')}
+function v360SwitchActorTab(tab){$$('[data-actor-tab]').forEach(b=>b.classList.toggle('active',b.dataset.actorTab===tab));['works','images','partners','overview'].forEach(x=>$(`#actorPanel${x[0].toUpperCase()+x.slice(1)}`)?.classList.toggle('active',x===tab))}
+async function v360AddActorImages(files,setFirstAsMain=false){const a=actorById(editingActorId);if(!a)return;const list=[...files];if(!list.length)return;if(!Array.isArray(a.images))a.images=[];let added=0;for(const file of list){try{const made=await v331PrepareImage(file),id=makeId('actor_image');await v331Put({id,actorId:a.id,name:file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});a.images.push({id,name:file.name,created_at:new Date().toISOString()});if((setFirstAsMain||!a.portrait_image_id)&&added===0)a.portrait_image_id=id;added++}catch(err){console.warn(err);showToast(`${file.name}：${err.message}`)}}saveData();v360RenderActorPortraits(a);await v360RenderActorGallery(a);renderActorPage();showToast(`已加入 ${added} 張人物影像`)}
+async function v360SetPortrait(file){return v360AddActorImages([file],true)}
+async function v360RemovePortrait(){const a=actorById(editingActorId);if(!a?.portrait_image_id)return;if(!confirm('確定取消目前主要肖像？照片仍會保留在人物影像中。'))return;a.portrait_image_id='';saveData();v360RenderActorPortraits(a);await v360RenderActorGallery(a);renderActorPage();showToast('已取消主要肖像，人物影像仍保留')}
+let rc40GalleryUrls=[],rc40GalleryIndex=0,rc40GalleryRecords=[];
+function rc40ClearGalleryUrls(){rc40GalleryUrls.forEach(URL.revokeObjectURL);rc40GalleryUrls=[]}
+async function v360RenderActorGallery(a){const host=$('#actorGalleryGrid');if(!host||!a)return;rc40ClearGalleryUrls();const refs=Array.isArray(a.images)?a.images:[];if(!refs.length){host.innerHTML='<div class="v331-empty">尚未加入人物影像。</div>';return}const cards=[];for(const ref of refs){const rec=await v331Get(ref.id).catch(()=>null);if(!rec)continue;const url=URL.createObjectURL(rec.thumb||rec.blob);rc40GalleryUrls.push(url);cards.push(`<div class="rc40-photo"><img src="${url}" data-actor-gallery-id="${esc(ref.id)}" alt="${esc(ref.name||a.name+'人物影像')}"><div class="rc40-photo-body">${a.portrait_image_id===ref.id?'<span class="rc40-main-mark">主要肖像</span>':'<span class="meta">人物寫真</span>'}<div class="rc40-photo-actions">${a.portrait_image_id===ref.id?'':`<button class="ghost rc40-set-main" data-id="${esc(ref.id)}" type="button">設為主要肖像</button>`}<button class="danger rc40-delete-photo" data-id="${esc(ref.id)}" type="button">刪除</button></div></div></div>`)}host.innerHTML=cards.join('')||'<div class="v331-empty">圖片檔已不在此瀏覽器。</div>';host.querySelectorAll('[data-actor-gallery-id]').forEach(img=>img.addEventListener('click',()=>rc40OpenActorLightbox(a,img.dataset.actorGalleryId)));host.querySelectorAll('.rc40-set-main').forEach(b=>b.addEventListener('click',()=>{a.portrait_image_id=b.dataset.id;saveData();v360RenderActorPortraits(a);v360RenderActorGallery(a);renderActorPage();showToast('主要肖像已更新')}));host.querySelectorAll('.rc40-delete-photo').forEach(b=>b.addEventListener('click',()=>rc40DeleteActorPhoto(a,b.dataset.id)))}
+async function rc40DeleteActorPhoto(a,id){const ref=(a.images||[]).find(x=>x.id===id);if(!confirm(`確定刪除「${ref?.name||'這張人物影像'}」？`))return;await v331DeleteBlob(id).catch(()=>{});a.images=(a.images||[]).filter(x=>x.id!==id);if(a.portrait_image_id===id)a.portrait_image_id=a.images[0]?.id||'';saveData();v360RenderActorPortraits(a);await v360RenderActorGallery(a);renderActorPage();showToast('人物影像已刪除')}
+async function rc40OpenActorLightbox(a,id){rc40GalleryRecords=[];for(const ref of a.images||[]){const rec=await v331Get(ref.id).catch(()=>null);if(rec){const url=URL.createObjectURL(rec.blob);rc40GalleryUrls.push(url);rc40GalleryRecords.push({id:ref.id,url,name:ref.name})}}rc40GalleryIndex=Math.max(0,rc40GalleryRecords.findIndex(x=>x.id===id));rc40ShowLightbox()}
+function rc40ShowLightbox(){if(!rc40GalleryRecords.length)return;$('#actorGalleryLightboxImage').src=rc40GalleryRecords[rc40GalleryIndex].url;$('#actorGalleryLightbox').classList.add('show');$('#actorGalleryLightbox').setAttribute('aria-hidden','false')}
+function rc40MoveLightbox(delta){if(!rc40GalleryRecords.length)return;rc40GalleryIndex=(rc40GalleryIndex+delta+rc40GalleryRecords.length)%rc40GalleryRecords.length;rc40ShowLightbox()}
+function rc40CloseLightbox(){$('#actorGalleryLightbox').classList.remove('show');$('#actorGalleryLightbox').setAttribute('aria-hidden','true');$('#actorGalleryLightboxImage').removeAttribute('src')}
 function openActorDetail(actorId){
   const a=actorById(actorId);if(!a)return;
   const activePage=document.querySelector('.workspace-page.active')?.id;
@@ -4574,6 +4683,7 @@ function openActorDetail(actorId){
 <div class="v360-profile-note"><span>演員介紹</span><p>${esc(a.bio||'尚未填寫演員介紹。')}</p></div>
 <div class="v360-system-stats"><span>典藏資料</span><b>參演作品 ${works.length} 部</b><b>合作人物 ${partners.length} 位</b><b>最近使用 ${a.last_used?new Date(a.last_used).toLocaleDateString():'—'}</b></div>`;
   v360RenderActorPortraits(a);
+  v360RenderActorGallery(a);
   $('#actorOverviewWorksStrip').innerHTML=works.length?works.slice(0,4).map(w=>`<button class="v361-work-card actor-overview-work-open" data-id="${esc(w.id)}" type="button">
     <span class="v361-work-cover"><span class="v361-work-cover-fallback">🎬</span>${v317ResolveWorkHeroImage(w)?`<img data-image-id="${esc(v317ResolveWorkHeroImage(w))}" alt="${esc(w.title||'作品封面')}" hidden>`:''}</span>
     <span class="v361-work-info"><span class="v361-work-title">${esc(w.title||'未命名作品')}</span><span class="v361-work-role">${esc(actorWorkCredit(w,a))}${w.episode||w.episodes?` · ${esc(w.episode||w.episodes)} 集`:''}</span></span>
@@ -4623,7 +4733,7 @@ async function deleteCurrentActor(){
   const linked=historyData.filter(w=>(w.actor_ids||[]).includes(a.id));
   const impact=linked.length?`\n\n此演員目前關聯 ${linked.length} 部作品；刪除後會同步從這些作品的演員陣容移除。`:'';
   if(!confirm(`確定刪除演員「${a.name}」？${impact}\n\n此操作無法復原。`))return;
-  if(a.portrait_image_id)await v331DeleteBlob(a.portrait_image_id).catch(()=>{});
+  for(const ref of a.images||[])await v331DeleteBlob(ref.id).catch(()=>{});
   actors=actors.filter(x=>x.id!==a.id);
   historyData.forEach(w=>{
     if(Array.isArray(w.actor_ids))w.actor_ids=w.actor_ids.filter(id=>id!==a.id);
@@ -4638,12 +4748,43 @@ async function deleteCurrentActor(){
 
 
 let actorCreateSmartMode=false;
+const rc39SmartImages={actor:[],work:[]};
+function rc39HasExistingImage(kind){return kind==='actor'?(!actorCreateSmartMode&&!!actorById(editingActorId)?.portrait_image_id):!!workById(smartTargetWorkId)?.poster_image_id}
+function rc39ClearSmartImages(kind){
+  rc39SmartImages[kind].forEach(x=>URL.revokeObjectURL(x.url));rc39SmartImages[kind]=[];rc39RenderSmartImages(kind);
+}
+function rc39AddSmartImages(kind,files){
+  const valid=[...files].filter(f=>/^image\/(jpeg|png|webp)$/.test(f.type));
+  if(!valid.length)return showToast('請選擇 JPG、PNG 或 WebP 圖片');
+  if(kind==='actor'&&rc39SmartImages.actor.length+valid.length>8)return showToast('人物影像一次最多加入 8 張');
+  valid.forEach(file=>rc39SmartImages[kind].push({id:makeId('pending_image'),file,url:URL.createObjectURL(file)}));
+  const hasExisting=rc39HasExistingImage(kind);
+  if(!hasExisting&&!rc39SmartImages[kind].some(x=>x.primary))rc39SmartImages[kind][0].primary=true;
+  rc39RenderSmartImages(kind);
+  if(kind==='actor'){$('#actorSmartApplySelectedBtn').disabled=false;if(!actorCreateSmartMode)$('#actorSmartApplyBlankBtn').disabled=false}
+  else $('#smartPasteApplyBtn').disabled=!(smartTargetWorkId||smartParsed?.title);
+}
+function rc39RenderSmartImages(kind){
+  const section=$(kind==='actor'?'#actorSmartImages':'#smartPasteImages'),host=$(kind==='actor'?'#actorSmartImageList':'#smartPasteImageList');if(!section||!host)return;
+  const list=rc39SmartImages[kind];section.hidden=!list.length;
+  host.innerHTML=list.map(x=>`<div class="rc39-smart-image-card ${kind}"><img src="${x.url}" alt="${esc(x.file.name)}"><button class="danger rc39-remove" data-kind="${kind}" data-id="${x.id}" type="button" aria-label="移除圖片">✕</button><div class="rc39-smart-image-info"><b>${esc(x.file.name)}</b><label><input type="radio" name="rc39-${kind}-primary" data-kind="${kind}" data-primary="${x.id}" ${x.primary?'checked':''}> ${kind==='actor'?'設為主要肖像':'設為主海報'}</label></div></div>`).join('');
+  host.querySelectorAll('.rc39-remove').forEach(b=>b.addEventListener('click',()=>{const arr=rc39SmartImages[kind],i=arr.findIndex(x=>x.id===b.dataset.id);if(i<0)return;const was=arr[i].primary;URL.revokeObjectURL(arr[i].url);arr.splice(i,1);if(was&&arr[0]&&!rc39HasExistingImage(kind))arr[0].primary=true;rc39RenderSmartImages(kind)}));
+  host.querySelectorAll('[data-primary]').forEach(r=>r.addEventListener('change',()=>{rc39SmartImages[kind].forEach(x=>x.primary=x.id===r.dataset.primary);rc39RenderSmartImages(kind)}));
+}
+async function rc39SaveActorSmartImage(a){
+  if(!a||!rc39SmartImages.actor.length)return 0;if(!Array.isArray(a.images))a.images=[];let added=0;
+  for(const item of rc39SmartImages.actor){const made=await v331PrepareImage(item.file),id=makeId('actor_image');await v331Put({id,actorId:a.id,name:item.file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});a.images.push({id,name:item.file.name,created_at:new Date().toISOString()});if(item.primary)a.portrait_image_id=id;else if(!a.portrait_image_id&&added===0)a.portrait_image_id=id;added++}return added;
+}
+async function rc39SaveWorkSmartImages(w){
+  if(!w||!rc39SmartImages.work.length)return 0;if(!Array.isArray(w.images))w.images=[];
+  let added=0;for(const item of rc39SmartImages.work){const made=await v331PrepareImage(item.file),id=makeId('image');await v331Put({id,workId:w.id,name:item.file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});w.images.push({id,role:item.primary?'poster':'still',name:item.file.name,note:'',created_at:new Date().toISOString()});if(item.primary)w.poster_image_id=id;added++}return added;
+}
 function actorCreateClear(){
  ['Name','RealName','Nationality','Birthplace','BirthDate','Education','Aliases','Nicknames','FormerNames','Agency','RepresentativeWorks','Bio'].forEach(k=>{const e=$('#actorCreate'+k);if(e)e.value=''});
  $('#actorCreateGender').value='unknown';$('#actorCreateIdentity').value='actor';
 }
 function openActorCreatePage(){actorCreateClear();switchPage('actor-create');setTimeout(()=>$('#actorCreateName')?.focus(),30)}
-function saveActorCreate(){
+async function saveActorCreate(){
  const name=canonicalActorName($('#actorCreateName').value);if(!name){showToast('請輸入主要顯示名');$('#actorCreateName').focus();return}
  const same=actors.filter(a=>sameActorName(a.name,name));
  if(same.length&&!confirm(`演員資料庫已有 ${same.length} 位名稱為「${name}」的演員。\n\n若這是另一位同名演員，可以繼續建立；若是同一人，建議取消並編輯既有演員。\n\n仍要建立新的獨立演員嗎？`))return;
@@ -4651,10 +4792,12 @@ function saveActorCreate(){
  aliases:actorSmartList($('#actorCreateAliases').value),nicknames:actorSmartList($('#actorCreateNicknames').value),former_names:actorSmartList($('#actorCreateFormerNames').value),
  nationality:$('#actorCreateNationality').value.trim(),birthplace:$('#actorCreateBirthplace').value.trim(),birth_date:$('#actorCreateBirthDate').value.trim(),education:$('#actorCreateEducation').value.trim(),
  agency:$('#actorCreateAgency').value.trim(),representative_works:actorSmartList($('#actorCreateRepresentativeWorks').value),bio:$('#actorCreateBio').value.trim(),recognition_meta:{}};
- actors.push(a);saveData();renderActorPage();renderQuickActors();renderSystemPage();editingActorId=a.id;openActorDetail(a.id);showToast('演員已建立');
+ actors.push(a);let imageAdded=0;try{imageAdded=await rc39SaveActorSmartImage(a)}catch(err){console.warn(err);showToast('演員已建立，但圖片處理失敗')}
+ saveData();renderActorPage();renderQuickActors();renderSystemPage();editingActorId=a.id;openActorDetail(a.id);rc39ClearSmartImages('actor');showToast(imageAdded?'演員與肖像已建立':'演員已建立');
 }
 function openActorCreateSmart(){
  actorCreateSmartMode=true;actorSmartParsed=null;
+ rc39ClearSmartImages('actor');
  $('#actorSmartCurrentName').textContent='新增演員';$('#actorSmartIdentityHint').textContent='解析後帶入新增演員表單，不會直接建立';
  $('#actorSmartPasteInput').value='';$('#actorSmartPreview').innerHTML='';$('#actorSmartGuide').hidden=true;$('#actorSmartStatus').className='actor-smart-status';$('#actorSmartStatus').textContent='尚未解析';
  $('#actorSmartApplyBlankBtn').disabled=true;$('#actorSmartApplySelectedBtn').disabled=true;
@@ -4847,6 +4990,7 @@ function openActorSmartPaste(){
  actorCreateSmartMode=false;
  const a=actorById(editingActorId);if(!a)return;
  actorSmartParsed=null;
+ rc39ClearSmartImages('actor');
  $('#actorSmartCurrentName').textContent=a.name;
  $('#actorSmartIdentityHint').textContent=`Actor ID：${a.id} · 姓名不是唯一識別`;
  $('#actorSmartPasteInput').value='';
@@ -4885,15 +5029,16 @@ function renderActorSmartPreview(){
    const oldText=actorSmartDisplay(k,oldv), newText=actorSmartDisplay(k,p[k]);
    const eq=oldText===newText;
    const add=actorSmartEmpty(oldv)&&!actorSmartEmpty(p[k]);
-   if(eq)same++;else if(add)adds++;else conflicts++;
-   // 所有解析到的欄位都可勾選；相同資料預設不勾，新增/不同預設勾。
+   const merge=Array.isArray(p[k])&&!add&&!eq;
+   if(eq)same++;else if(add)adds++;else if(merge)adds++;else conflicts++;
+   // 空白欄位與清單合併可安全套用；既有純文字衝突預設不勾選。
    const suspect=suspectFields.has(k);
    return `<div class="actor-smart-row ${eq?'same':''}">
-     <input class="actor-smart-check" type="checkbox" data-field="${k}" ${(eq||suspect)?'':'checked'}>
+     <input class="actor-smart-check" type="checkbox" data-field="${k}" ${(add||merge)&&!suspect?'checked':''}>
      <div class="field">${label}</div>
      <div class="old">${esc(oldText)}</div>
      <div class="arrow">${eq?'＝':'→'}</div>
-     <div class="new">${esc(newText)} ${suspect?'<span class="meta">可疑，未勾選</span>':eq?'<span class="meta">相同</span>':add?'<span class="meta">補入空白</span>':'<span class="meta">更新</span>'}</div>
+     <div class="new">${esc(newText)} ${suspect?'<span class="meta">可疑，未勾選</span>':eq?'<span class="meta">相同</span>':add?'<span class="meta">補入空白</span>':merge?'<span class="meta">合併去重</span>':'<span class="meta">資料衝突，未勾選</span>'}</div>
    </div>`;
  }).join('');
  $('#actorSmartPreview').innerHTML=`<div class="actor-smart-row head"><span>套用</span><span>欄位</span><span>目前資料</span><span></span><span>辨識結果</span></div>${rows}`;
@@ -4902,9 +5047,12 @@ function renderActorSmartPreview(){
  $('#actorSmartApplyBlankBtn').disabled=adds===0;
  $('#actorSmartApplySelectedBtn').disabled=false;
 }
-function applyActorSmart(mode){
- let a=actorById(editingActorId);if(!a||!actorSmartParsed)return;
+async function applyActorSmart(mode){
+ let a=actorById(editingActorId);if(!a||(!actorSmartParsed&&!rc39SmartImages.actor.length))return;
+ actorSmartParsed=actorSmartParsed||{};
  const selected=new Set([...$$('#actorSmartPreview .actor-smart-check')].filter(x=>x.checked).map(x=>x.dataset.field));
+ const conflicts=ACTOR_SMART_FIELDS.filter(([k])=>selected.has(k)&&!actorSmartEmpty(actorSmartCurrentValue(a,k))&&!Array.isArray(actorSmartParsed[k])&&actorSmartDisplay(k,actorSmartCurrentValue(a,k))!==actorSmartDisplay(k,actorSmartParsed[k])).map(([,label])=>label);
+ if(mode==='selected'&&conflicts.length&&!confirm(`以下既有欄位將被更新：${conflicts.join('、')}。\n\n未勾選欄位會保留原資料，確定套用？`))return;
  let changed=0;
  for(const [k] of ACTOR_SMART_FIELDS){
    if(actorSmartParsed[k]==null)continue;
@@ -4920,14 +5068,15 @@ function applyActorSmart(mode){
      }
      a.stage_name=nn||a.name; changed++;
    }else{
-     a[k]=Array.isArray(v)?v.map(actorSmartTraditional):actorSmartTraditional(v);
+     a[k]=Array.isArray(v)?[...new Set([...(Array.isArray(a[k])?a[k]:[]),...v.map(actorSmartTraditional)])]:actorSmartTraditional(v);
      if(k==='gender')a[k]=v; // gender 已是 enum，不做中文字轉換
      changed++;
    }
  }
  a.recognition_meta={schema:'short-drama-actor-recognition',version:'1.1',method:'smart_paste',traditionalized:true,updated_at:new Date().toISOString()};
- saveData();renderActorPage();renderQuickActors();openActorDetail(a.id);closeActorSmartPaste();
- showToast(mode==='blank'?`已補入 ${changed} 個空白欄位`:`已套用 ${changed} 個勾選欄位`);
+ let imageAdded=0;try{imageAdded=await rc39SaveActorSmartImage(a)}catch(err){console.warn(err);showToast('文字已套用，但圖片處理失敗')}
+ saveData();renderActorPage();renderQuickActors();openActorDetail(a.id);closeActorSmartPaste();rc39ClearSmartImages('actor');
+ showToast(`${mode==='blank'?`已補入 ${changed} 個空白欄位`:`已套用 ${changed} 個勾選欄位`}${imageAdded?`，並加入 ${imageAdded} 張人物影像`:''}`);
 }
 
 function renderRelationsPage(){
@@ -5092,20 +5241,24 @@ function splitSmartList(v){
   return String(v||'').split(/[、,，;；／/]+/).map(x=>x.trim()).filter(Boolean);
 }
 function parseSmartWorkText(text){
-  const result={heading:'',title:'',aliases:'',work_type:'',work_format:'',cast_role:'',tags:[],original_work:'',original_author:'',creation_source:'',screenwriter:'',production_company:'',producing_company:'',contractor_company:'',filing_date:'',filing_title:'',filing_number:'',synopsis:'',actors:[],cast_entries:[],character_bios:{},platform:'',premiere_date:'',episode_duration:'',episode:'',episode_note:'',seasons:[]};
-  const clean=s=>String(s||'').replace(/\*\*/g,'').trim();
+  const result={heading:'',title:'',aliases:'',work_type:'',work_format:'',cast_role:'',tags:[],original_work:'',original_author:'',creation_source:'',screenwriter:'',production_company:'',producing_company:'',contractor_company:'',filing_date:'',filing_title:'',filing_number:'',synopsis:'',actors:[],cast_entries:[],character_bios:{},platform:'',premiere_date:'',episode_duration:'',episode:'',episode_note:'',seasons:[],country:'',language:'',subtitles:'',directors:'',producers:'',filming_location:'',production_start:'',production_end:'',finale_date:'',broadcast_country:'',broadcast_records:[]};
+  const clean=s=>String(s||'').replace(/\*\*/g,'').replace(/\s*\(\s*\[[^\]]+\]\(.*\)\s*\)\s*$/,'').replace(/\s*\[[\d]+\]\s*$/,'').trim();
   let smartSection='';
   String(text||'').split(/\r?\n/).forEach(raw=>{
     const heading=raw.match(/^\s*#{1,6}\s*(.+)$/);
     if(heading){result.heading=[result.heading,clean(heading[1])].filter(Boolean).join(' ');return}
-    const line=raw.replace(/^\s*(?:[*•\-–—>]+\s*)+/,'').trim();
+    let line=clean(raw.replace(/^\s*(?:[*•\-–—>]+\s*)+/,'').trim());
     if(!line)return;
+    if(/^\|.*\|$/.test(line)){const cells=line.slice(1,-1).split('|').map(x=>x.replace(/<br\s*\/?>/gi,'、').trim());if(cells.length>=2&&!/^[-: ]+$/.test(cells[0]))line=`${cells[0]}：${cells.slice(1).join('、')}`;}
     // Allows "中 文 名", "別 名", "**中文名**" and normal labels.
     const mm=line.match(/^(.{1,28}?)[：:]\s*(.*)$/);
     if(!mm){
       if(smartSection==='character_bios'){
         const parts=line.split(/[｜|]/).map(x=>x.trim()).filter(Boolean);
         if(parts.length>=2)result.character_bios[parts.shift()]=parts.join('｜');
+      }else if(smartSection==='broadcast_records'){
+        const p=line.split(/[｜|]/).map(x=>x.trim());
+        if(p.length>=3)result.broadcast_records.push({region:p[0]||'',channel:p[1]||'',start_date:p[2]||'',end_date:p[3]||'',mode:p.slice(4).join('｜')||''});
       }
       return;
     }
@@ -5113,6 +5266,11 @@ function parseSmartWorkText(text){
     let value=clean(mm[2]).replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').trim();
     if(['角色介紹','角色介绍'].includes(key)){
       smartSection='character_bios';const parts=value.split(/[｜|]/).map(x=>x.trim()).filter(Boolean);if(parts.length>=2)result.character_bios[parts.shift()]=parts.join('｜');return;
+    }
+    if(['播映紀錄','播映记录','播出紀錄','播出记录','上映紀錄','上映记录'].includes(key)){
+      smartSection='broadcast_records';
+      if(value){const p=value.split(/[｜|]/).map(x=>x.trim());if(p.length>=3)result.broadcast_records.push({region:p[0]||'',channel:p[1]||'',start_date:p[2]||'',end_date:p[3]||'',mode:p.slice(4).join('｜')||''});}
+      return;
     }
     smartSection='';
     if(['中文名','劇名','剧名','作品名'].includes(key)) result.title=value;
@@ -5125,9 +5283,16 @@ function parseSmartWorkText(text){
       if(originalMatch){result.creation_source='原創劇本';result.original_work='';if(originalMatch[1])result.screenwriter=originalMatch[1].trim()}
       else{const parsed=splitOriginalAuthorText(value);result.original_work=parsed.title;if(parsed.author)result.original_author=parsed.author}
     }
-    else if(['作者','原作者','原著作者','小說作者','小说作者','漫畫作者','漫画作者','作家'].includes(key)) result.original_author=value;
+    else if(['作者','原作者','原作者／作者','原作者/作者','原著作者','小說作者','小说作者','漫畫作者','漫画作者','作家'].includes(key)) result.original_author=value;
     else if(['創作來源','创作来源'].includes(key)) result.creation_source=value;
     else if(['編劇','编剧'].includes(key)) result.screenwriter=value;
+    else if(['導演','导演'].includes(key)) result.directors=value;
+    else if(['監製','监制','製片人','制片人'].includes(key)) result.producers=value;
+    else if(['製作國家／地區','制作国家／地区','製作國家地區','制作国家地区','國家地區','国家地区'].includes(key)) result.country=value;
+    else if(['語言','语言'].includes(key)) result.language=value;
+    else if(['字幕'].includes(key)) result.subtitles=value;
+    else if(['拍攝地點','拍摄地点'].includes(key)) result.filming_location=value;
+    else if(['拍攝／製作年份','拍摄／制作年份','製作日期','制作日期'].includes(key)){const ds=value.split(/[—–~～至]+/).map(x=>x.trim());result.production_start=ds[0]||'';result.production_end=ds[1]||'';}
     else if(['製作公司','制作公司'].includes(key)) result.production_company=value;
     else if(['出品公司'].includes(key)) result.producing_company=value;
     else if(['承製公司','承制公司'].includes(key)) result.contractor_company=value;
@@ -5138,8 +5303,10 @@ function parseSmartWorkText(text){
     else if(['主演','主角','演員','演员'].includes(key)){result.actors=splitSmartList(value);result.cast_role='主演'}
     else if(['配音','聲優','声优'].includes(key)){result.actors=splitSmartList(value).map(x=>x.replace(/[（(]\s*飾\s+.*?[）)]/g,'').trim()).filter(Boolean);result.cast_role='配音'}
     else if(['網路播放平台','网络播放平台','播放平台','平台'].includes(key)) result.platform=value;
-    else if(['首播時間','首播时间','首播日期'].includes(key)){result.premiere_date=value;v211ParsePremieres(value,result)}
-    else if(['每集時間','每集时间','每集時長','每集时长'].includes(key)) result.episode_duration=value;
+    else if(['首播時間','首播时间','首播日期','播出日期','上映時間','上映时间','上映日期'].includes(key)){const ds=value.split(/[—–~～至]+/).map(x=>x.trim());result.premiere_date=ds[0]||value;result.finale_date=ds[1]||'';v211ParsePremieres(value,result)}
+    else if(['完結時間','完结时间','完結日期','完结日期'].includes(key)) result.finale_date=value;
+    else if(['播出國家／地區','播出国家／地区','播出國家地區','播出国家地区','上映地區','上映地区'].includes(key)) result.broadcast_country=value;
+    else if(['每集時間','每集时间','每集時長','每集时长','片長','片长'].includes(key)) result.episode_duration=value;
     else if(['集數','集数'].includes(key)){
       const nums=[...value.matchAll(/第\s*[一二三四五六七八九十百\d]+\s*季\s*(\d+)\s*集/g)];
       const n=value.match(/\d+/);result.episode=nums.length?nums.reduce((t,m)=>t+(+m[1]||0),0):n?n[0]:'';
@@ -5161,11 +5328,12 @@ function openSmartPaste(workId){
   // When creating a new work, editingWorkId is null; do NOT fall back to stale viewingWorkId.
   smartTargetWorkId=workId||null;
   smartParsed=null;
+  rc39ClearSmartImages('work');
   const smartHeading=$('#smartPasteModal h2');
   if(smartHeading) smartHeading.textContent=smartTargetWorkId?'✨ 智慧辨識｜更新目前作品':'✨ 智慧貼上｜建立新作品';
   $('#smartPasteText').value='';
   $('#smartPastePreview').innerHTML='<div class="meta">尚未解析</div>';
-  $('#smartPasteApplyBtn').disabled=true;
+  $('#smartPasteApplyBtn').disabled=true;$('#smartPasteApplyBlankBtn').disabled=true;
   $('#smartPasteModal').classList.add('show');
   $('#smartPasteModal').setAttribute('aria-hidden','false');
   setTimeout(()=>$('#smartPasteText').focus(),30);
@@ -5175,41 +5343,11 @@ function closeSmartPaste(){
   $('#smartPasteModal').classList.remove('show');
   $('#smartPasteModal').setAttribute('aria-hidden','true');
 }
-function renderSmartPreview(data){
-  const castMap=new Map((data.cast_entries||[]).map(x=>[canonicalActorName(x.name),x]));
-  const actorHtml=data.actors.length?data.actors.map(name=>{
-    const a=findActorByEquivalentName(name), meta=castMap.get(canonicalActorName(name))||{};
-    const detail=[meta.cast_type&&meta.cast_type!=='未知'?meta.cast_type:'',meta.role_name&&meta.role_name!=='未知'?`飾 ${meta.role_name}`:''].filter(Boolean).join('｜');
-    let linked=false;
-    try{ linked=!!(a && smartTargetWorkId && (workById(smartTargetWorkId)?.actor_ids||[]).includes(a.id)); }catch(e){}
-    const state=a?(linked?'✓ 已在本作':'✓ 演員資料庫已有'):'＋ 將新增演員';
-    return `<span class="${a?'smart-actor-ok':'smart-actor-new'}"><b>${esc(name)}</b>${detail?`｜${esc(detail)}`:''}｜${state}</span>`;
-  }).join('<br>'):'—';
-  $('#smartPastePreview').innerHTML=`<div class="smart-preview-grid">
-    <div class="k">中文名</div><div class="v">${esc(data.title||'—')}</div>
-    <div class="k">別名</div><div class="v">${esc(data.aliases||'—')}</div>
-    <div class="k">作品類型</div><div class="v">${esc(data.work_type||'—')}</div>
-    <div class="k">作品形式</div><div class="v">${esc(data.work_format||'—')}</div>
-    <div class="k">標籤</div><div class="v">${esc(data.tags.join('｜')||'—')}</div>
-    <div class="k">創作來源</div><div class="v">${esc(data.creation_source||'—')}</div>
-    <div class="k">原作名稱</div><div class="v">${esc(data.original_work||'—')}</div>
-    <div class="k">原作者／作者</div><div class="v">${esc(data.original_author||'—')}</div>
-    <div class="k">編劇</div><div class="v">${esc(data.screenwriter||'—')}</div>
-    <div class="k">製作公司</div><div class="v">${esc(data.production_company||'—')}</div>
-    <div class="k">備案時間</div><div class="v">${esc(data.filing_date||'—')}</div>
-    ${data.producing_company?`<div class="k">出品公司</div><div class="v">${esc(data.producing_company)}</div>`:''}
-    ${data.contractor_company?`<div class="k">承製公司</div><div class="v">${esc(data.contractor_company)}</div>`:''}
-    ${data.filing_title?`<div class="k">備案名稱</div><div class="v">${esc(data.filing_title)}</div>`:''}
-    ${data.filing_number?`<div class="k">備案號</div><div class="v">${esc(data.filing_number)}</div>`:''}
-    <div class="k">劇情大綱</div><div class="v">${esc(data.synopsis||'—')}</div>
-    <div class="k">${esc(data.cast_role||'主演')}</div><div class="v">${actorHtml}</div>
-    <div class="k">季度／篇章</div><div class="v">${esc((data.seasons||[]).map(s=>`${s.name}${s.premiere?'｜'+s.premiere:''}${s.episodes?'｜'+s.episodes:''}${s.status?'｜'+s.status:''}`).join('；')||'—')}</div>
-    <div class="k">播放平台</div><div class="v">${esc(data.platform||'—')}</div>
-    <div class="k">首播時間</div><div class="v">${esc(data.premiere_date||'—')}</div>
-    <div class="k">每集時間</div><div class="v">${esc(data.episode_duration||'—')}</div>
-    <div class="k">集數</div><div class="v">${esc(data.episode||'—')}${data.episode_note?`<div class="meta">備註：${esc(data.episode_note)}</div>`:''}</div>
-  </div>`;
-}
+const RC40_WORK_SMART_FIELDS=[['title','中文名'],['aliases','別名'],['work_type','作品類型'],['work_format','作品形式'],['tags','標籤'],['creation_source','創作來源'],['original_work','原作名稱'],['original_author','原作者／作者'],['screenwriter','編劇'],['directors','導演'],['producers','監製'],['production_company','製作公司'],['producing_company','出品公司'],['contractor_company','承製公司'],['country','製作國家／地區'],['language','語言'],['subtitles','字幕'],['filming_location','拍攝地點'],['production_start','開機／製作開始'],['production_end','殺青／製作結束'],['filing_date','備案時間'],['filing_title','備案名稱'],['filing_number','備案號'],['synopsis','劇情大綱'],['actors','演員陣容'],['seasons','季度／篇章'],['platform','播放平台'],['broadcast_country','播出國家／地區'],['premiere_date','首播／上映時間'],['finale_date','完結時間'],['episode_duration','每集時間／片長'],['episode','集數'],['broadcast_records','播映／上映紀錄']];
+function rc40WorkCurrent(w,k){if(!w)return k==='tags'||k==='actors'||k==='seasons'?[]:'';if(k==='creation_source')return w.creationSource||w.creation_source||'';if(k==='original_work')return w.original_work||w.originalTitle||'';if(k==='original_author')return w.originalAuthor||w.original_author||'';if(k==='actors')return getWorkActors(w).map(a=>a.name);return w[k]??(k==='tags'||k==='seasons'?[]:'')}
+function rc40SmartText(k,v){if(k==='seasons')return (v||[]).map(s=>`${s.name||''}${s.premiere?'｜'+s.premiere:''}${s.episodes?'｜'+s.episodes:''}`).join('；')||'—';if(k==='broadcast_records')return (v||[]).map(r=>[r.region,r.channel,r.start_date,r.end_date,r.mode].filter(Boolean).join('｜')).join('；')||'—';if(Array.isArray(v))return v.join('、')||'—';return String(v||'—')}
+function rc40SmartEmpty(v){return Array.isArray(v)?!v.length:!String(v||'').trim()||/^未知$/.test(String(v).trim())}
+function renderSmartPreview(data){const w=workById(smartTargetWorkId),rows=[];let adds=0,same=0,conflicts=0,merges=0;for(const [k,label] of RC40_WORK_SMART_FIELDS){const nv=data[k];if(rc40SmartEmpty(nv))continue;const ov=rc40WorkCurrent(w,k),oldText=rc40SmartText(k,ov),newText=rc40SmartText(k,nv),eq=oldText===newText,blank=rc40SmartEmpty(ov),merge=['actors','tags','broadcast_records'].includes(k)&&!blank&&!eq;let checked=false,state='';if(eq){same++;state='相同'}else if(blank){adds++;checked=true;state='補入空白'}else if(merge){merges++;checked=true;state='合併去重'}else{conflicts++;state='資料衝突，未勾選'}rows.push(`<div class="actor-smart-row ${eq?'same':''}"><input class="work-smart-check" type="checkbox" data-field="${k}" ${checked?'checked':''}><div class="field">${label}</div><div class="old">${esc(oldText)}</div><div class="arrow">${eq?'＝':'→'}</div><div class="new">${esc(newText)} <span class="meta">${state}</span></div></div>`)}$('#smartPastePreview').innerHTML=`<div class="actor-smart-status ${conflicts?'warn':'ok'}">已辨識 ${rows.length} 個欄位：補空白 ${adds}、安全合併 ${merges}、相同 ${same}、衝突 ${conflicts}。衝突欄位不會自動覆蓋，「未知」不會套入。</div><div class="actor-smart-row head"><span>套用</span><span>欄位</span><span>目前資料</span><span></span><span>辨識結果</span></div>${rows.join('')}`;$('#smartPasteApplyBlankBtn').disabled=!adds;$('#smartPasteApplyBtn').disabled=!rows.length&&!rc39SmartImages.work.length}
 function parseSmartPaste(){
   try{
     const rawSmartText=$('#smartPasteText').value;
@@ -5235,11 +5373,12 @@ function parseSmartPaste(){
     }else{
       smartParsed.actors=[...new Set((smartParsed.actors||[]).map(canonicalActorName).filter(Boolean))];
     }
-    if(!smartParsed.title && !smartParsed.actors.length && !smartParsed.work_type){
-      $('#smartPastePreview').innerHTML='<div class="meta">⚠️ 沒有辨識到作品欄位，請確認欄位名稱與冒號。</div>';
-      $('#smartPasteApplyBtn').disabled=true;showToast('沒有辨識到作品欄位');return;
+    if(!smartParsed.title && !smartParsed.actors.length && !smartParsed.work_type && (!rc39SmartImages.work.length||!smartTargetWorkId)){
+      $('#smartPastePreview').innerHTML=`<div class="meta">⚠️ ${rc39SmartImages.work.length?'建立新作品仍需提供作品名稱；圖片已保留，可補上文字後重新解析。':'沒有辨識到作品欄位，請確認欄位名稱與冒號。'}</div>`;
+      $('#smartPasteApplyBtn').disabled=true;showToast(rc39SmartImages.work.length?'請補上作品名稱':'沒有辨識到作品欄位');return;
     }
-    renderSmartPreview(smartParsed);
+    if(smartParsed.title||smartParsed.actors.length||smartParsed.work_type)renderSmartPreview(smartParsed);
+    else $('#smartPastePreview').innerHTML='<div class="meta">未輸入文字資料；將只套用已加入的圖片。</div>';
     $('#smartPasteApplyBtn').disabled=false;
   }catch(err){
     console.error('Smart paste parse failed',err);
@@ -5258,8 +5397,9 @@ function ensureSmartActor(name,identity='actor'){
   actors.push(a);
   return a;
 }
-function applySmartPaste(){
-  if(!smartParsed)return;
+async function applySmartPaste(mode='selected'){
+  if(!smartParsed&&!rc39SmartImages.work.length)return;
+  smartParsed=smartParsed||parseSmartWorkText('');
   const wasExisting=!!(smartTargetWorkId&&workById(smartTargetWorkId));
   let w=smartTargetWorkId?workById(smartTargetWorkId):null;
   if(!w){
@@ -5268,33 +5408,23 @@ function applySmartPaste(){
     smartTargetWorkId=w.id;
   }
   const d=smartParsed;
-  if(d.title)w.title=canonicalWorkTitle(d.title);
-  if(d.aliases)w.aliases=d.aliases;
-  if(d.work_type)w.work_type=d.work_type;
-  if(d.work_format)w.work_format=v210NormalizeFormat(d.work_format);
-  if(d.cast_role)w.cast_role=d.cast_role;if(d.seasons?.length)w.seasons=d.seasons.map(v211Season);
-  if(d.tags.length)w.tags=d.tags;
-  if(d.creation_source)w.creationSource=d.creation_source;
-  if(d.original_work){w.original_work=d.original_work;w.originalTitle=d.original_work;}
-  if(d.original_author)w.originalAuthor=canonicalDbText(d.original_author);
-  if(d.screenwriter)w.screenwriter=d.screenwriter;
-  if(d.production_company)w.production_company=d.production_company;
-  if(d.producing_company)w.producing_company=d.producing_company;
-  if(d.contractor_company)w.contractor_company=d.contractor_company;
-  if(d.filing_date)w.filing_date=d.filing_date;
-  if(d.filing_title)w.filing_title=d.filing_title;
-  if(d.filing_number)w.filing_number=d.filing_number;
-  if(d.synopsis)w.synopsis=d.synopsis;
-  if(w.creationSource==='原創劇本'){w.original_work='';w.originalTitle='';w.originalAuthor='';w.original='原創劇本';}
-  if(d.platform)w.platform=d.platform;
-  if(d.premiere_date)w.premiere_date=d.premiere_date;
-  if(d.episode_duration)w.episode_duration=d.episode_duration;
-  if(d.episode)w.episode=d.episode;
-  if(d.episode_note){
+  const selected=new Set([...$$('#smartPastePreview .work-smart-check')].filter(x=>x.checked).map(x=>x.dataset.field));
+  const should=k=>{if(rc40SmartEmpty(d[k]))return false;const old=rc40WorkCurrent(w,k);return mode==='blank'?rc40SmartEmpty(old):selected.has(k)};
+  const conflictSelected=RC40_WORK_SMART_FIELDS.filter(([k])=>selected.has(k)&&!rc40SmartEmpty(rc40WorkCurrent(w,k))&&!['actors','tags'].includes(k)&&rc40SmartText(k,rc40WorkCurrent(w,k))!==rc40SmartText(k,d[k])).map(([,label])=>label);
+  if(mode==='selected'&&conflictSelected.length&&!confirm(`以下既有欄位將被更新：${conflictSelected.join('、')}。\n\n未勾選欄位會保留原資料，確定套用？`))return;
+  if(should('title'))w.title=canonicalWorkTitle(d.title);
+  if(should('aliases'))w.aliases=d.aliases;if(should('work_type'))w.work_type=d.work_type;if(should('work_format'))w.work_format=v210NormalizeFormat(d.work_format);
+  if(should('seasons'))w.seasons=d.seasons.map(v211Season);
+  if(should('tags'))w.tags=[...new Set([...(w.tags||[]),...d.tags])];
+  if(should('creation_source'))w.creationSource=d.creation_source;if(should('original_work')){w.original_work=d.original_work;w.originalTitle=d.original_work}if(should('original_author')){w.originalAuthor=canonicalDbText(d.original_author);w.original_author=w.originalAuthor;}
+  ['screenwriter','directors','producers','production_company','producing_company','contractor_company','country','language','subtitles','filming_location','production_start','production_end','filing_date','filing_title','filing_number','synopsis','platform','broadcast_country','premiere_date','finale_date','episode_duration','episode'].forEach(k=>{if(should(k))w[k]=d[k]});
+  if(should('broadcast_records')){const merged=[...(w.broadcast_records||[]),...(d.broadcast_records||[])],seen=new Set();w.broadcast_records=merged.filter(r=>{const key=[r.region,r.channel,r.start_date,r.end_date,r.mode].map(x=>String(x||'').trim()).join('|');if(seen.has(key))return false;seen.add(key);return true})}
+  if(w.creationSource==='原創劇本'){w.original_work='';w.originalTitle='';w.originalAuthor='';w.original_author='';w.original='原創劇本';}
+  if(should('episode')&&d.episode_note){
     const note=`集數備註：${d.episode_note}`;
     if(!String(w.notes||'').includes(note))w.notes=[w.notes,note].filter(Boolean).join('\n');
   }
-  if(d.actors.length){
+  if(should('actors')){if(d.cast_role)w.cast_role=d.cast_role;
     if((d.cast_entries||[]).length){
       const ids=[];
       d.cast_entries.forEach(row=>{
@@ -5304,19 +5434,20 @@ function applySmartPaste(){
           cast_type:row.cast_type||'未知',role_name:row.role_name||'未知',role_bio:row.role_bio||'',source:'paste',status:'confirmed'
         });
       });
-      w.actor_ids=ids;
+      w.actor_ids=[...new Set([...(w.actor_ids||[]),...ids])];
     }else{
-      w.actor_ids=[...new Set(d.actors.map(n=>ensureSmartActor(n,d.cast_role==='配音'?'voice_actor':'actor').id))];
+      w.actor_ids=[...new Set([...(w.actor_ids||[]),...d.actors.map(n=>ensureSmartActor(n,d.cast_role==='配音'?'voice_actor':'actor').id)])];
     }
   }
+  let imageAdded=0;try{imageAdded=await rc39SaveWorkSmartImages(w)}catch(err){console.warn(err);showToast('文字已套用，但部分圖片處理失敗')}
   w.updated_at=new Date().toISOString();
   w.time=w.time||w.created_at;
   syncWorkLegacyFields(w);
   saveData();renderRecent();renderHistoryPage();renderActorPage();renderSystemPage();
-  closeSmartPaste();
+  closeSmartPaste();rc39ClearSmartImages('work');
   editingWorkId=w.id;viewingWorkId=w.id;
   openWorkDetail(w.id);
-  showToast(wasExisting?'智慧貼上已套用至目前作品，請確認後儲存':'已建立新的作品草稿，請確認後儲存');
+  showToast(`${wasExisting?'智慧貼上已套用至目前作品':'已建立新的作品草稿'}${imageAdded?`，並加入 ${imageAdded} 張圖片`:''}，請確認後儲存`);
 }
 
 
@@ -6198,10 +6329,10 @@ function refreshAttributeConsumers(){
 let v280WorkTab='data';
 function v280SetWorkTab(tab){
   const wrap=document.querySelector('.v280-tabbed-work');if(!wrap)return;
-  v280WorkTab=tab==='images'?'images':'data';
+  v280WorkTab=['images','tv'].includes(tab)?tab:'data';
   document.querySelectorAll('.v280-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===v280WorkTab));
   const panels=[...wrap.querySelectorAll('.v280-panel')];
-  if(v280WorkTab==='images'){wrap.classList.add('v280-single');panels.forEach(p=>p.classList.toggle('v280-visible',p.dataset.panel==='images'))}
+  if(v280WorkTab!=='data'){wrap.classList.add('v280-single');panels.forEach(p=>p.classList.toggle('v280-visible',p.dataset.panel===v280WorkTab))}
   else{wrap.classList.remove('v280-single');panels.forEach(p=>p.classList.remove('v280-visible'))}
 }
 function v280InitWorkTabs(){
@@ -6245,8 +6376,11 @@ async function v331RenderImages(w){const hosts=[$('#v331ImageGallery'),$('#v331E
 async function v331AddImages(files,scope='view'){const w=workById(scope==='edit'?editingWorkId:viewingWorkId)||workById(editingWorkId)||workById(viewingWorkId);if(!w)return showToast('請先儲存作品，再加入圖片');const list=[...files];if(!list.length)return;if(!Array.isArray(w.images))w.images=[];if(typeof w.poster_image_id!=='string')w.poster_image_id='';const prefix=scope==='edit'?'#v331Edit':'#v331',role=$(`${prefix}ImageRole`).value,note=$(`${prefix}ImageNote`).value.trim();showToast(`正在處理 ${list.length} 張圖片…`);let added=0;for(const file of list){try{const id=makeId('image'),made=await v331PrepareImage(file);await v331Put({id,workId:w.id,name:file.name,type:made.blob.type,blob:made.blob,thumb:made.thumb,created_at:new Date().toISOString()});w.images.push({id,role,name:file.name,note,created_at:new Date().toISOString()});if(role==='poster'&&!w.poster_image_id)w.poster_image_id=id;added++}catch(err){console.warn(err);showToast(`${file.name}：${err.message}`)}}w.updated_at=new Date().toISOString();saveData();$(`${prefix}ImageNote`).value='';await v331RenderImages(w);renderHistoryPage();showToast(`已加入 ${added} 張圖片`)}
 async function v331SetPoster(w,id){w.poster_image_id=id;const ref=w.images.find(x=>x.id===id);if(ref)ref.role='poster';w.updated_at=new Date().toISOString();saveData();await v331RenderImages(w);showToast('主海報已更新')}
 async function v331RemoveImage(w,id){const ref=w.images.find(x=>x.id===id);if(!confirm(`確定刪除「${ref?.note||ref?.name||'這張圖片'}」？`))return;await v331DeleteBlob(id).catch(console.warn);w.images=w.images.filter(x=>x.id!==id);if(w.poster_image_id===id)w.poster_image_id=w.images.find(x=>x.role==='poster')?.id||'';w.updated_at=new Date().toISOString();saveData();await v331RenderImages(w);renderHistoryPage();showToast('圖片已刪除')}
-async function v331OpenLightbox(id){const rec=await v331Get(id);if(!rec)return showToast('找不到圖片檔');const url=URL.createObjectURL(rec.blob);v331ObjectUrls.push(url);$('#v331LightboxImage').src=url;$('#v331Lightbox').classList.add('show')}
-function v331CloseLightbox(){$('#v331Lightbox').classList.remove('show');$('#v331LightboxImage').removeAttribute('src')}
+let v331LightboxRecords=[],v331LightboxIndex=0;
+async function v331OpenLightbox(id){const w=[workById(viewingWorkId),workById(editingWorkId)].find(x=>(x?.images||[]).some(r=>r.id===id))||workById(viewingWorkId)||workById(editingWorkId),refs=w?.images?.length?w.images:[{id}];v331LightboxRecords=[];for(const ref of refs){const rec=await v331Get(ref.id).catch(()=>null);if(!rec)continue;const url=URL.createObjectURL(rec.blob||rec.thumb);v331ObjectUrls.push(url);v331LightboxRecords.push({id:ref.id,url,name:ref.note||ref.name||'作品圖片'})}if(!v331LightboxRecords.length)return showToast('找不到圖片檔');v331LightboxIndex=Math.max(0,v331LightboxRecords.findIndex(x=>x.id===id));v331ShowLightbox()}
+function v331ShowLightbox(){if(!v331LightboxRecords.length)return;const rec=v331LightboxRecords[v331LightboxIndex];$('#v331LightboxImage').src=rec.url;$('#v331LightboxImage').alt=rec.name;$('#v331Lightbox').classList.add('show');$('#v331Lightbox').setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+function v331MoveLightbox(delta){if(!v331LightboxRecords.length)return;v331LightboxIndex=(v331LightboxIndex+delta+v331LightboxRecords.length)%v331LightboxRecords.length;v331ShowLightbox()}
+function v331CloseLightbox(){$('#v331Lightbox').classList.remove('show');$('#v331Lightbox').setAttribute('aria-hidden','true');$('#v331LightboxImage').removeAttribute('src');document.body.style.overflow=''}
 
 function v330NormalizeMedia(m,i=0){
   const url=String(m?.url||'').trim(),episode=Math.max(1,Number(m?.episode)||i+1);
@@ -7158,6 +7292,8 @@ function traditionalizeExistingTitlesAndActors(){
     keep.use_count=group.reduce((s,a)=>s+(a.use_count||0),0);
     keep.favorite=group.some(a=>a.favorite);
     keep.last_used=group.map(a=>a.last_used).filter(Boolean).sort().at(-1)||null;
+    keep.images=[...new Map(group.flatMap(a=>a.images||[]).map(x=>[x.id,x])).values()];
+    if(!keep.portrait_image_id)keep.portrait_image_id=group.find(a=>a.portrait_image_id)?.portrait_image_id||keep.images[0]?.id||'';
     if(keep.gender==='unknown'){
       const known=group.find(a=>a.gender&&a.gender!=='unknown');
       if(known)keep.gender=known.gender;
@@ -7422,9 +7558,11 @@ function boot(){
   $('#workSmartPasteBtn').addEventListener('click',()=>openSmartPaste(editingWorkId));
   $('#workSmartPasteFromViewBtn').addEventListener('click',()=>openSmartPaste(viewingWorkId));
   $('#smartPasteClose').addEventListener('click',closeSmartPaste);
-  $('#smartPasteClearBtn').addEventListener('click',()=>{$('#smartPasteText').value='';smartParsed=null;$('#smartPastePreview').innerHTML='<div class="meta">尚未解析</div>';$('#smartPasteApplyBtn').disabled=true});
+  $('#smartPasteClearBtn').addEventListener('click',()=>{$('#smartPasteText').value='';smartParsed=null;rc39ClearSmartImages('work');$('#smartPastePreview').innerHTML='<div class="meta">尚未解析</div>';$('#smartPasteApplyBtn').disabled=true;$('#smartPasteApplyBlankBtn').disabled=true});
+  $('#smartPasteImagePick')?.addEventListener('click',()=>$('#smartPasteImageInput').click());
+  $('#smartPasteImageInput')?.addEventListener('change',e=>{rc39AddSmartImages('work',e.target.files);e.target.value=''});
   $('#smartPasteParseBtn').addEventListener('click',parseSmartPaste);
-  $('#smartPasteApplyBtn').addEventListener('click',applySmartPaste);
+  $('#smartPasteApplyBtn').addEventListener('click',()=>applySmartPaste('selected'));$('#smartPasteApplyBlankBtn').addEventListener('click',()=>applySmartPaste('blank'));
   $('#smartPasteModal').addEventListener('click',e=>{if(e.target===$('#smartPasteModal'))closeSmartPaste()});
 
   $$('#workViewTabs [data-work-view-tab]').forEach(btn=>{
@@ -7460,7 +7598,9 @@ function boot(){
   editImageDrop?.addEventListener('dragleave',()=>editImageDrop.classList.remove('drag'));
   editImageDrop?.addEventListener('drop',e=>{e.preventDefault();editImageDrop.classList.remove('drag');v331AddImages([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')),'edit')});
   $('#v331LightboxClose')?.addEventListener('click',v331CloseLightbox);
+  $('#v331LightboxPrev')?.addEventListener('click',()=>v331MoveLightbox(-1));$('#v331LightboxNext')?.addEventListener('click',()=>v331MoveLightbox(1));
   $('#v331Lightbox')?.addEventListener('click',e=>{if(e.target===$('#v331Lightbox'))v331CloseLightbox()});
+  document.addEventListener('keydown',e=>{if(!$('#v331Lightbox')?.classList.contains('show'))return;if(e.key==='ArrowLeft')v331MoveLightbox(-1);else if(e.key==='ArrowRight')v331MoveLightbox(1);else if(e.key==='Escape')v331CloseLightbox()});
 
 
   bindActorCombo('#workAddActorCombo','#workAddActorSearch','#workAddActorMenu','#workAddActorSelect');
@@ -7518,7 +7658,10 @@ function boot(){
   $('#actorDetailSaveBtn').addEventListener('click',saveActorDetail);$('#actorSmartPasteBtn')?.addEventListener('click',openActorSmartPaste);$('#actorSmartPasteClose')?.addEventListener('click',closeActorSmartPaste);$('#actorSmartFormatBtn')?.addEventListener('click',()=>showActorSmartGuide('format'));
   $('#actorSmartPromptBtn')?.addEventListener('click',()=>showActorSmartGuide('prompt'));
   $('#actorSmartGuideCopy')?.addEventListener('click',copyActorSmartGuide);
-  $('#actorSmartClearBtn')?.addEventListener('click',()=>{$('#actorSmartPasteInput').value='';actorSmartParsed=null;$('#actorSmartPreview').innerHTML='';$('#actorSmartStatus').className='actor-smart-status';$('#actorSmartStatus').textContent='尚未解析';$('#actorSmartApplyBlankBtn').disabled=true;$('#actorSmartApplySelectedBtn').disabled=true});$('#actorSmartParseBtn')?.addEventListener('click',()=>{actorSmartParsed=parseActorSmartText($('#actorSmartPasteInput').value);renderActorSmartPreview()});$('#actorSmartApplyBlankBtn')?.addEventListener('click',()=>actorCreateSmartMode?applyActorSmartToCreate():applyActorSmart('blank'));$('#actorSmartApplySelectedBtn')?.addEventListener('click',()=>actorCreateSmartMode?applyActorSmartToCreate():applyActorSmart('selected'));$('#actorSmartPasteModal')?.addEventListener('click',e=>{if(e.target.id==='actorSmartPasteModal')closeActorSmartPaste()});
+  $('#actorSmartClearBtn')?.addEventListener('click',()=>{$('#actorSmartPasteInput').value='';actorSmartParsed=null;rc39ClearSmartImages('actor');$('#actorSmartPreview').innerHTML='';$('#actorSmartStatus').className='actor-smart-status';$('#actorSmartStatus').textContent='尚未解析';$('#actorSmartApplyBlankBtn').disabled=true;$('#actorSmartApplySelectedBtn').disabled=true});
+  $('#actorSmartImagePick')?.addEventListener('click',()=>$('#actorSmartImageInput').click());
+  $('#actorSmartImageInput')?.addEventListener('change',e=>{rc39AddSmartImages('actor',e.target.files);e.target.value=''});
+  $('#actorSmartParseBtn')?.addEventListener('click',()=>{actorSmartParsed=parseActorSmartText($('#actorSmartPasteInput').value);renderActorSmartPreview();if(rc39SmartImages.actor.length)$('#actorSmartApplySelectedBtn').disabled=false});$('#actorSmartApplyBlankBtn')?.addEventListener('click',()=>actorCreateSmartMode?applyActorSmartToCreate():applyActorSmart('blank'));$('#actorSmartApplySelectedBtn')?.addEventListener('click',()=>actorCreateSmartMode?applyActorSmartToCreate():applyActorSmart('selected'));$('#actorSmartPasteModal')?.addEventListener('click',e=>{if(e.target.id==='actorSmartPasteModal')closeActorSmartPaste()});
   $('#actorEditToggle')?.addEventListener('click',()=>v360ToggleActorEdit(true));
   $('#actorEditCancel')?.addEventListener('click',()=>v360ToggleActorEdit(false));
   $('#actorEditReturnTop')?.addEventListener('click',()=>v360ToggleActorEdit(false));
@@ -7531,6 +7674,10 @@ function boot(){
   $('#actorPortraitPick')?.addEventListener('click',()=>$('#actorPortraitInput').click());
   $('#actorPortraitInput')?.addEventListener('change',e=>{const f=e.target.files?.[0];if(f)v360SetPortrait(f);e.target.value=''});
   $('#actorPortraitRemove')?.addEventListener('click',v360RemovePortrait);
+  $('#actorGalleryAdd')?.addEventListener('click',()=>$('#actorGalleryInput').click());
+  $('#actorGalleryInput')?.addEventListener('change',e=>{v360AddActorImages(e.target.files,false);e.target.value=''});
+  $('#actorGalleryLightboxClose')?.addEventListener('click',rc40CloseLightbox);$('#actorGalleryPrev')?.addEventListener('click',()=>rc40MoveLightbox(-1));$('#actorGalleryNext')?.addEventListener('click',()=>rc40MoveLightbox(1));$('#actorGalleryLightbox')?.addEventListener('click',e=>{if(e.target.id==='actorGalleryLightbox')rc40CloseLightbox()});
+  document.addEventListener('keydown',e=>{if(!$('#actorGalleryLightbox')?.classList.contains('show'))return;if(e.key==='ArrowLeft')rc40MoveLightbox(-1);else if(e.key==='ArrowRight')rc40MoveLightbox(1);else if(e.key==='Escape')rc40CloseLightbox()});
   $$('[data-actor-tab]').forEach(b=>b.addEventListener('click',()=>v360SwitchActorTab(b.dataset.actorTab)));
 
   $('#goStoryPageBtn')?.addEventListener('click',()=>switchPage('stories'));
@@ -7956,9 +8103,11 @@ document.addEventListener('click',function(e){
     <div class="toolbar" style="margin:12px 0">
       <button id="smartPasteParseBtn" class="primary" type="button">解析內容</button>
       <button id="smartPasteClearBtn" class="ghost" type="button">清空</button>
+      <button id="smartPasteImagePick" class="ghost" type="button">🖼️ 加入圖片</button><input id="smartPasteImageInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
       <button id="smartPasteFormatBtn" class="ghost" type="button">📋 標準辨識格式</button>
       <button id="smartPastePromptBtn" class="ghost" type="button">🤖 AI 整理提示詞</button>
     </div>
+    <div id="smartPasteImages" class="rc39-smart-images" hidden><div class="rc39-smart-image-head"><b>作品圖片</b><span class="meta">可一次加入多張；選一張作為主海報，其餘會列為劇照。</span></div><div id="smartPasteImageList" class="rc39-smart-image-list"></div></div>
     <div id="smartPasteGuide" class="actor-smart-guide" hidden>
       <div class="actor-smart-guide-head">
         <b id="smartPasteGuideTitle">標準辨識格式</b>
@@ -7968,7 +8117,7 @@ document.addEventListener('click',function(e){
     </div>
     <div id="smartPastePreview" class="smart-preview"><div class="meta">尚未解析</div></div>
     <div class="toolbar" style="justify-content:flex-end;margin-top:14px">
-      <button id="smartPasteApplyBtn" class="primary" type="button" disabled>套用至作品</button>
+      <button id="smartPasteApplyBlankBtn" class="ghost" type="button" disabled>只補所有空白欄位</button><button id="smartPasteApplyBtn" class="primary" type="button" disabled>套用勾選欄位</button>
     </div>
   </div>
 </div>
@@ -8061,7 +8210,7 @@ renderHistoryPage=function(){
 };
 function v350WatchPercent(p){return Math.max(0,Math.min(100,Number(p?.percent)||0))}
 let v350ViewPosterUrl='';
-async function v350HydrateViewPoster(w){const host=$('#v350ViewPoster'),backdrop=$('#v351HeroBackdrop');if(!host)return;if(v350ViewPosterUrl){URL.revokeObjectURL(v350ViewPosterUrl);v350ViewPosterUrl=''}host.innerHTML='<span>🎬</span>';if(backdrop)backdrop.style.backgroundImage='none';if(!w?.poster_image_id)return;const rec=await v331Get(w.poster_image_id).catch(()=>null);if(!rec||viewingWorkId!==w.id)return;v350ViewPosterUrl=URL.createObjectURL(rec.blob||rec.thumb);host.innerHTML=`<img src="${v350ViewPosterUrl}" alt="${esc(w.title||'作品主封面')}">`;if(backdrop)backdrop.style.backgroundImage=`url("${v350ViewPosterUrl}")`}
+async function v350HydrateViewPoster(w){const host=$('#v350ViewPoster'),backdrop=$('#v351HeroBackdrop');if(!host)return;if(v350ViewPosterUrl){URL.revokeObjectURL(v350ViewPosterUrl);v350ViewPosterUrl=''}host.innerHTML='<span>🎬</span>';host.onclick=null;host.style.cursor='';host.removeAttribute('title');if(backdrop)backdrop.style.backgroundImage='none';if(!w?.poster_image_id)return;const rec=await v331Get(w.poster_image_id).catch(()=>null);if(!rec||viewingWorkId!==w.id)return;v350ViewPosterUrl=URL.createObjectURL(rec.blob||rec.thumb);host.innerHTML=`<img src="${v350ViewPosterUrl}" alt="${esc(w.title||'作品主海報')}">`;host.style.cursor='zoom-in';host.title='點擊放大瀏覽封面／劇照';host.onclick=()=>v331OpenLightbox(w.poster_image_id);if(backdrop)backdrop.style.backgroundImage=`url("${v350ViewPosterUrl}")`}
 let v351StillUrls=[];
 async function v351RenderStillPreview(w){const host=$('#v351StillPreview');if(!host)return;v351StillUrls.forEach(URL.revokeObjectURL);v351StillUrls=[];const __hero=String(v317ResolveWorkHeroImage(w)||'');const refs=(Array.isArray(w.images)?w.images:[]).filter(x=>String(x?.id||x?.image_id||x?.imageId||'')!==__hero).slice(0,4);if(!refs.length){host.innerHTML='<div class="v351-still-empty">尚無其他劇照。</div>';return}host.innerHTML=refs.map(x=>`<button class="v351-still" data-id="${esc(x.id)}" type="button"><span>載入中</span></button>`).join('');for(const btn of $$('#v351StillPreview .v351-still')){const rec=await v331Get(btn.dataset.id).catch(()=>null);if(!rec||viewingWorkId!==w.id)continue;const url=URL.createObjectURL(rec.thumb||rec.blob);v351StillUrls.push(url);btn.innerHTML=`<img src="${url}" alt="作品劇照">`;btn.onclick=()=>v331OpenLightbox(btn.dataset.id)}}
 function v351RenderWorkExperience(w){
@@ -8232,7 +8381,7 @@ function rc20KnownCastNames(w){
 function rc20WorkPrompt(w){
   const title=String(w?.title||w?.name||w?.chinese_name||'').trim();
   const alias=String(w?.alias||w?.aliases||'').trim();
-  const form=String(w?.format||w?.work_form||w?.type||'').trim();
+  const form=String(w?.work_format||w?.format||w?.work_form||'').trim();
   const platform=String(w?.platform||w?.platforms||'').trim();
   const cast=rc20KnownCastNames(w);
   const clues=[
@@ -8243,38 +8392,71 @@ function rc20WorkPrompt(w){
     platform?`已知平台：${platform}`:''
   ].filter(Boolean).join('\n');
 
-  return `你現在扮演一位專業的「微短劇資料庫管理員」。接下來我會提供微短劇劇名，以及我已知的演員、角色、平台或其他線索。請先聯網查證，再依指定格式輸出可供資料庫辨識的資料。
+  return `你現在扮演一位專業的「影視作品資料庫管理員」，能處理微短劇、電視劇、網路劇、電影、動畫與綜藝／實境作品。接下來我會提供作品名稱及已知線索。請先聯網查證並確認作品版本與作品形式，再依指定格式輸出可供資料庫辨識的資料。
 
 【目前待查資料】
 ${clues || '待查作品：請依我接下來提供的劇名查證'}
 
 【核心規則】
-1. 必須先確認作品版本。若存在同名作品、翻拍版、不同演員版本、小說與短劇同名等情況，必須利用我提供的演員、角色、平台、年份等線索交叉查證，不得混用不同版本資料。
+1. 必須先確認作品版本與作品形式。若存在同名作品、翻拍版、不同演員版本、小說與影視作品同名等情況，必須利用演員、角色、平台、年份等線索交叉查證，不得混用不同版本資料。
 2. 禁止猜測。查不到或無可靠來源確認的資料，請填「未知」；不得為了補齊欄位而自行推測。
-3. 演員資料必須區分「演員姓名」、「演出定位」與「角色名」。
-4. 演出定位僅能使用：男主角、女主角、主角、男配角、女配角、配角、客串、特別出演、友情出演、其他、未知。
-5. 不得單純依演員本人的性別推定男主角或女主角；只有來源明確指出或有充分可靠資料能確認時才能填寫，否則使用「主角」或「未知」。
-6. 如果查得到角色名，必須寫出演員與角色的對應關係；只能確認參演時，角色名填「未知」。
-7. 「標籤」中的詞彙只能使用全形逗號（，）分隔；其他多值欄位也統一使用全形逗號（，）分隔。
-8. 日期優先使用 YYYY年M月D日；只能確認年份時可只寫年份。
-9. 保持資料精簡、易讀，不要加入寒暄、分析過程、資料來源說明、Markdown 表格或額外段落。
-10. 可以使用 Markdown 粗體欄位名稱，但不得改變以下欄位名稱與排列順序。
+3. 作品形式僅能使用：微短劇、電視劇、網路劇、電影、動畫、綜藝／實境、其他。若目前資料已指定作品形式但查證結果不同，請保留查證結果並在該欄標示「待確認」，不得自行混合兩個版本。
+4. 演員資料必須區分「演員姓名」、「演出定位」與「角色名」。演出定位僅能使用：男主角、女主角、主角、男配角、女配角、配角、客串、特別出演、友情出演、其他、未知。
+5. 不得單純依演員性別推定角色定位；若只能確認參演，角色名及定位填「未知」，但仍須保留該演員。
+6. 多值欄位一律使用全形逗號（，）分隔；日期優先使用 YYYY年M月D日，只能確認年份時可只寫年份。
+7. 微短劇不必輸出沒有意義的電視播映資料；電影不輸出集數與每集時間；電視劇／網路劇如有多地區或多平台播出，必須逐筆輸出播映紀錄。
+8. 「未知」僅代表查無可靠資料，不能用來覆蓋使用者既有資料。不要加入寒暄、分析過程、引用編號、Markdown 表格、來源說明或額外段落。
+9. 可以使用 Markdown 粗體欄位名稱，但不得改變欄位名稱。先輸出共用欄位，再依作品形式輸出適用的專用欄位；不適用欄位省略。
 
 【輸出格式】
 * **中文名**：[劇名]
 * **別 名**：[若無則寫「暫無其他別名」]
+* **作品形式**：[微短劇／電視劇／網路劇／電影／動畫／綜藝／實境／其他]
 * **作品類型**：[例如：都市愛情，重生逆襲]
 * **標 籤**：[標籤A，標籤B，標籤C]
-* **原 著**：[原著作品與作者；原創則寫「原創劇本」]
+* **製作國家／地區**：[國家或地區]
+* **語 言**：[主要語言]
+* **字 幕**：[字幕語言]
+* **創作來源**：[原創劇本／小說改編／漫畫改編／網路文學改編／影視翻拍／同劇本翻拍／其他改編]
+* **原作名稱**：[原作名稱；原創則省略]
+* **原作者／作者**：[姓名；原創則省略]
 * **編 劇**：[姓名；查無可靠資料則寫「未知」]
+* **導 演**：[姓名；查無可靠資料則寫「未知」]
+* **製作公司**：[公司名稱]
 * **演員陣容**：
   * [演員姓名]｜[演出定位]｜飾 [角色名]
   * [演員姓名]｜[演出定位]｜飾 [角色名]
+* **劇情簡介**：[精簡整理主要劇情；無可靠資料則寫「未知」]
+
+【微短劇適用欄位】
 * **網路播放平台**：[平台A，平台B]
 * **首播時間**：[YYYY年M月D日]
 * **每集時間**：約 [X] 分鐘
 * **集 數**：[X] 集
-* **劇情簡介**：[精簡整理主要劇情；無可靠資料則寫「未知」]
+* **備案名稱**：[名稱]
+* **備案號**：[編號]
+* **備案時間**：[日期]
+* **出品公司**：[公司名稱]
+* **承製公司**：[公司名稱]
+
+【電視劇／網路劇適用欄位】
+* **監 製**：[姓名]
+* **拍攝地點**：[地點]
+* **製作日期**：[開機日期]—[殺青日期]
+* **首播時間**：[YYYY年M月D日]
+* **完結時間**：[YYYY年M月D日]
+* **每集時間**：約 [X] 分鐘
+* **集 數**：[X] 集
+* **播出國家／地區**：[國家或地區]
+* **播映紀錄**：
+  * [地區]｜[平台／頻道]｜[開始日期]｜[結束日期]｜[播出方式或更新規則]
+
+【電影適用欄位】
+* **片 長**：約 [X] 分鐘
+* **上映時間**：[YYYY年M月D日]
+* **上映地區**：[國家或地區]
+* **上映紀錄**：
+  * [地區]｜[院線／平台]｜[上映日期]｜[下映日期或未知]｜[院線上映／網路上架]
 
 【演員陣容格式範例】
 * **演員陣容**：
@@ -8383,20 +8565,42 @@ rc19ParseCastText=function(text){
 /* ================= RC22 Smart Guide Toggle ================= */
 const WORK_STANDARD_FORMAT=`中文名：
 別名：
-作品類型：
 作品形式：
+作品類型：
 標籤：
+製作國家／地區：
+語言：
+字幕：
 創作來源：
 原作名稱：
 原作者／作者：
 編劇：
+導演：
+監製：
+製作公司：
+出品公司：
+承製公司：
+拍攝地點：
+製作日期：
 劇情大綱：
 演員陣容：
   演員姓名｜演出定位｜飾 角色名
 網路播放平台：
+播出國家／地區：
 首播時間：
+完結時間：
 每集時間：
-集數：`;
+集數：
+播映紀錄：
+  地區｜平台／頻道｜開始日期｜結束日期｜播出方式或更新規則
+片長：
+上映時間：
+上映地區：
+上映紀錄：
+  地區｜院線／平台｜上映日期｜下映日期或未知｜院線上映／網路上架
+備案名稱：
+備案號：
+備案時間：`;
 
 let smartPasteGuideMode='';
 function rc22WorkPromptText(){
@@ -8410,7 +8614,7 @@ function showSmartPasteGuide(mode){
   }
   smartPasteGuideMode=mode;
   const isPrompt=mode==='prompt';
-  $('#smartPasteGuideTitle').textContent=isPrompt?'AI 整理提示詞':'短劇典藏庫作品標準辨識格式';
+  $('#smartPasteGuideTitle').textContent=isPrompt?'AI 整理提示詞':'影視作品標準辨識格式';
   $('#smartPasteGuideText').textContent=isPrompt?rc22WorkPromptText():WORK_STANDARD_FORMAT;
   guide.hidden=false;
 }
